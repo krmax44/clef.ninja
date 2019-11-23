@@ -1,0 +1,38 @@
+@import '~typeface-assistant/index.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.container {
+	max-width: 1400px;
+}
+
+.card-container {
+	@apply w-full py-2;
+}
+
+@screen md {
+	.card-container {
+		@apply w-1/2 px-2;
+	}
+
+	.card-container:nth-child(2n) {
+		@apply pr-0;
+	}
+
+	.card-container:nth-child(2n + 1) {
+		@apply pl-0;
+	}
+}
+
+.card {
+	@apply rounded overflow-hidden shadow-md h-full;
+}
+
+.card-inner {
+	@apply px-6 py-4;
+}
+
+.card h3 {
+	@apply font-bold text-xl mb-2;
+}

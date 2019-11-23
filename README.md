@@ -1,29 +1,19 @@
-# clef.ninja
+![Banner](./src/assets/images/banner.svg)
 
-## Project setup
-```
-yarn install
-```
+Train reading music the fun way. [clef.ninja](https://clef.ninja)
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+Currently under development 🚧
 
-### Compiles and minifies for production
-```
-yarn run build
-```
+## About
 
-### Run your tests
-```
-yarn run test
-```
+I wanted a tool to help me learn playing piano, specifically reading music quickly and hitting the correct keys.
 
-### Lints and fixes files
-```
-yarn run lint
-```
+## Roadmap
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- [x] Landing Page
+- [x] Generating random notes
+- [x] Render notes using Vexflow
+- [ ] Virtual keyboard
+- [ ] MIDI integration
+- [ ] Training mode
+- [ ] Arcade mode
