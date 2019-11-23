@@ -1,0 +1,14 @@
+image: node:10
+
+pages:
+  script:
+    - yarn install
+    - yarn build
+    - rm public -rf # for some reason gitlab only allows a folder named public
+    - mkdir public
+    - cp dist/* public/ -r
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
