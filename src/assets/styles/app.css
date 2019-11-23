@@ -36,3 +36,7 @@
 .card h3 {
 	@apply font-bold text-xl mb-2;
 }
+
+a {
+	@apply text-brand-blue;
+}

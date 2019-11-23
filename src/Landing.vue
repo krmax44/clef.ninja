@@ -64,7 +64,8 @@
 									<h3>Open-Source Software</h3>
 									<p>
 										Are you missing a feature or encountering a nasty bug? Feel
-										free to contribute to the code on Github.
+										free to contribute to the code on
+										<a href="https://github.com/krmax44/clef.ninja">Github</a>.
 									</p>
 								</div>
 							</div>
@@ -72,7 +73,10 @@
 					</div>
 
 					<div class="py-4">
-						<a class="btn-cta" href="app/">Let's play!</a>
+						<!-- <a class="btn-cta" href="app/">Let's play!</a> -->
+						<span class="text-italic text-gray-700"
+							>Currently under development - coming soon...</span
+						>
 					</div>
 				</main>
 			</div>
