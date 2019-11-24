@@ -74,9 +74,9 @@
 
 					<div class="py-4">
 						<!-- <a class="btn-cta" href="app/">Let's play!</a> -->
-						<span class="text-italic text-gray-700"
-							>Currently under development - coming soon...</span
-						>
+						<span class="text-italic text-gray-700">
+							Currently under development - coming soon...
+						</span>
 					</div>
 				</main>
 			</div>
