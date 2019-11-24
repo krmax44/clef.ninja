@@ -36,7 +36,7 @@
 									<p>
 										Using MIDI, you can connect your keyboard to your computer
 										and use it to input the correct notes! Unfortunately, this
-										feature only works in Chroumium-based browsers.
+										feature only works in Chromium-based browsers.
 									</p>
 								</div>
 							</div>
