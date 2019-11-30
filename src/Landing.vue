@@ -73,9 +73,12 @@
 					</div>
 
 					<div class="py-4">
-						<!-- <a class="btn-cta" href="app/">Let's play!</a> -->
+						<a class="btn btn-blue" href="app/">Play the public alpha!</a>
+					</div>
+
+					<div>
 						<span class="text-italic text-gray-700">
-							Currently under development - coming soon...
+							At the moment, this is a development build intended for testing.
 						</span>
 					</div>
 				</main>
@@ -114,12 +117,11 @@ export default {
 	@apply flex flex-col justify-center items-center;
 }
 
-.btn-cta {
-	@apply bg-brand-blue text-white text-xl py-2 px-16 rounded inline-flex items-center;
-	transition: background-color 0.3s;
+.btn-blue {
+	@apply text-xl px-16;
 }
 
-.btn-cta:hover {
+.btn-blue:hover {
 	@apply bg-brand-red;
 }
 </style>

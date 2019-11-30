@@ -1,5 +1,11 @@
 <template>
-	<div ref="paper" />
+	<div class="flex justify-center mb-8">
+		<div class="card-container">
+			<div class="card flex justify-center cursor-auto">
+				<div ref="paper" />
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>

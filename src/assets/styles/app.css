@@ -40,3 +40,25 @@
 a {
 	@apply text-brand-blue;
 }
+
+.btn {
+	@apply py-2 px-16 rounded inline-flex items-center;
+	transition: background-color 0.3s;
+}
+
+.btn-blue {
+	@apply bg-brand-blue text-white;
+}
+
+.btn-blue {
+	@apply bg-brand-red;
+}
+
+.btn-disabled {
+	@apply bg-gray-400 text-white;
+}
+
+.no-drag {
+	user-drag: none;
+	user-select: none;
+}
