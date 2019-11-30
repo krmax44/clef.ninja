@@ -17,10 +17,12 @@ I wanted a tool to help me learn playing piano, specifically reading music quick
 
 ## Roadmap
 
+Roadmap for the first non-alpha release.
+
 - [x] Landing Page
 - [x] Generating random notes
 - [x] Render notes using Vexflow
-- [ ] Virtual keyboard
-- [ ] MIDI integration
-- [ ] Training mode
+- [x] Virtual keyboard
+- [x] MIDI integration
+- [x] Training mode
 - [ ] Arcade mode
