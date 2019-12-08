@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="px-4">
 		<h2 class="text-2xl">Select your game mode.</h2>
 
 		<div class="flex justify-around py-8 flex-wrap">
@@ -44,5 +44,5 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-@import '../assets/styles/cardPicker.css';
+@import '../assets/styles/card-picker.css';
 </style>

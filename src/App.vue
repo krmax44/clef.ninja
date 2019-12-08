@@ -1,9 +1,9 @@
 <template>
-	<div class="min-h-screen container mx-auto">
-		<div class="pt-12 md:pt-24 px-4">
-			<SiteHeader />
+	<div class="min-h-screen container mx-auto flex flex-col">
+		<div class="pt-8 md:pt-12 flex flex-col flex-1">
+			<SiteHeader class="px-4" />
 
-			<main class="pt-12 md:pt-24">
+			<main class="pt-12 md:pt-24 flex flex-1">
 				<transition
 					name="slide"
 					@beforeLeave="bodyScroll('hidden')"
@@ -40,7 +40,7 @@ export default {
 };
 </script>
 
-<style lang="postcss">
+<style lang="postcss" scoped>
 @import './assets/styles/app.css';
 
 .slide-enter-active {
@@ -57,5 +57,9 @@ export default {
 .slide-enter {
 	opacity: 0;
 	transform: translateX(30%);
+}
+
+main > div {
+	@apply w-full;
 }
 </style>

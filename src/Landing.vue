@@ -1,7 +1,7 @@
 <template>
 	<div class="min-h-screen flex flex-col container mx-auto">
-		<div class="flex flex-1 px-4">
-			<div class="lg:w-8/12 pt-12 md:pt-24">
+		<div class="flex flex-1">
+			<div class="lg:w-8/12 pt-8 md:pt-12 px-4">
 				<SiteHeader />
 
 				<main class="pt-12 md:pt-24">
@@ -115,6 +115,20 @@ export default {
 
 .center {
 	@apply flex flex-col justify-center items-center;
+}
+
+@screen md {
+	.card-container {
+		@apply w-1/2 px-2;
+	}
+
+	.card-container:nth-child(2n) {
+		@apply pr-0;
+	}
+
+	.card-container:nth-child(2n + 1) {
+		@apply pl-0;
+	}
 }
 
 .btn-blue {

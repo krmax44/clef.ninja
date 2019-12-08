@@ -1,0 +1,21 @@
+.card {
+	@apply cursor-pointer;
+}
+
+.card-inner {
+	@apply flex flex-col justify-around items-center text-center;
+}
+
+.card svg {
+	@apply my-2;
+}
+
+.card-container {
+	@apply w-full px-2;
+}
+
+@screen md {
+	.card-container {
+		@apply w-2/5;
+	}
+}

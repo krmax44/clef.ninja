@@ -8,25 +8,11 @@
 }
 
 .card-container {
-	@apply w-full py-2;
-}
-
-@screen md {
-	.card-container {
-		@apply w-1/2 px-2;
-	}
-
-	.card-container:nth-child(2n) {
-		@apply pr-0;
-	}
-
-	.card-container:nth-child(2n + 1) {
-		@apply pl-0;
-	}
+	@apply py-2;
 }
 
 .card {
-	@apply rounded overflow-hidden shadow-md h-full;
+	@apply rounded shadow-md h-full;
 }
 
 .card-inner {

@@ -2,8 +2,9 @@
 	<header class="flex flex-row items-center">
 		<img
 			src="../assets/images/logo.svg"
-			class="h-24 self-start cursor-pointer"
+			class="h-16 self-start cursor-pointer"
 			@click="$store.commit('stage', 0)"
+			alt="clef.ninja Logo"
 		/>
 		<h1 class="text-4xl ml-4 cursor-pointer" @click="$store.commit('stage', 0)">
 			<span class="font-bold">clef</span>

@@ -1,7 +1,5 @@
 <template>
-	<div>
-		<GameTraining />
-	</div>
+	<GameTraining />
 </template>
 <script>
 import GameTraining from './GameTraining';

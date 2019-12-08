@@ -1,25 +1,17 @@
-import Vex from 'vexflow';
-const VF = Vex.Flow;
+import midiToNote from './midiToNote';
+import determineClef from './determineClef';
 
-const notes = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
+const MIN = 36; // C1
+const MAX = 86; // E6 (will never be reached)
 
-export default function() {
-	const octave = Math.floor(Math.random() * (5 - 2)) + 2;
-	const clef = octave >= 4 ? 'treble' : 'bass';
-	const note = notes[Math.floor(Math.random() * notes.length)];
+export default function randomNote() {
+	const midiNote = Math.floor(Math.random() * (MAX - MIN)) + MIN;
+	const { pitchClass, octave, accidental } = midiToNote(
+		midiNote,
+		Math.random() < 0.5 ? '#' : 'b'
+	);
 
-	const accidental =
-		(Math.random() > 0.5 && (Math.random() > 0.5 ? '#' : 'b')) || '';
+	const clef = determineClef(midiNote);
 
-	const staveNote = new VF.StaveNote({
-		keys: [`${note}${accidental}/${octave}`],
-		clef,
-		duration: 'q'
-	});
-
-	if (accidental) {
-		staveNote.addAccidental(0, new VF.Accidental(accidental));
-	}
-
-	return staveNote;
+	return { midiNote, pitchClass, octave, accidental, clef };
 }

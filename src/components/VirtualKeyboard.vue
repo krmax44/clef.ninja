@@ -1,7 +1,13 @@
 <template>
 	<div class="keyboard">
-		<div class="key no-drag" v-for="({ note, halftone }, i) in notes" :key="i">
-			<div class="white" :class="classes(note)" @click="$emit('note', note)" />
+		<div
+			class="key no-drag"
+			v-for="({ note, noteName, octave, halftone }, i) in notes"
+			:key="i"
+		>
+			<div class="white" :class="classes(note)" @click="$emit('note', note)">
+				{{ noteName === 'c' ? `C${octave}` : '' }}
+			</div>
 			<div
 				v-if="halftone"
 				class="black"
@@ -23,7 +29,7 @@ const NOTES = Array(4)
 		const note = toMidi(`${n}${octave}`);
 		const halftone = ['e', 'b'].includes(n) ? false : toMidi(`${n}#${octave}`);
 
-		return { note, halftone };
+		return { note, halftone, noteName: n, octave };
 	});
 
 export default {
@@ -60,34 +66,17 @@ export default {
 
 <style lang="postcss" scoped>
 .keyboard {
-	position: absolute;
-	left: 0;
-	right: 0;
-	@apply flex w-screen;
+	width: 100vw;
+	margin-left: 50%;
+	transform: translateX(-50%);
+	@apply flex w-screen overflow-auto;
 }
 
 .keyboard .key {
 	width: 100%;
+	min-width: 50px;
 	height: 300px;
-	position: relative;
-}
-
-@media (max-width: theme('screens.sm')) {
-	.keyboard .key:nth-child(n + 8) {
-		@apply .hidden;
-	}
-}
-
-@media (max-width: theme('screens.lg')) {
-	.keyboard .key:nth-child(n + 15) {
-		@apply .hidden;
-	}
-}
-
-@media (max-width: 1700px) {
-	.keyboard .key:nth-child(n + 22) {
-		@apply .hidden;
-	}
+	@apply w-full relative;
 }
 
 .keyboard .key div {
@@ -96,17 +85,15 @@ export default {
 }
 
 .keyboard .key .white {
-	@apply border rounded bg-white h-full;
+	@apply flex border rounded bg-white h-full justify-center items-end pb-2 text-gray-600;
 }
 
 .keyboard .key .black {
 	width: calc(100% / 1.5);
 	height: calc(100% / 3 * 1.5);
-	position: absolute;
 	left: calc(100% / 1.5);
 	top: 0;
-	z-index: 9;
-	@apply bg-black shadow-md rounded;
+	@apply bg-black shadow-md rounded absolute z-10;
 }
 
 .keyboard .key .white:active,
