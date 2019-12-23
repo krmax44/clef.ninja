@@ -1,18 +1,18 @@
 <template>
-	<div class="keyboard">
+	<div class="keyboard" :class="{ disabled }">
 		<div
 			class="key no-drag"
 			v-for="({ note, noteName, octave, halftone }, i) in notes"
 			:key="i"
 		>
-			<div class="white" :class="classes(note)" @click="$emit('note', note)">
+			<div class="white" :class="classes(note)" @click="keyPressed(note)">
 				{{ noteName === 'c' ? `C${octave}` : '' }}
 			</div>
 			<div
 				v-if="halftone"
 				class="black"
 				:class="classes(halftone)"
-				@click="$emit('note', halftone)"
+				@click="keyPressed(halftone)"
 			/>
 		</div>
 	</div>
@@ -33,7 +33,7 @@ const NOTES = Array(4)
 	});
 
 export default {
-	props: ['correct', 'wrong'],
+	props: ['correct', 'wrong', 'disabled'],
 	data() {
 		return {
 			notes: NOTES,
@@ -41,6 +41,9 @@ export default {
 		};
 	},
 	methods: {
+		keyPressed(note) {
+			if (!this.disabled) this.$emit('note', note);
+		},
 		noteDown({ note }) {
 			this.active.add(note);
 			this.active = new Set(this.active);
@@ -69,44 +72,49 @@ export default {
 	width: 100vw;
 	margin-left: 50%;
 	transform: translateX(-50%);
+	transition: opacity 0.5s;
 	@apply flex w-screen overflow-auto;
 }
 
+.keyboard.disabled {
+	opacity: 0.7;
+}
+
 .keyboard .key {
-	width: 100%;
 	min-width: 50px;
 	height: 300px;
 	@apply w-full relative;
-}
 
-.keyboard .key div {
-	transition: background-color 1s ease;
-	@apply w-full h-full;
-}
+	div {
+		transition: background-color 1s ease;
+		@apply w-full h-full;
+	}
 
-.keyboard .key .white {
-	@apply flex border rounded bg-white h-full justify-center items-end pb-2 text-gray-600;
-}
+	.white {
+		@apply flex border rounded bg-white h-full justify-center items-end pb-2 text-gray-600;
+	}
 
-.keyboard .key .black {
-	width: calc(100% / 1.5);
-	height: calc(100% / 3 * 1.5);
-	left: calc(100% / 1.5);
-	top: 0;
-	@apply bg-black shadow-md rounded absolute z-10;
-}
+	.black {
+		width: calc(100% / 1.5);
+		height: calc(100% / 3 * 1.5);
+		left: calc(100% / 1.5);
+		top: 0;
+		@apply bg-black shadow-md rounded absolute z-10;
+	}
 
-.keyboard .key .white:active,
-.keyboard .key .white.active {
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) inset, 0 0 3px rgba(0, 0, 0, 0.1);
-}
+	.keyboard:not(.disabled) {
+		.white:active,
+		.white.active {
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) inset, 0 0 3px rgba(0, 0, 0, 0.1);
+		}
 
-.keyboard .key .black:active,
-.keyboard .key .black.active {
-	box-shadow: 0 0 10px rgba(255, 255, 255, 0.8) inset,
-		0 0 10px rgba(255, 255, 255, 0.5);
+		.black:active,
+		.black.active {
+			box-shadow: 0 0 10px rgba(255, 255, 255, 0.8) inset,
+				0 0 10px rgba(255, 255, 255, 0.5);
+		}
+	}
 }
-
 .keyboard .key div.correct {
 	background-color: rgba(4, 231, 99, 0.2);
 }

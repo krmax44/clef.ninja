@@ -1,6 +1,13 @@
 <template>
 	<div class="flex flex-col flex-1 max-w-full">
-		<NoteRenderer class="px-4" :notes="notes" ref="renderer" />
+		<div class="flex justify-center mb-8">
+			<div class="card-container">
+				<div class="card flex justify-center cursor-auto">
+					<NoteRenderer class="px-4" :notes="notes" ref="renderer" />
+				</div>
+			</div>
+		</div>
+
 		<VirtualKeyboard
 			@note="input"
 			:correct="correct"
@@ -61,31 +68,21 @@ export default {
 
 			setTimeout(() => {
 				this.notes = [randomNote()];
-				this.render();
 				this.halting = false;
 			}, 700);
-
-			this.render();
-		},
-		render() {
-			this.$refs.renderer.render(this.notes);
 		}
 	},
 	mounted() {
-		const { keyboard } = this.$store.state;
+		const { midi } = this.$store.getters;
 
-		if (keyboard.type === 'midi') {
-			const { midi } = keyboard;
-
+		if (midi) {
 			midi.on('noteDown', this.input);
 		}
 	},
 	beforeDestroy() {
-		const { keyboard } = this.$store.state;
+		const { midi } = this.$store.getters;
 
-		if (keyboard.type === 'midi') {
-			const { midi } = keyboard;
-
+		if (midi) {
 			midi.off('noteDown', this.input);
 		}
 	}

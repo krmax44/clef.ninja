@@ -10,8 +10,8 @@
 					@afterEnter="bodyScroll('auto')"
 					mode="out-in"
 				>
-					<GamemodeSelector v-if="stage === 'gamemodeSelector'" />
-					<KeyboardSetup v-else-if="stage === 'keyboardSetup'" />
+					<HomeView v-if="stage === 'homeView'" />
+					<SettingsView v-else-if="stage === 'settingsView'" />
 					<GamePlay v-else />
 				</transition>
 			</main>
@@ -21,12 +21,12 @@
 
 <script>
 import SiteHeader from './components/SiteHeader';
-import GamemodeSelector from './components/GamemodeSelector';
-import KeyboardSetup from './components/KeyboardSetup';
+import HomeView from './components/HomeView';
+import SettingsView from './components/SettingsView';
 import GamePlay from './components/GamePlay';
 
 export default {
-	components: { SiteHeader, GamemodeSelector, KeyboardSetup, GamePlay },
+	components: { SiteHeader, HomeView, SettingsView, GamePlay },
 	computed: {
 		stage() {
 			return this.$store.state.stage;

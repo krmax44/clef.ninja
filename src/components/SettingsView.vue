@@ -1,5 +1,3 @@
-<!-- TODO: make keyboard setup persistent -->
-
 <template>
 	<div class="px-4">
 		<h2 class="text-2xl">Setup your keyboard.</h2>
@@ -38,7 +36,7 @@
 							>
 								Requesting access...
 							</button>
-							<button @click="startMidi()" class="btn btn-blue" v-else>
+							<button @click="startMidi()" class="btn btn-red" v-else>
 								Request access
 							</button>
 						</div>
@@ -78,7 +76,7 @@ export default {
 	methods: {
 		setKeyboard(keyboard) {
 			this.$store.commit('keyboard', keyboard);
-			this.$store.commit('nextStage');
+			this.$store.commit('stage', 'homeView');
 		},
 		noteUp(note) {
 			this.stage = 'works';

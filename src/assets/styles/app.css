@@ -36,8 +36,8 @@ a {
 	@apply bg-brand-blue text-white;
 }
 
-.btn-blue {
-	@apply bg-brand-red;
+.btn-red {
+	@apply bg-brand-red text-white;
 }
 
 .btn-disabled {

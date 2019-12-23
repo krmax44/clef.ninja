@@ -3,11 +3,9 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-const stages = ['gamemodeSelector', 'keyboardSetup', 'game'];
-
 export default new Vuex.Store({
 	state: {
-		stage: 'gamemodeSelector',
+		stage: 'homeView',
 		gamemode: '',
 		keyboard: {
 			type: 'virtual',
@@ -21,12 +19,13 @@ export default new Vuex.Store({
 		keyboard(state, keyboard) {
 			state.keyboard = keyboard;
 		},
-		nextStage(state) {
-			const currentStage = stages.indexOf(state.stage);
-			state.stage = stages[currentStage + 1];
-		},
 		stage(state, stage) {
-			state.stage = stages[stage];
+			state.stage = stage;
+		}
+	},
+	getters: {
+		midi(state) {
+			return state.keyboard.type === 'midi' && state.keyboard.midi;
 		}
 	}
 });

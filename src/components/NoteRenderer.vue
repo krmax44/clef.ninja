@@ -1,11 +1,5 @@
 <template>
-	<div class="flex justify-center mb-8">
-		<div class="card-container">
-			<div class="card flex justify-center cursor-auto">
-				<div ref="paper" class="paper" />
-			</div>
-		</div>
-	</div>
+	<div ref="paper" class="paper" />
 </template>
 
 <script>
@@ -18,10 +12,10 @@ import staveNote from '../utils/staveNote';
 export default {
 	props: ['notes'],
 	mounted() {
-		this.render(this.notes);
+		this.render();
 	},
 	methods: {
-		render(notes) {
+		render() {
 			const div = this.$refs.paper;
 			[...div.children].forEach(c => c.remove());
 
@@ -32,11 +26,11 @@ export default {
 
 			const stave = new Stave(0, 40, 100, 100);
 
-			stave.addClef(notes[0].clef);
+			stave.addClef(this.notes[0].clef);
 
 			stave.setContext(context).draw();
 
-			const staveNotes = staveNote(notes);
+			const staveNotes = staveNote(this.notes);
 			const voice = new Voice({ num_beats: staveNotes.length, beat_value: 4 });
 			voice.addTickables(staveNotes);
 
@@ -44,6 +38,11 @@ export default {
 
 			context.scale(1.5, 1.5);
 			voice.draw(context, stave);
+		}
+	},
+	watch: {
+		notes() {
+			this.render();
 		}
 	}
 };

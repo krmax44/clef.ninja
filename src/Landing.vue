@@ -73,13 +73,7 @@
 					</div>
 
 					<div class="py-4">
-						<a class="btn btn-blue" href="app/">Play the public alpha!</a>
-					</div>
-
-					<div>
-						<span class="text-italic text-gray-700">
-							At the moment, this is a development build intended for testing.
-						</span>
+						<a class="btn btn-red" href="app/">Let's jam!</a>
 					</div>
 				</main>
 			</div>
