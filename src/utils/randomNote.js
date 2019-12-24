@@ -1,8 +1,8 @@
 import midiToNote from './midiToNote';
 import determineClef from './determineClef';
 
-const MIN = 36; // C1
-const MAX = 86; // E6 (will never be reached)
+const MIN = 36; // C2
+const MAX = 84; // C6 (will never be reached)
 
 export default function randomNote() {
 	const midiNote = Math.floor(Math.random() * (MAX - MIN)) + MIN;
