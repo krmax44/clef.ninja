@@ -7,7 +7,7 @@ import { Renderer } from 'vexflow/src/renderer';
 import { Stave } from 'vexflow/src/stave';
 import { Voice } from 'vexflow/src/voice';
 import { Formatter } from 'vexflow/src/formatter';
-import staveNote from '../utils/staveNote';
+import staveNote from '@/utils/staveNote';
 
 export default {
 	props: ['notes'],

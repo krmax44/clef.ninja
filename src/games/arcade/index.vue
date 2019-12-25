@@ -1,26 +1,9 @@
 <template>
 	<div class="flex flex-col flex-1 max-w-full">
-		<div class="timer" :class="{ away: state !== 'playing' }">
-			<div
-				class="timer-inner"
-				:class="{ hurry: remainingTime <= 10 }"
-				:style="{ width: `${(remainingTime / 60) * 100}%` }"
-				@click="remainingTime -= 10"
-			/>
-		</div>
+		<ArcadeTimer :remainingTime="remainingTime" :state="state" />
 
 		<portal to="header-right">
-			<div class="flex items-center">
-				<transition-group name="lives" tag="div" class="flex flex-row">
-					<span class="text-2xl score inline-block mr-4" :key="'score'">
-						Score: {{ score }}
-					</span>
-
-					<span :key="i" v-for="i of lives" class="live">
-						<HeartIcon fillColor="#fc5130" :size="32" />
-					</span>
-				</transition-group>
-			</div>
+			<ArcadeStats :lives="lives" :score="score" />
 		</portal>
 
 		<div class="flex flex-col flex-1 max-w-full">
@@ -28,18 +11,11 @@
 				<div class="card-container">
 					<div class="card flex justify-center cursor-auto">
 						<div class="card-inner">
-							<template v-if="state === 'gameOver'">
-								<TrophyIcon :size="48" />
-
-								<h2 class="font-bold text-3xl">Game Over</h2>
-								<p class="text-xl">
-									You scored {{ score }} point{{ score !== 1 ? 's' : '' }}!
-								</p>
-
-								<button class="btn btn-red mt-8" @click="restart()">
-									Play again
-								</button>
-							</template>
+							<ArcadeGameOver
+								v-if="state === 'gameOver'"
+								:score="score"
+								@restart="restart"
+							/>
 
 							<template v-else-if="state === 'countdown'">
 								<h2 class="font-bold text-6xl">{{ countdown || 'GO!' }}</h2>
@@ -67,13 +43,14 @@
 </template>
 
 <script>
-import NoteRenderer from './NoteRenderer';
-import VirtualKeyboard from './VirtualKeyboard';
-import randomNote from '../utils/randomNote';
-import midiToNote from '../utils/midiToNote';
-import HeartIcon from 'vue-material-design-icons/HeartOutline';
-import TrophyIcon from 'vue-material-design-icons/TrophyAward';
+import ArcadeTimer from './ArcadeTimer';
+import ArcadeStats from './ArcadeStats';
+import ArcadeGameOver from './ArcadeGameOver';
+import NoteRenderer from '@/components/NoteRenderer';
+import VirtualKeyboard from '@/components/VirtualKeyboard';
 
+import randomNote from '@/utils/randomNote';
+import midiToNote from '@/utils/midiToNote';
 import { note } from '@tonaljs/tonal';
 import { toMidi } from '@tonaljs/midi';
 
@@ -93,8 +70,16 @@ const resetMixin = vueComponentReset(() => ({
 }));
 
 export default {
-	components: { NoteRenderer, VirtualKeyboard, HeartIcon, TrophyIcon },
+	components: {
+		ArcadeTimer,
+		ArcadeStats,
+		ArcadeGameOver,
+		NoteRenderer,
+		VirtualKeyboard
+	},
+
 	mixins: [resetMixin],
+
 	methods: {
 		input(input) {
 			if (this.state !== 'playing') return;
@@ -120,6 +105,7 @@ export default {
 
 			this.notes = [randomNote()];
 		},
+
 		start() {
 			this.gameClock = setInterval(() => {
 				if (this.countdown === 0) this.state = 'playing';
@@ -132,10 +118,12 @@ export default {
 				}
 			}, 1000);
 		},
+
 		restart() {
 			this.reset();
 			this.start();
 		},
+
 		gameOver() {
 			this.remainingTime = 0;
 			this.lives = [];
@@ -143,6 +131,7 @@ export default {
 			clearInterval(this.gameClock);
 		}
 	},
+
 	mounted() {
 		const { midi } = this.$store.getters;
 
@@ -152,6 +141,7 @@ export default {
 
 		this.start();
 	},
+
 	beforeDestroy() {
 		const { midi } = this.$store.getters;
 
@@ -165,43 +155,7 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-.timer {
-	transition: all 0.5s;
-	@apply fixed inset-x-0 top-0 bg-gray-200;
-
-	&.away {
-		opacity: 0;
-		transform: translateY(-8px);
-	}
-
-	&-inner {
-		height: 8px;
-		transition: all 1s linear;
-		@apply bg-brand-blue;
-
-		&.hurry {
-			@apply bg-brand-red;
-		}
-	}
-}
-
 .display {
 	max-height: 300px;
-}
-
-.lives-enter-active,
-.lives-leave-active,
-.lives-move {
-	transition: all 0.5s;
-}
-
-.lives-leave-active {
-	position: fixed;
-}
-
-.lives-enter,
-.lives-leave-to {
-	transform: scale(0);
-	opacity: 0;
 }
 </style>

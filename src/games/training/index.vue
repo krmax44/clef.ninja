@@ -18,11 +18,11 @@
 </template>
 
 <script>
-import NoteRenderer from './NoteRenderer';
-import VirtualKeyboard from './VirtualKeyboard';
-import randomNote from '../utils/randomNote';
-import midiToNote from '../utils/midiToNote';
+import NoteRenderer from '@/components/NoteRenderer';
+import VirtualKeyboard from '@/components/VirtualKeyboard';
 
+import randomNote from '@/utils/randomNote';
+import midiToNote from '@/utils/midiToNote';
 import { note } from '@tonaljs/tonal';
 import { toMidi } from '@tonaljs/midi';
 

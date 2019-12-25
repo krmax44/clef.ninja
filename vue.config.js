@@ -1,11 +1,11 @@
 module.exports = {
 	pages: {
 		index: {
-			entry: 'src/landing.js',
+			entry: 'src/pages/landing',
 			title: 'clef.ninja'
 		},
 		app: {
-			entry: 'src/app.js',
+			entry: 'src/pages/app',
 			filename: 'app/index.html'
 		}
 	}

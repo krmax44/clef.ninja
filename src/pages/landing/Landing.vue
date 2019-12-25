@@ -82,7 +82,7 @@
 				<div class="rounded overflow-hidden shadow-lg">
 					<img
 						class="w-auto max-h-3/4-screen"
-						src="./assets/images/hero_home_portrait.jpg"
+						src="@/assets/images/reading-music.jpg"
 						alt="Person playing piano"
 					/>
 				</div>
@@ -97,7 +97,7 @@ import PianoIcon from 'vue-material-design-icons/Piano';
 import GiftIcon from 'vue-material-design-icons/GiftOutline';
 import HeartIcon from 'vue-material-design-icons/HeartOutline';
 
-import SiteHeader from './components/SiteHeader';
+import SiteHeader from '@/components/SiteHeader';
 
 export default {
 	components: { GamepadIcon, PianoIcon, GiftIcon, HeartIcon, SiteHeader }
@@ -105,7 +105,7 @@ export default {
 </script>
 
 <style lang="postcss">
-@import './assets/styles/app.css';
+@import '~@/assets/styles/app.css';
 
 .center {
 	@apply flex flex-col justify-center items-center;

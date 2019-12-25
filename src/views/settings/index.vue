@@ -58,7 +58,7 @@
 import PianoIcon from 'vue-material-design-icons/Piano';
 import MidiIcon from 'vue-material-design-icons/MidiPort';
 
-import MidiHandler from '../utils/MidiHander';
+import MidiHandler from '@/utils/MidiHander';
 
 export default {
 	components: { PianoIcon, MidiIcon },
@@ -103,5 +103,5 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-@import '../assets/styles/card-picker.css';
+@import '~@/assets/styles/card-picker.css';
 </style>

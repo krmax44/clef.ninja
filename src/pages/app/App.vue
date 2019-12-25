@@ -12,7 +12,7 @@
 				>
 					<HomeView v-if="stage === 'homeView'" />
 					<SettingsView v-else-if="stage === 'settingsView'" />
-					<GamePlay v-else />
+					<GameView v-else />
 				</transition>
 			</main>
 		</div>
@@ -20,13 +20,13 @@
 </template>
 
 <script>
-import SiteHeader from './components/SiteHeader';
-import HomeView from './components/HomeView';
-import SettingsView from './components/SettingsView';
-import GamePlay from './components/GamePlay';
+import SiteHeader from '@/components/SiteHeader';
+import HomeView from '@/views/home/';
+import SettingsView from '@/views/settings/';
+import GameView from '@/views/game/';
 
 export default {
-	components: { SiteHeader, HomeView, SettingsView, GamePlay },
+	components: { SiteHeader, HomeView, SettingsView, GameView },
 	computed: {
 		stage() {
 			return this.$store.state.stage;
@@ -41,7 +41,7 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-@import './assets/styles/app.css';
+@import '~@/assets/styles/app.css';
 
 .slide-enter-active {
 	transition: opacity 0.5s, transform 0.5s cubic-bezier(0, 0, 0.2, 1);

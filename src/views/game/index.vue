@@ -5,8 +5,8 @@
 	</div>
 </template>
 <script>
-import GameTraining from './GameTraining';
-import GameArcade from './GameArcade';
+import GameTraining from '@/games/training';
+import GameArcade from '@/games/arcade';
 
 export default {
 	components: { GameTraining, GameArcade }

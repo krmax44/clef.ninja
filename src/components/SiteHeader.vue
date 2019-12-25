@@ -14,6 +14,41 @@
 			<span class="text-gray-800">.ninja</span>
 		</h1>
 
-		<portal-target name="header-right" class="flex ml-auto" />
+		<portal-target
+			name="header-right"
+			class="flex ml-auto"
+			:transition="fadeTransition"
+		/>
 	</header>
 </template>
+
+<script>
+export default {
+	computed: {
+		fadeTransition() {
+			return {
+				functional: true,
+				render(h, context) {
+					return h(
+						'transition',
+						{ props: { name: 'fade', mode: 'out-in' } },
+						context.children
+					);
+				}
+			};
+		}
+	}
+};
+</script>
+
+<style lang="postcss">
+.fade-enter-active,
+.fade-leave-active {
+	transition: opacity 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to {
+	opacity: 0;
+}
+</style>

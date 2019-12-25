@@ -64,7 +64,7 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-@import '../assets/styles/card-picker.css';
+@import '~@/assets/styles/card-picker.css';
 
 @screen md {
 	.card-container {
