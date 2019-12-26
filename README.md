@@ -13,3 +13,7 @@ I wanted a tool to help me learn playing piano, specifically reading music quick
 ## Roadmap
 
 See [Roadmap](https://github.com/krmax44/clef.ninja/projects/1).
+
+## Changelog
+
+Tooted on [Mastodon](https://fosstodon.org/@clefninja).
