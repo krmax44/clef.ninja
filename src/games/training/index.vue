@@ -137,5 +137,9 @@ export default {
 	&:last-child {
 		@apply mr-0;
 	}
+
+	& >>> svg {
+		transition: fill 0.3s;
+	}
 }
 </style>
