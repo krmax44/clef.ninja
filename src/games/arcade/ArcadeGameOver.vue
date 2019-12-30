@@ -13,11 +13,12 @@
 	</div>
 </template>
 
-<script>
-import TrophyIcon from 'vue-material-design-icons/TrophyAward';
+<script lang="ts">
+import Vue from 'vue';
+import TrophyIcon from 'vue-material-design-icons/TrophyAward.vue';
 
-export default {
+export default Vue.extend({
 	props: ['score'],
 	components: { TrophyIcon }
-};
+});
 </script>

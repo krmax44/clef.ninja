@@ -54,15 +54,21 @@
 	</div>
 </template>
 
-<script>
-import PianoIcon from 'vue-material-design-icons/Piano';
-import MidiIcon from 'vue-material-design-icons/MidiPort';
+<script lang="ts">
+import Vue from 'vue';
+import PianoIcon from 'vue-material-design-icons/Piano.vue';
+import MidiIcon from 'vue-material-design-icons/MidiPort.vue';
 
 import MidiHandler from '@/utils/MidiHander';
 
-export default {
+interface Data {
+	stage: string;
+	midi: MidiHandler | undefined;
+}
+
+export default Vue.extend({
 	components: { PianoIcon, MidiIcon },
-	data() {
+	data(): Data {
 		return {
 			stage: 'start',
 			midi: undefined
@@ -70,18 +76,19 @@ export default {
 	},
 	computed: {
 		supportsMidi() {
-			return !!navigator.requestMIDIAccess;
+			return !!(navigator as any).requestMIDIAccess;
 		}
 	},
 	methods: {
-		setKeyboard(keyboard) {
-			this.$store.commit('keyboard', keyboard);
-			this.$store.commit('stage', 'homeView');
+		setKeyboard(keyboard: string) {
+			// TODO: vuex + ts
+			(this as any).$store.commit('keyboard', keyboard);
+			(this as any).$store.commit('stage', 'homeView');
 		},
-		noteUp(note) {
-			this.stage = 'works';
-			this.midi.off('noteUp', this.noteUp);
-			this.setKeyboard({ type: 'midi', midi: this.midi });
+		noteUp() {
+			(this as any).stage = 'works';
+			this.midi && this.midi.off('noteUp', this.noteUp);
+			(this as any).setKeyboard({ type: 'midi', midi: this.midi });
 		},
 		async startMidi() {
 			const midi = new MidiHandler();
@@ -95,11 +102,9 @@ export default {
 		}
 	},
 	beforeDestroy() {
-		if (this.midi) {
-			this.midi.off('noteUp', this.noteUp);
-		}
+		this.midi && this.midi.off('noteUp', this.noteUp);
 	}
-};
+});
 </script>
 
 <style lang="postcss" scoped>

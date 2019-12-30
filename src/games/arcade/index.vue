@@ -22,7 +22,7 @@
 							</template>
 
 							<NoteRenderer
-								:notes="notes"
+								:note="note"
 								ref="renderer"
 								v-show="state === 'playing'"
 							/>
@@ -42,34 +42,45 @@
 	</div>
 </template>
 
-<script>
-import ArcadeTimer from './ArcadeTimer';
-import ArcadeStats from './ArcadeStats';
-import ArcadeGameOver from './ArcadeGameOver';
-import NoteRenderer from '@/components/NoteRenderer';
-import VirtualKeyboard from '@/components/VirtualKeyboard';
+<script lang="ts">
+import Vue from 'vue';
 
-import randomNote from '@/utils/randomNote';
-import midiToNote from '@/utils/midiToNote';
-import { note } from '@tonaljs/tonal';
-import { toMidi } from '@tonaljs/midi';
+import ArcadeTimer from './ArcadeTimer.vue';
+import ArcadeStats from './ArcadeStats.vue';
+import ArcadeGameOver from './ArcadeGameOver.vue';
+import NoteRenderer from '@/components/NoteRenderer.vue';
+import VirtualKeyboard from '@/components/VirtualKeyboard.vue';
 
-import vueComponentReset from '@ianwalter/vue-component-reset';
+import RandomNote from '@/generators/RandomNote';
 
-const resetMixin = vueComponentReset(() => ({
-	notes: [randomNote()],
-	correct: undefined,
-	wrong: undefined,
-	halting: false,
-	lives: new Array(3).fill().map((a, i) => i),
-	state: 'countdown',
-	score: 0,
-	remainingTime: 60,
-	countdown: 3,
-	gameClock: undefined
-}));
+interface Data {
+	note: RandomNote;
+	correct: number | undefined;
+	wrong: number | undefined;
+	halting: boolean;
+	lives: number[];
+	state: string;
+	score: number;
+	remainingTime: number;
+	countdown: number;
+	gameClock: number | undefined;
+}
 
-export default {
+export default Vue.extend({
+	data(): Data {
+		return {
+			note: new RandomNote(),
+			correct: -1,
+			wrong: -1,
+			halting: false,
+			lives: new Array(3).fill(undefined).map((a, i) => i),
+			state: 'countdown',
+			score: 0,
+			remainingTime: 60,
+			countdown: 3,
+			gameClock: undefined
+		};
+	},
 	components: {
 		ArcadeTimer,
 		ArcadeStats,
@@ -77,15 +88,11 @@ export default {
 		NoteRenderer,
 		VirtualKeyboard
 	},
-
-	mixins: [resetMixin],
-
 	methods: {
-		input(input) {
+		input(input: number) {
 			if (this.state !== 'playing') return;
 
-			const actual = this.notes[0].midiNote;
-			if (input !== actual) {
+			if (!this.note.check(input)) {
 				this.wrong = input;
 				this.lives.pop();
 
@@ -96,14 +103,14 @@ export default {
 				this.score++;
 			}
 
-			this.correct = actual;
+			this.correct = this.note.notes[0].midiNote;
 
 			setTimeout(() => {
 				this.correct = undefined;
 				this.wrong = undefined;
 			}, 50);
 
-			this.notes = [randomNote()];
+			this.note = new RandomNote();
 		},
 
 		start() {
@@ -120,7 +127,7 @@ export default {
 		},
 
 		restart() {
-			this.reset();
+			Object.assign(this.$data, (this.$options.data as any).apply(this));
 			this.start();
 		},
 
@@ -133,7 +140,8 @@ export default {
 	},
 
 	mounted() {
-		const { midi } = this.$store.getters;
+		// TODO: vuex + ts
+		const { midi } = (this as any).$store.getters;
 
 		if (midi) {
 			midi.on('noteDown', this.input);
@@ -143,7 +151,8 @@ export default {
 	},
 
 	beforeDestroy() {
-		const { midi } = this.$store.getters;
+		// TODO: vuex + ts
+		const { midi } = (this as any).$store.getters;
 
 		if (midi) {
 			midi.off('noteDown', this.input);
@@ -151,7 +160,7 @@ export default {
 
 		clearInterval(this.gameClock);
 	}
-};
+});
 </script>
 
 <style lang="postcss" scoped>

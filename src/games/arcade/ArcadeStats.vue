@@ -12,13 +12,14 @@
 	</div>
 </template>
 
-<script>
-import HeartIcon from 'vue-material-design-icons/HeartOutline';
+<script lang="ts">
+import Vue from 'vue';
+import HeartIcon from 'vue-material-design-icons/HeartOutline.vue';
 
-export default {
+export default Vue.extend({
 	props: ['lives', 'score'],
 	components: { HeartIcon }
-};
+});
 </script>
 
 <style lang="postcss" scoped>

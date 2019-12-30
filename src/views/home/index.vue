@@ -47,20 +47,22 @@
 	</div>
 </template>
 
-<script>
-import SchoolIcon from 'vue-material-design-icons/SchoolOutline';
-import GamepadIcon from 'vue-material-design-icons/GamepadSquareOutline';
-import SettingsIcon from 'vue-material-design-icons/SettingsOutline';
+<script lang="ts">
+import Vue from 'vue';
+import SchoolIcon from 'vue-material-design-icons/SchoolOutline.vue';
+import GamepadIcon from 'vue-material-design-icons/GamepadSquareOutline.vue';
+import SettingsIcon from 'vue-material-design-icons/SettingsOutline.vue';
 
-export default {
+export default Vue.extend({
 	components: { SchoolIcon, GamepadIcon, SettingsIcon },
 	methods: {
-		selectGamemode(gamemode) {
-			this.$store.commit('gamemode', gamemode);
-			this.$store.commit('stage', 'gamePlay');
+		selectGamemode(gamemode: string) {
+			// TODO: vuex + ts
+			(this as any).$store.commit('gamemode', gamemode);
+			(this as any).$store.commit('stage', 'gamePlay');
 		}
 	}
-};
+});
 </script>
 
 <style lang="postcss" scoped>

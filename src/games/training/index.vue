@@ -19,7 +19,7 @@
 		<div class="flex justify-center mb-8">
 			<div class="card-container">
 				<div class="card flex justify-center cursor-auto">
-					<NoteRenderer class="px-4" :notes="notes" ref="renderer" />
+					<NoteRenderer class="px-4" :note="note" ref="renderer" />
 				</div>
 			</div>
 		</div>
@@ -33,26 +33,39 @@
 	</div>
 </template>
 
-<script>
-import NoteRenderer from '@/components/NoteRenderer';
-import VirtualKeyboard from '@/components/VirtualKeyboard';
+<script lang="ts">
+import Vue from 'vue';
+import NoteRenderer from '@/components/NoteRenderer.vue';
+import VirtualKeyboard from '@/components/VirtualKeyboard.vue';
 
-import BassIcon from 'vue-material-design-icons/MusicClefBass';
-import TrebleIcon from 'vue-material-design-icons/MusicClefTreble';
+import BassIcon from 'vue-material-design-icons/MusicClefBass.vue';
+import TrebleIcon from 'vue-material-design-icons/MusicClefTreble.vue';
 
-import randomNote from '@/utils/randomNote';
+import RandomNote from '@/generators/RandomNote';
 import midiToNote from '@/utils/midiToNote';
-import { note } from '@tonaljs/tonal';
-import { toMidi } from '@tonaljs/midi';
 
-export default {
-	data() {
+interface Data {
+	note: RandomNote;
+	correct: number | undefined;
+	wrong: number | undefined;
+	halting: boolean;
+	options: {
+		treble: boolean;
+		bass: boolean;
+	};
+}
+
+type Clefs = 'treble' | 'bass';
+
+export default Vue.extend({
+	data(): Data {
 		return {
-			notes: [randomNote()],
+			note: new RandomNote(),
 			correct: undefined,
 			wrong: undefined,
 			halting: false,
 			options: {
+				// TODO: this will get hairy with more options!
 				treble: true,
 				bass: true
 			}
@@ -60,28 +73,14 @@ export default {
 	},
 	components: { NoteRenderer, VirtualKeyboard, BassIcon, TrebleIcon },
 	methods: {
-		input(input) {
+		input(input: number): void {
 			if (this.halting) return;
 
-			const actual = this.notes[0].midiNote;
-
-			if (input !== actual) {
+			if (!this.note.check(input)) {
 				this.wrong = input;
-				// TODO: find a better way to find the positional difference between notes on clef
-				// if the two notes are too far away, Vexflow is unable to correctly render and throws an error
-				if (Math.abs(actual - input) < 8) {
-					this.notes.push({
-						...midiToNote(input),
-						color: '#fc5130',
-						midiNote: input,
-						clef: this.notes[0].clef
-					});
-				}
-			} else {
-				this.notes[0].color = '#04e763';
 			}
 
-			this.correct = actual;
+			this.correct = this.note.notes[0].midiNote;
 			this.halting = true;
 
 			setTimeout(() => {
@@ -94,40 +93,47 @@ export default {
 				this.halting = false;
 			}, 700);
 		},
-		toggleOption(option) {
+		toggleOption(option: Clefs): void {
 			const options = { ...this.options, [option]: !this.options[option] };
 			if (!Object.values(options).some(x => x)) {
 				return;
 			}
 
 			this.options = options;
-			if (this.notes[0].clef === option && this.options[option] === false) {
+			if (
+				this.note.notes[0].clef === option &&
+				this.options[option] === false
+			) {
 				this.randomNote();
 			}
 		},
-		activeColor(option) {
+		activeColor(option: Clefs): string {
 			return this.options[option] ? '#30bced' : '#718096';
 		},
-		randomNote() {
-			const clefs = Object.keys(this.options).filter(c => this.options[c]);
-			this.notes = [randomNote(clefs)];
+		randomNote(): void {
+			const clefs = Object.keys(this.options).filter(
+				c => this.options[c as Clefs]
+			);
+			this.note = new RandomNote(clefs as ('treble' | 'bass')[]);
 		}
 	},
 	mounted() {
-		const { midi } = this.$store.getters;
+		// TODO: vuex + ts
+		const { midi } = (this as any).$store.getters;
 
 		if (midi) {
 			midi.on('noteDown', this.input);
 		}
 	},
 	beforeDestroy() {
-		const { midi } = this.$store.getters;
+		// TODO: vuex + ts
+		const { midi } = (this as any).$store.getters;
 
 		if (midi) {
 			midi.off('noteDown', this.input);
 		}
 	}
-};
+});
 </script>
 
 <style lang="postcss" scoped>

@@ -22,13 +22,15 @@
 	</header>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({
 	computed: {
 		fadeTransition() {
 			return {
 				functional: true,
-				render(h, context) {
+				render(h: Vue.CreateElement, context: Vue.RenderContext) {
 					return h(
 						'transition',
 						{ props: { name: 'fade', mode: 'out-in' } },
@@ -38,7 +40,7 @@ export default {
 			};
 		}
 	}
-};
+});
 </script>
 
 <style lang="postcss">

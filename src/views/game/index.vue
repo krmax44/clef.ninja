@@ -4,11 +4,13 @@
 		<GameArcade v-else />
 	</div>
 </template>
-<script>
-import GameTraining from '@/games/training';
-import GameArcade from '@/games/arcade';
 
-export default {
+<script lang="ts">
+import Vue from 'vue';
+import GameTraining from '@/games/training/index.vue';
+import GameArcade from '@/games/arcade/index.vue';
+
+export default Vue.extend({
 	components: { GameTraining, GameArcade }
-};
+});
 </script>

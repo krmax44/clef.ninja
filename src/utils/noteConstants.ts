@@ -8,4 +8,4 @@ export const bass = {
 	max: 65 // F4
 };
 
-export const clefs = ['treble', 'bass'];
+export const clefs: ('treble' | 'bass')[] = ['treble', 'bass'];

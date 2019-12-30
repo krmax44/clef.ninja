@@ -18,7 +18,8 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import { toMidi } from '@tonaljs/midi';
 
 const NOTES = Array(4)
@@ -32,7 +33,7 @@ const NOTES = Array(4)
 		return { note, halftone, noteName: n, octave };
 	});
 
-export default {
+export default Vue.extend({
 	props: ['correct', 'wrong', 'disabled'],
 	data() {
 		return {
@@ -41,18 +42,18 @@ export default {
 		};
 	},
 	methods: {
-		keyPressed(note) {
+		keyPressed(note: number) {
 			if (!this.disabled) this.$emit('note', note);
 		},
-		noteDown({ note }) {
+		noteDown({ note }: { note: number }) {
 			this.active.add(note);
 			this.active = new Set(this.active);
 		},
-		noteUp({ note }) {
+		noteUp({ note }: { note: number }) {
 			this.active.delete(note);
 			this.active = new Set(this.active);
 		},
-		classes(note) {
+		classes(note: number) {
 			const correct = this.correct === note;
 			const wrong = this.wrong === note;
 
@@ -64,7 +65,7 @@ export default {
 			};
 		}
 	}
-};
+});
 </script>
 
 <style lang="postcss" scoped>

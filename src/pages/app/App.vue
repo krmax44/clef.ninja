@@ -19,25 +19,26 @@
 	</div>
 </template>
 
-<script>
-import SiteHeader from '@/components/SiteHeader';
-import HomeView from '@/views/home/';
-import SettingsView from '@/views/settings/';
-import GameView from '@/views/game/';
+<script lang="ts">
+import Vue from 'vue';
+import SiteHeader from '@/components/SiteHeader.vue';
+import HomeView from '@/views/home/index.vue';
+import SettingsView from '@/views/settings/index.vue';
+import GameView from '@/views/game/index.vue';
 
-export default {
+export default Vue.extend({
 	components: { SiteHeader, HomeView, SettingsView, GameView },
 	computed: {
 		stage() {
-			return this.$store.state.stage;
+			return (this as any).$store.state.stage;
 		}
 	},
 	methods: {
-		bodyScroll(to) {
+		bodyScroll(to: string) {
 			document.body.style.overflowX = to;
 		}
 	}
-};
+});
 </script>
 
 <style lang="postcss" scoped>

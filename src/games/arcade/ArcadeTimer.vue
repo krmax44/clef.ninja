@@ -9,10 +9,12 @@
 	</div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({
 	props: ['state', 'remainingTime']
-};
+});
 </script>
 
 <style lang="postcss" scoped>
