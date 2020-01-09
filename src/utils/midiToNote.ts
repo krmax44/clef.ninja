@@ -1,4 +1,4 @@
-import Note from './note';
+import { Note, Accidental } from './types';
 
 // modified from @tonaljs/midi
 
@@ -8,7 +8,7 @@ const ACCIDENTALS = [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0];
 
 export default function(
 	midi: number,
-	accidentals: '#' | 'b' | undefined = '#'
+	accidentals: Accidental | undefined = '#'
 ): Note {
 	const notes = accidentals === '#' ? S : F;
 	const step = midi % 12;

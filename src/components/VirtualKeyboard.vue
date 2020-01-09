@@ -34,7 +34,21 @@ const NOTES = Array(4)
 	});
 
 export default Vue.extend({
-	props: ['correct', 'wrong', 'disabled'],
+	props: {
+		correct: {
+			type: Array,
+			required: true
+		},
+		wrong: {
+			type: Number,
+			required: true
+		},
+		disabled: {
+			type: Boolean,
+			required: false,
+			default: false
+		}
+	},
 	data() {
 		return {
 			notes: NOTES,
@@ -54,7 +68,7 @@ export default Vue.extend({
 			this.active = new Set(this.active);
 		},
 		classes(note: number) {
-			const correct = this.correct === note;
+			const correct = this.correct.includes(note);
 			const wrong = this.wrong === note;
 
 			return {
@@ -116,6 +130,7 @@ export default Vue.extend({
 		}
 	}
 }
+
 .keyboard .key div.correct {
 	background-color: rgba(4, 231, 99, 0.2);
 }

@@ -1,9 +1,10 @@
 import * as constants from './noteConstants';
+import { Clef } from './types';
 
 export default function(
 	midiNote: number,
-	clefs: ('treble' | 'bass')[] = constants.clefs
-): 'treble' | 'bass' {
+	clefs: Clef[] = constants.clefs
+): Clef {
 	const viable = clefs.filter(
 		clef => constants[clef].min <= midiNote && midiNote <= constants[clef].max
 	);

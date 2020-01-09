@@ -7,7 +7,8 @@
 			alt="clef.ninja Logo"
 		/>
 		<h1
-			class="text-4xl ml-4 cursor-pointer"
+			class="brand"
+			:class="{ 'hidden lg:block': brandHidden, visible: brandVisible }"
 			@click="$store.commit('stage', 'homeView')"
 		>
 			<span class="font-bold">clef</span>
@@ -18,6 +19,7 @@
 			name="header-right"
 			class="flex ml-auto"
 			:transition="fadeTransition"
+			@change="portalChange"
 		/>
 	</header>
 </template>
@@ -26,6 +28,12 @@
 import Vue from 'vue';
 
 export default Vue.extend({
+	data() {
+		return {
+			brandHidden: false,
+			brandVisible: true
+		};
+	},
 	computed: {
 		fadeTransition() {
 			return {
@@ -39,11 +47,43 @@ export default Vue.extend({
 				}
 			};
 		}
+	},
+	methods: {
+		async portalChange(status: boolean) {
+			if (status === true) {
+				this.brandHidden = true;
+				this.brandVisible = false;
+			} else {
+				setTimeout(() => {
+					this.brandHidden = false;
+				}, 500);
+				setTimeout(() => {
+					this.brandVisible = true;
+				}, 700);
+			}
+		}
 	}
 });
 </script>
 
 <style lang="postcss">
+.brand {
+	width: 100%;
+	transition: opacity 0.3s;
+	opacity: 0;
+	@apply text-4xl ml-4 cursor-pointer w-auto;
+
+	&.visible {
+		opacity: 1;
+	}
+}
+
+@screen lg {
+	.brand {
+		opacity: 1;
+	}
+}
+
 .fade-enter-active,
 .fade-leave-active {
 	transition: opacity 0.5s;

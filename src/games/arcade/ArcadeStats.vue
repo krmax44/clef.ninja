@@ -2,10 +2,14 @@
 	<div class="flex items-center">
 		<transition-group name="lives" tag="div" class="flex flex-row">
 			<span class="text-2xl score inline-block mr-4" :key="'score'">
-				<span class="hidden md:inline-block">Score:</span> {{ score }}
+				Score: {{ score }}
 			</span>
 
-			<span :key="i" v-for="i of lives" class="live">
+			<span
+				:key="i"
+				v-for="i of new Array(lives).fill(undefined).map((a, i) => i)"
+				class="live"
+			>
 				<HeartIcon fillColor="#fc5130" :size="32" />
 			</span>
 		</transition-group>

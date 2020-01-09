@@ -7,7 +7,7 @@ import Vue from 'vue';
 
 export default Vue.extend({
 	props: {
-		note: {
+		task: {
 			type: Object,
 			required: true
 		}
@@ -19,19 +19,13 @@ export default Vue.extend({
 		render() {
 			const target = this.$refs.paper as Element;
 			[...target.children].forEach(c => c.remove());
-			this.note.render(target);
+			this.task.render(target as HTMLElement);
 		}
 	},
 	watch: {
-		note() {
+		task() {
 			this.render();
 		}
 	}
 });
 </script>
-
-<style lang="postcss" scoped>
-.paper >>> svg {
-	max-height: 30vh;
-}
-</style>

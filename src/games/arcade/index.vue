@@ -8,7 +8,7 @@
 
 		<div class="flex flex-col flex-1 max-w-full">
 			<div class="flex justify-center mb-8 h-full display">
-				<div class="card-container">
+				<div class="card-container md:w-2/3">
 					<div class="card flex justify-center cursor-auto">
 						<div class="card-inner">
 							<ArcadeGameOver
@@ -22,7 +22,7 @@
 							</template>
 
 							<NoteRenderer
-								:note="note"
+								:task="task"
 								ref="renderer"
 								v-show="state === 'playing'"
 							/>
@@ -51,34 +51,31 @@ import ArcadeGameOver from './ArcadeGameOver.vue';
 import NoteRenderer from '@/components/NoteRenderer.vue';
 import VirtualKeyboard from '@/components/VirtualKeyboard.vue';
 
-import RandomNote from '@/generators/RandomNote';
+import Gen from '@/generators/Gen';
+import SingleNoteGenerator from '@/generators/SingleNoteGen';
+import ChordGen from '@/generators/ChordGen';
+import { randomPattern } from '@/generators/Patterns';
 
-interface Data {
-	note: RandomNote;
-	correct: number | undefined;
-	wrong: number | undefined;
-	halting: boolean;
-	lives: number[];
-	state: string;
-	score: number;
-	remainingTime: number;
-	countdown: number;
-	gameClock: number | undefined;
+function randomTask(): Gen {
+	const tasks = [() => SingleNoteGenerator, () => ChordGen, randomPattern];
+
+	const Task = tasks[Math.floor(Math.random() * tasks.length)]();
+	return new Task();
 }
 
 export default Vue.extend({
-	data(): Data {
+	data() {
 		return {
-			note: new RandomNote(),
-			correct: -1,
-			wrong: -1,
-			halting: false,
-			lives: new Array(3).fill(undefined).map((a, i) => i),
+			task: randomTask(),
+			taskMistake: false,
+			correct: [0],
+			wrong: 0,
+			lives: 5,
 			state: 'countdown',
 			score: 0,
 			remainingTime: 60,
 			countdown: 3,
-			gameClock: undefined
+			gameClock: 0
 		};
 	},
 	components: {
@@ -92,25 +89,34 @@ export default Vue.extend({
 		input(input: number) {
 			if (this.state !== 'playing') return;
 
-			if (!this.note.check(input)) {
+			const { correct, correctNotes, done } = this.task.check(input);
+			if (!correct) {
 				this.wrong = input;
-				this.lives.pop();
 
-				if (this.lives.length === 0) {
+				// only lose 1 live per failed task
+				if (!this.taskMistake) {
+					this.taskMistake = true;
+					this.lives--;
+				}
+
+				if (this.lives === 0) {
 					this.gameOver();
 				}
 			} else {
 				this.score++;
 			}
 
-			this.correct = this.note.notes[0].midiNote;
+			this.correct = correctNotes;
 
 			setTimeout(() => {
-				this.correct = undefined;
-				this.wrong = undefined;
+				this.correct = [];
+				this.wrong = 0;
 			}, 50);
 
-			this.note = new RandomNote();
+			if (done) {
+				this.task = randomTask();
+				this.taskMistake = false;
+			}
 		},
 
 		start() {
@@ -133,7 +139,7 @@ export default Vue.extend({
 
 		gameOver() {
 			this.remainingTime = 0;
-			this.lives = [];
+			this.lives = 0;
 			this.state = 'gameOver';
 			clearInterval(this.gameClock);
 		}

@@ -1,14 +1,20 @@
 import midiToNote from '../utils/midiToNote';
 import determineClef from '../utils/determineClef';
 import * as constants from '../utils/noteConstants';
-import Note from '../utils/note';
+import { Note, Clef } from '../utils/types';
 
 import Vex from 'vexflow';
-const { Renderer, Stave, Voice, Formatter, StaveNote, Accidental } = Vex.Flow;
+const { Renderer, Stave, Formatter, StaveNote, Accidental } = Vex.Flow;
 
-export default abstract class RandomMusic {
+interface CheckResult {
+	done: boolean;
+	correctNotes: number[];
+	correct: boolean;
+}
+
+export default abstract class Gen {
 	public notes: Note[];
-	public clef: 'treble' | 'bass';
+	public clef: Clef;
 
 	constructor() {
 		this.notes = [];
@@ -42,24 +48,18 @@ export default abstract class RandomMusic {
 
 		const renderer = new Renderer(target, Renderer.Backends.SVG);
 
-		renderer.resize(150, 300);
+		renderer.resize(150, 150);
 		const context = renderer.getContext();
 
-		const stave = new Stave(0, 40, 150);
+		const stave = new Stave(0, 0, 300);
 		stave.addClef(this.clef);
 
 		stave.setContext(context).draw();
 
-		const voice = new Voice({ num_beats: staveNotes.length, beat_value: 4 });
-		voice.addTickables(staveNotes);
-
-		new Formatter().joinVoices([voice]).format([voice], 60);
+		Formatter.FormatAndDraw(context, stave, staveNotes);
 
 		const ties = this.ties();
 		ties.forEach(t => t.setContext(context).draw());
-
-		context.scale(1.5, 1.5);
-		voice.draw(context, stave);
 	}
 
 	public ties(): Vex.Flow.StaveTie[] {
@@ -86,5 +86,9 @@ export default abstract class RandomMusic {
 		const clef = determineClef(midiNote, clefs);
 
 		return { midiNote, pitchClass, octave, accidental, clef };
+	}
+
+	public check(_input: number): CheckResult {
+		throw new Error("Can't check abstract gen.");
 	}
 }
