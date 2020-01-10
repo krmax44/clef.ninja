@@ -1,9 +1,8 @@
-import midiToNote from '../utils/midiToNote';
 import Gen from './Gen';
-import { Note, Clef } from '../utils/types';
+import Note from '../utils/Note';
+import { Clef } from '../utils/types';
 
 import Vex from 'vexflow';
-import determineClef from '@/utils/determineClef';
 import { clefs as CLEFS } from '@/utils/noteConstants';
 const {
 	Renderer,
@@ -28,26 +27,28 @@ export default class LickPatternGen extends Gen {
 		const twoMidi = oneMidi + 2;
 		const threeMidi = twoMidi + 1;
 		const fourMidi = threeMidi + 2;
+		const fiveMidi = oneMidi;
 		const sixMidi = oneMidi - 2;
-		const seven = { ...one };
-		const eight = { ...one };
+		const sevenMidi = oneMidi;
 
-		this.clef = determineClef(fourMidi);
+		const [two, three, four, five, six, seven] = [
+			twoMidi,
+			threeMidi,
+			fourMidi,
+			fiveMidi,
+			sixMidi,
+			sevenMidi
+		].map(n => {
+			const note = Note.fromMidi(n);
+			note.duration = '8';
+			return note;
+		});
 
-		const [two, three, four, six] = [twoMidi, threeMidi, fourMidi, sixMidi].map(
-			n => {
-				const note = midiToNote(n);
-				note.duration = '8';
-				return note;
-			}
-		);
-
-		const five = { ...two };
+		this.clef = four.determineClef(clefs);
 
 		one.duration = '8';
 		five.duration = 'q';
 		seven.duration = '8';
-		eight.duration = 'h';
 
 		this.notes = [one, two, three, four, five, six, seven];
 	}
@@ -105,7 +106,8 @@ export default class LickPatternGen extends Gen {
 		const beams = Beam.generateBeams(staveNotes);
 		Formatter.FormatAndDraw(context, stave, staveNotes);
 
-		const ties = this.ties();
+		// TODO: fix ties
+		// const ties = this.ties();
 		[...beams].forEach(t => t.setContext(context).draw());
 	}
 

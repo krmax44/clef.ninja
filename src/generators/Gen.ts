@@ -1,7 +1,6 @@
-import midiToNote from '../utils/midiToNote';
-import determineClef from '../utils/determineClef';
 import * as constants from '../utils/noteConstants';
-import { Note, Clef } from '../utils/types';
+import { Clef } from '../utils/types';
+import Note from '../utils/Note';
 
 import Vex from 'vexflow';
 const { Renderer, Stave, Formatter, StaveNote, Accidental } = Vex.Flow;
@@ -57,13 +56,6 @@ export default abstract class Gen {
 		stave.setContext(context).draw();
 
 		Formatter.FormatAndDraw(context, stave, staveNotes);
-
-		const ties = this.ties();
-		ties.forEach(t => t.setContext(context).draw());
-	}
-
-	public ties(): Vex.Flow.StaveTie[] {
-		return [];
 	}
 
 	public static randomNote(
@@ -78,14 +70,10 @@ export default abstract class Gen {
 		const MAX = Math.max(...maxs) - maxOffset;
 
 		const midiNote = Math.floor(Math.random() * (MAX - MIN)) + MIN;
-		const { pitchClass, octave, accidental } = midiToNote(
-			midiNote,
-			Math.random() < 0.5 ? '#' : 'b'
-		);
+		const note = Note.fromMidi(midiNote, Math.random() < 0.5 ? '#' : 'b');
+		note.clef = note.determineClef(clefs);
 
-		const clef = determineClef(midiNote, clefs);
-
-		return { midiNote, pitchClass, octave, accidental, clef };
+		return note;
 	}
 
 	public check(_input: number): CheckResult {

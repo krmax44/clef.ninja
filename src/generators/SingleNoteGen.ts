@@ -18,5 +18,4 @@ export default class SingleNoteGen extends Gen {
 
 	public staveNotes = super.staveNotes;
 	public render = super.render;
-	public ties = super.ties;
 }

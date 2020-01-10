@@ -1,4 +1,4 @@
-import { Clef } from './types';
+import { Clef, Accidental } from './types';
 
 export const treble = {
 	min: 55, // G3
@@ -11,3 +11,5 @@ export const bass = {
 };
 
 export const clefs: Clef[] = ['treble', 'bass'];
+
+export const accidentals: Accidental[] = ['#', 'b'];

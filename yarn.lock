@@ -876,12 +876,61 @@
     error-stack-parser "^2.0.0"
     string-width "^2.0.0"
 
+"@tonaljs/array@^3.2.3":
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/@tonaljs/array/-/array-3.2.3.tgz#fe7bf97e732b5c96f093fe38ecf904abaac0fb4e"
+  integrity sha512-JREVyC9N+pnJZIY/vTRQbPoTXbHmOCPiMTtG4FDVXt29D1wzTA1l3/NzadOkioVyn2hS21oGZz/wviknHBjH4g==
+  dependencies:
+    "@tonaljs/tonal" "^3.2.2"
+
+"@tonaljs/chord-dictionary@^3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@tonaljs/chord-dictionary/-/chord-dictionary-3.3.0.tgz#bb5fde65d4010772f415bc24204b0698a1b45c70"
+  integrity sha512-gV1Ry2fHRd458PnOnYzuxhzdw61lHFMKWsvIo9zjgRNMnSyWR5yw8liTYg+rI2wgWoHBnzstfnbzPQhTrtemCg==
+  dependencies:
+    "@tonaljs/interval" "^3.2.3"
+    "@tonaljs/pcset" "^3.2.3"
+
+"@tonaljs/chord@^3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@tonaljs/chord/-/chord-3.3.0.tgz#a7266fafbe8d6d8c740e530b09ede972def0f925"
+  integrity sha512-2NYcirmRxIfPwTEB2W4rel6py7VjWIE6J9k50+Oud0SegLJTl6K9lvpeMJQaa4M9kw4p6pjL0SUj1PMeZd7WfA==
+  dependencies:
+    "@tonaljs/array" "^3.2.3"
+    "@tonaljs/chord-dictionary" "^3.3.0"
+    "@tonaljs/pcset" "^3.2.3"
+    "@tonaljs/scale-dictionary" "^3.4.0"
+    "@tonaljs/tonal" "^3.2.2"
+
+"@tonaljs/interval@^3.2.3":
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/@tonaljs/interval/-/interval-3.2.3.tgz#0548beb01bf7061acac5358f1737bbf4cc2501e3"
+  integrity sha512-1b/3EWU1vnsLAt+GinozkhsnvwwEJJljkUJdCUZKLEHQ3J7RKGrGjlcz4YzMSXdxoc1Nar/Ipz2pyjkMkm3plA==
+  dependencies:
+    "@tonaljs/tonal" "^3.2.2"
+
 "@tonaljs/midi@^3.3.1":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@tonaljs/midi/-/midi-3.3.1.tgz#9b91990b5da529bdf6ce2cc30e934ce65e63244f"
   integrity sha512-APq+4Jef9V5MFJSvx7lKn3qv+t7hQMUQ6BzqnRDRuzMsey4Zs1loiW8lAiUSKJGsXFS8QSE3VgBTYt2WEc7Oew==
   dependencies:
     "@tonaljs/tonal" "^3.2.2"
+
+"@tonaljs/pcset@^3.2.3":
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/@tonaljs/pcset/-/pcset-3.2.3.tgz#4fa3a36d738a078cb37e530119160d29fb9fd56a"
+  integrity sha512-4ggDGelRwlcyTNP17EsCiN7NWnekI5YMFUgZuypjQeLKfE5jlmA8mfOv5/uEfic6aq2MLpInOO4w9rlbMqO+Jw==
+  dependencies:
+    "@tonaljs/array" "^3.2.3"
+    "@tonaljs/tonal" "^3.2.2"
+
+"@tonaljs/scale-dictionary@^3.4.0":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/@tonaljs/scale-dictionary/-/scale-dictionary-3.4.0.tgz#4315e9812387ce0e43cb23dca3911397b8031f2f"
+  integrity sha512-H8InmEUpWXqFqAVyEPNmraj7JPIyzspvM01Dnnz1wUITOxRNypb7oJLKJNFKlN344jSEDS4VLgcdYLZTMcfEZw==
+  dependencies:
+    "@tonaljs/interval" "^3.2.3"
+    "@tonaljs/pcset" "^3.2.3"
 
 "@tonaljs/tonal@^3.2.2":
   version "3.2.2"

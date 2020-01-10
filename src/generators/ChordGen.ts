@@ -1,10 +1,15 @@
-import midiToNote from '../utils/midiToNote';
 import Gen from './Gen';
-import determineClef from '../utils/determineClef';
+import Note from '../utils/Note';
 import { clefs as CLEFS } from '../utils/noteConstants';
+import { entries } from '@tonaljs/chord-dictionary';
+import { chord as toChord } from '@tonaljs/chord';
 
 import Vex from 'vexflow';
 const { StaveNote, Accidental } = Vex.Flow;
+
+const chords = entries().filter(
+	c => c.intervals.length > 2 && c.intervals.length <= 4
+);
 
 export default class ChordGen extends Gen {
 	private midiNotes: number[];
@@ -13,17 +18,25 @@ export default class ChordGen extends Gen {
 
 	constructor(clefs = CLEFS) {
 		super();
-		const bass = Gen.randomNote(clefs, 0, 7);
-		const bassMidi = bass.midiNote;
-		const thirdMidi = bassMidi + (Math.random() > 0.5 ? 3 : 4); // major or minor
-		const fifthMidi = bassMidi + 7;
 
-		const midiNotes = [bassMidi, thirdMidi, fifthMidi];
-		this.midiNotes = midiNotes;
+		const chord = chords[Math.floor(Math.random() * chords.length)];
+		const maxOffset = parseInt(chord.intervals[chord.intervals.length - 1]);
 
-		const chord = midiNotes.map(n => midiToNote(n));
-		this.clef = determineClef(thirdMidi);
-		this.notes = chord;
+		const bass = Gen.randomNote(clefs, 0, maxOffset);
+		const bassPitchClass = bass.determinePitchClass();
+
+		const chordNotes = toChord(
+			`${bassPitchClass}${bass.octave}${chord.aliases[0]}`
+		).notes;
+		console.log(chordNotes);
+		this.notes = chordNotes.map(n => Note.fromString(n));
+		console.log(this.notes);
+		this.midiNotes = this.notes.map(n => n.midiNote);
+
+		// determine clef based on center note of chord
+		this.clef = this.notes[
+			Math.round((this.notes.length - 1) / 2)
+		].determineClef(clefs);
 	}
 
 	public staveNotes(): Vex.Flow.StaveNote[] {
@@ -62,6 +75,10 @@ export default class ChordGen extends Gen {
 			}
 		} else {
 			correctNotes = this.checkCount >= 1 ? this.midiNotes : [];
+
+			if (this.checkCount > 3) {
+				return { done: true, correct: false, correctNotes };
+			}
 		}
 
 		const done = this.checkProgress.length === this.midiNotes.length;
@@ -70,5 +87,4 @@ export default class ChordGen extends Gen {
 	}
 
 	public render = super.render;
-	public ties = super.ties;
 }
