@@ -22,7 +22,7 @@ export default class LickPatternGen extends Gen {
 	constructor(clefs = CLEFS) {
 		super();
 
-		const one = Gen.randomNote(clefs, 2, 4);
+		const one = Note.random(clefs, 2, 4);
 		const oneMidi = one.midiNote;
 		const twoMidi = oneMidi + 2;
 		const threeMidi = twoMidi + 1;
@@ -74,10 +74,10 @@ export default class LickPatternGen extends Gen {
 
 	staveNotes() {
 		return this.notes.map((note, i) => {
-			const { octave, accidental, duration } = note;
+			const { pitchClass, octave, accidental, duration } = note;
 
 			const staveNote = new StaveNote({
-				keys: [`${note.determinePitchClass()}/${octave}`],
+				keys: [`${pitchClass}/${octave}`],
 				clef: this.clef,
 				duration: duration as string
 			});

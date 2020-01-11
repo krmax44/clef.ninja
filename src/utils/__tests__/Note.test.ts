@@ -8,14 +8,20 @@ describe('Note', () => {
 		expect(note.midiNote).toBe(37);
 		expect(note.octave).toBe(2);
 		expect(note.accidental).toBe('b');
-	});
-
-	it('determines the pitch class', () => {
-		expect(note.determinePitchClass()).toBe('db');
+		expect(note.pitchClass).toBe('db');
 	});
 
 	it('determines the clef', () => {
 		expect(note.determineClef()).toBe('bass');
+	});
+
+	it('generates a random note', () => {
+		const clef = Math.random() > 0.5 ? 'treble' : 'bass';
+		const note = Note.random([clef]);
+
+		expect(note.midiNote).toBeGreaterThanOrEqual(constants[clef].min);
+		expect(note.midiNote).toBeLessThanOrEqual(constants[clef].max);
+		expect(note.clef).toBe(clef);
 	});
 
 	it('parses a string note', () => {

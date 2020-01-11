@@ -24,8 +24,8 @@ export default class ChordGen extends Gen {
 			chordTemplate.intervals[chordTemplate.intervals.length - 1]
 		);
 
-		const bass = Gen.randomNote(clefs, 0, maxOffset);
-		const bassPitchClass = bass.determinePitchClass();
+		const bass = Note.random(clefs, 0, maxOffset);
+		const bassPitchClass = bass.pitchClass;
 
 		const chordNotes = toChord(
 			`${bassPitchClass}${bass.octave} ${chordTemplate.aliases[0]}`
@@ -42,7 +42,7 @@ export default class ChordGen extends Gen {
 
 	public staveNotes(): Vex.Flow.StaveNote[] {
 		const keys = this.notes.map(note => {
-			return `${note.determinePitchClass()}/${note.octave}`;
+			return `${note.pitchClass}/${note.octave}`;
 		});
 
 		const staveNote = new StaveNote({

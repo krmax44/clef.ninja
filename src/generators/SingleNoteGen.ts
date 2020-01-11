@@ -1,10 +1,11 @@
 import Gen from './Gen';
+import Note from '../utils/Note';
 import { clefs as CLEFS } from '../utils/noteConstants';
 
 export default class SingleNoteGen extends Gen {
 	constructor(clefs = CLEFS) {
 		super();
-		const note = Gen.randomNote(clefs);
+		const note = Note.random(clefs);
 		this.notes = [note];
 		this.clef = note.clef!;
 	}

@@ -22,10 +22,9 @@ export default abstract class Gen {
 
 	public staveNotes() {
 		return this.notes.map((note, i) => {
-			const { octave, clef, accidental, color } = note;
-
+			const { pitchClass, octave, clef, accidental, color } = note;
 			const staveNote = new StaveNote({
-				keys: [`${note.determinePitchClass()}/${octave}`],
+				keys: [`${pitchClass}/${octave}`],
 				clef,
 				duration: 'q'
 			});
@@ -56,24 +55,6 @@ export default abstract class Gen {
 		stave.setContext(context).draw();
 
 		Formatter.FormatAndDraw(context, stave, staveNotes);
-	}
-
-	public static randomNote(
-		clefs = constants.clefs,
-		minOffset = 0,
-		maxOffset = 0
-	): Note {
-		const mins = clefs.map(clef => constants[clef].min);
-		const maxs = clefs.map(clef => constants[clef].max);
-
-		const MIN = Math.min(...mins) + minOffset;
-		const MAX = Math.max(...maxs) - maxOffset;
-
-		const midiNote = Math.floor(Math.random() * (MAX - MIN)) + MIN;
-		const note = new Note(midiNote, Math.random() < 0.5 ? '#' : 'b');
-		note.determineClef(clefs);
-
-		return note;
 	}
 
 	public check(_input: number): CheckResult {
