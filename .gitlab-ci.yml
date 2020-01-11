@@ -5,7 +5,6 @@ default:
   cache:
     paths:
       - node_modules/
-      - .yarn
 
 stages:
   - test
@@ -14,7 +13,7 @@ stages:
 test:
   stage: test
   script:
-    - yarn test
+    - yarn ci
 
 pages:
   stage: deploy

@@ -6,7 +6,8 @@
 		"serve": "vue-cli-service serve",
 		"build": "vue-cli-service build",
 		"lint": "vue-cli-service lint",
-		"test": "vue-cli-service test:unit"
+		"test": "vue-cli-service test:unit",
+		"ci": "yarn lint && yarn test"
 	},
 	"dependencies": {
 		"@tonaljs/chord": "^3.3.0",
