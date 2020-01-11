@@ -74,10 +74,10 @@ export default class LickPatternGen extends Gen {
 
 	staveNotes() {
 		return this.notes.map((note, i) => {
-			const { pitchClass, octave, accidental, duration } = note;
+			const { octave, accidental, duration } = note;
 
 			const staveNote = new StaveNote({
-				keys: [`${pitchClass}/${octave}`],
+				keys: [`${note.determinePitchClass()}/${octave}`],
 				clef: this.clef,
 				duration: duration as string
 			});

@@ -42,9 +42,7 @@ export default class ChordGen extends Gen {
 
 	public staveNotes(): Vex.Flow.StaveNote[] {
 		const keys = this.notes.map(note => {
-			const { pitchClass, octave } = note;
-
-			return `${pitchClass}/${octave}`;
+			return `${note.determinePitchClass()}/${note.octave}`;
 		});
 
 		const staveNote = new StaveNote({

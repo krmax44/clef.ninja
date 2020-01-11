@@ -22,10 +22,10 @@ export default abstract class Gen {
 
 	public staveNotes() {
 		return this.notes.map((note, i) => {
-			const { pitchClass, octave, clef, accidental, color } = note;
+			const { octave, clef, accidental, color } = note;
 
 			const staveNote = new StaveNote({
-				keys: [`${pitchClass}/${octave}`],
+				keys: [`${note.determinePitchClass()}/${octave}`],
 				clef,
 				duration: 'q'
 			});
