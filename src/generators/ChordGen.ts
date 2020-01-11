@@ -19,18 +19,19 @@ export default class ChordGen extends Gen {
 	constructor(clefs = CLEFS) {
 		super();
 
-		const chord = chords[Math.floor(Math.random() * chords.length)];
-		const maxOffset = parseInt(chord.intervals[chord.intervals.length - 1]);
+		const chordTemplate = chords[Math.floor(Math.random() * chords.length)];
+		const maxOffset = parseInt(
+			chordTemplate.intervals[chordTemplate.intervals.length - 1]
+		);
 
 		const bass = Gen.randomNote(clefs, 0, maxOffset);
 		const bassPitchClass = bass.determinePitchClass();
 
 		const chordNotes = toChord(
-			`${bassPitchClass}${bass.octave}${chord.aliases[0]}`
+			`${bassPitchClass}${bass.octave} ${chordTemplate.aliases[0]}`
 		).notes;
-		console.log(chordNotes);
+
 		this.notes = chordNotes.map(n => Note.fromString(n));
-		console.log(this.notes);
 		this.midiNotes = this.notes.map(n => n.midiNote);
 
 		// determine clef based on center note of chord

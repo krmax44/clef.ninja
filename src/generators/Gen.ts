@@ -70,8 +70,8 @@ export default abstract class Gen {
 		const MAX = Math.max(...maxs) - maxOffset;
 
 		const midiNote = Math.floor(Math.random() * (MAX - MIN)) + MIN;
-		const note = Note.fromMidi(midiNote, Math.random() < 0.5 ? '#' : 'b');
-		note.clef = note.determineClef(clefs);
+		const note = new Note(midiNote, Math.random() < 0.5 ? '#' : 'b');
+		note.determineClef(clefs);
 
 		return note;
 	}

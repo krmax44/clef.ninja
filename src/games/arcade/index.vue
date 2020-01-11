@@ -87,7 +87,7 @@ export default Vue.extend({
 	},
 	methods: {
 		input(input: number) {
-			if (this.state !== 'playing') return;
+			if (this.state !== 'playing') return false;
 
 			const { correct, correctNotes, done } = this.task.check(input);
 			if (!correct) {

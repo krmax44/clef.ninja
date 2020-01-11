@@ -1,76 +1,78 @@
 {
-  "name": "clef.ninja",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
-  },
-  "dependencies": {
-    "@tonaljs/chord": "^3.3.0",
-    "@tonaljs/chord-dictionary": "^3.3.0",
-    "@tonaljs/midi": "^3.3.1",
-    "@tonaljs/tonal": "^3.2.2",
-    "@types/vexflow": "^1.2.33",
-    "core-js": "^3.6.2",
-    "houk": "^1.1.1",
-    "portal-vue": "^2.1.7",
-    "typeface-assistant": "^0.0.75",
-    "vue": "^2.6.11",
-    "vue-material-design-icons": "^4.4.0",
-    "vuex": "^3.0.1"
-  },
-  "devDependencies": {
-    "@fullhuman/postcss-purgecss": "^1.2.0",
-    "@ky-is/vue-cli-plugin-tailwind": "^2.0.0",
-    "@typescript-eslint/eslint-plugin": "^2.15.0",
-    "@typescript-eslint/parser": "^2.15.0",
-    "@vue/cli-plugin-babel": "^4.1.2",
-    "@vue/cli-plugin-eslint": "^4.1.2",
-    "@vue/cli-plugin-typescript": "^4.1.2",
-    "@vue/cli-plugin-vuex": "^4.1.2",
-    "@vue/cli-service": "^4.1.2",
-    "@vue/eslint-config-prettier": "^6.0.0",
-    "@vue/eslint-config-typescript": "^5.0.1",
-    "babel-eslint": "^10.0.3",
-    "eslint": "^6.8.0",
-    "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-vue": "^6.1.2",
-    "postcss-nested": "^4.2.1",
-    "postcss-preset-env": "^6.6.0",
-    "prettier": "^1.18.2",
-    "tailwindcss": "^1.1.4",
-    "typescript": "~3.7.4",
-    "vexflow": "^1.2.89",
-    "vue-template-compiler": "^2.6.11"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "@vue/prettier",
-      "@vue/typescript"
-    ],
-    "rules": {
-      "no-console": "off"
-    },
-    "parserOptions": {
-      "parser": "@typescript-eslint/parser"
-    }
-  },
-  "prettier": {
-    "bracketSpacing": true,
-    "singleQuote": true,
-    "useTabs": true
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not IE 11",
-    "not dead"
-  ]
+	"name": "clef.ninja",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"serve": "vue-cli-service serve",
+		"build": "vue-cli-service build",
+		"lint": "vue-cli-service lint",
+		"test": "vue-cli-service test:unit"
+	},
+	"dependencies": {
+		"@tonaljs/chord": "^3.3.0",
+		"@tonaljs/chord-dictionary": "^3.3.0",
+		"@tonaljs/midi": "^3.3.1",
+		"@tonaljs/tonal": "^3.2.2",
+		"@types/vexflow": "^1.2.33",
+		"houk": "^1.1.1",
+		"portal-vue": "^2.1.7",
+		"typeface-assistant": "^0.0.75",
+		"vexflow": "^1.2.89",
+		"vue": "^2.6.11",
+		"vue-material-design-icons": "^4.4.0",
+		"vuex": "^3.0.1"
+	},
+	"devDependencies": {
+		"@fullhuman/postcss-purgecss": "^1.2.0",
+		"@ky-is/vue-cli-plugin-tailwind": "^2.0.0",
+		"@typescript-eslint/eslint-plugin": "^2.15.0",
+		"@typescript-eslint/parser": "^2.15.0",
+		"@vue/cli-plugin-babel": "^4.1.2",
+		"@vue/cli-plugin-eslint": "^4.1.2",
+		"@vue/cli-plugin-typescript": "^4.1.2",
+		"@vue/cli-plugin-unit-jest": "^4.1.2",
+		"@vue/cli-plugin-vuex": "^4.1.2",
+		"@vue/cli-service": "^4.1.2",
+		"@vue/eslint-config-prettier": "^6.0.0",
+		"@vue/eslint-config-typescript": "^5.0.1",
+		"@vue/test-utils": "^1.0.0-beta.30",
+		"babel-eslint": "^10.0.3",
+		"eslint": "^6.8.0",
+		"eslint-plugin-prettier": "^3.1.2",
+		"eslint-plugin-vue": "^6.1.2",
+		"postcss-nested": "^4.2.1",
+		"postcss-preset-env": "^6.6.0",
+		"prettier": "^1.18.2",
+		"tailwindcss": "^1.1.4",
+		"typescript": "~3.7.4",
+		"vue-template-compiler": "^2.6.11"
+	},
+	"eslintConfig": {
+		"root": true,
+		"env": {
+			"node": true
+		},
+		"extends": [
+			"plugin:vue/essential",
+			"@vue/prettier",
+			"@vue/typescript"
+		],
+		"rules": {
+			"no-console": "off"
+		},
+		"parserOptions": {
+			"parser": "@typescript-eslint/parser"
+		}
+	},
+	"prettier": {
+		"bracketSpacing": true,
+		"singleQuote": true,
+		"useTabs": true
+	},
+	"browserslist": [
+		"> 1%",
+		"last 2 versions",
+		"not IE 11",
+		"not dead"
+	]
 }

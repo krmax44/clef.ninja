@@ -37,27 +37,10 @@ export default class Note {
 		const pitchClass = midiToNoteName(this.midiNote, {
 			sharps,
 			pitchClass: true
-		});
+		}).toLowerCase();
 		this.pitchClass = pitchClass;
 
 		return pitchClass;
-	}
-
-	static fromMidi(midi: number, accidentals: Accidental | undefined = '#') {
-		const S = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
-		const F = ['c', 'db', 'd', 'eb', 'e', 'f', 'gb', 'g', 'ab', 'a', 'bb', 'b'];
-		const ACCIDENTALS = [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0];
-
-		const notes = accidentals === '#' ? S : F;
-		const step = midi % 12;
-		const pitchClass = notes[step];
-		const accidental = ACCIDENTALS[step] === 0 ? false : accidentals; // false || # || b
-
-		const note = new Note(midi);
-		note.pitchClass = pitchClass;
-		note.accidental = accidental;
-
-		return note;
 	}
 
 	static fromString(input: string) {

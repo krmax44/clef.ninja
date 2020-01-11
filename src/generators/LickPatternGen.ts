@@ -39,7 +39,7 @@ export default class LickPatternGen extends Gen {
 			sixMidi,
 			sevenMidi
 		].map(n => {
-			const note = Note.fromMidi(n);
+			const note = new Note(n);
 			note.duration = '8';
 			return note;
 		});

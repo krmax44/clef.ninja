@@ -1,9 +1,29 @@
 image: node:13
 
-pages:
+stages:
+  - install
+  - test
+  - build
+  - deploy
+
+install:
+  stage: install
   script:
     - yarn install
+
+test:
+  stage: test
+  script:
+    - yarn test
+
+build:
+  stage: build
+  script:
     - yarn build
+
+pages:
+  stage: deploy
+  script:
     - rm public -rf # for some reason gitlab only allows a folder named public
     - mkdir public
     - cp dist/* public/ -r
