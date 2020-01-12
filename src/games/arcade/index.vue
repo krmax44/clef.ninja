@@ -103,7 +103,7 @@ export default Vue.extend({
 				if (this.lives === 0) {
 					this.gameOver();
 				}
-			} else if (score) {
+			} else if (score !== false) {
 				this.score++;
 			}
 

@@ -14,7 +14,7 @@ export default class TaskSingleNote extends Task {
 		const correctNote = this.notes[0].midiNote;
 		const correct = input === correctNote;
 
-		return { correct, correctNotes: [correctNote], done: true, score: true };
+		return { correct, correctNotes: [correctNote], done: true };
 	}
 
 	public staveNotes = super.staveNotes;

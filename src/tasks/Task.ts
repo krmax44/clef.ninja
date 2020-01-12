@@ -8,7 +8,7 @@ interface CheckResult {
 	done: boolean;
 	correctNotes: number[];
 	correct: boolean;
-	score: boolean;
+	score?: boolean;
 }
 
 export default abstract class Task {

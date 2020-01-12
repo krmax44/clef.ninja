@@ -117,6 +117,6 @@ export default class TaskLickPattern extends Task {
 		const done = this.checkProgress === this.notes.length - 1;
 		this.checkProgress++;
 
-		return { correct, correctNotes: [correctNotes], done, score: true };
+		return { correct, correctNotes: [correctNotes], done };
 	}
 }
