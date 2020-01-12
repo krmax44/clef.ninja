@@ -27,7 +27,7 @@ export default class TaskLickPattern extends Task {
 		const twoMidi = oneMidi + 2;
 		const threeMidi = twoMidi + 1;
 		const fourMidi = threeMidi + 2;
-		const fiveMidi = oneMidi;
+		const fiveMidi = twoMidi;
 		const sixMidi = oneMidi - 2;
 		const sevenMidi = oneMidi;
 
