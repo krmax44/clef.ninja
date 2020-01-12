@@ -1,8 +1,8 @@
-import SingleNoteGen from '../SingleNoteGen';
+import TaskSingleNote from '../TaskSingleNote';
 
-describe('SingleNoteGen', () => {
+describe('TaskSingleNote', () => {
 	it('checks correct inputs', () => {
-		const task = new SingleNoteGen();
+		const task = new TaskSingleNote();
 		const correct = task.notes[0].midiNote;
 
 		expect(task.check(correct)).toEqual({
@@ -13,7 +13,7 @@ describe('SingleNoteGen', () => {
 	});
 
 	it('checks incorrect inputs', () => {
-		const task = new SingleNoteGen();
+		const task = new TaskSingleNote();
 		const correct = task.notes[0].midiNote;
 		const incorrect = correct + 2;
 

@@ -45,15 +45,15 @@ import TrainingSettings, {
 
 import SettingsIcon from 'vue-material-design-icons/SettingsOutline.vue';
 
-import Gen from '@/generators/Gen';
-import SingleNoteGenerator from '@/generators/SingleNoteGen';
-import ChordGen from '@/generators/ChordGen';
-import { randomPattern } from '@/generators/Patterns';
+import Task from '@/tasks/Task';
+import TaskSingleNote from '@/tasks/TaskSingleNote';
+import TaskChord from '@/tasks/TaskChord';
+import { randomPattern } from '@/tasks/PatternTasks';
 
-function randomTask({ tasks: viableTasks } = defaultSettings): Gen {
+function randomTask({ tasks: viableTasks } = defaultSettings): Task {
 	const tasks = {
-		singleNotes: () => SingleNoteGenerator,
-		chords: () => ChordGen,
+		singleNotes: () => TaskSingleNote,
+		chords: () => TaskChord,
 		patterns: randomPattern
 	};
 

@@ -1,6 +1,6 @@
-import LickPatternGen from './LickPatternGen';
+import TaskLickPattern from './TaskLickPattern';
 
-const PATTERNS = [LickPatternGen];
+const PATTERNS = [TaskLickPattern];
 
 export default PATTERNS;
 export function randomPattern() {

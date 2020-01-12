@@ -51,13 +51,13 @@ import ArcadeGameOver from './ArcadeGameOver.vue';
 import NoteRenderer from '@/components/NoteRenderer.vue';
 import VirtualKeyboard from '@/components/VirtualKeyboard.vue';
 
-import Gen from '@/generators/Gen';
-import SingleNoteGenerator from '@/generators/SingleNoteGen';
-import ChordGen from '@/generators/ChordGen';
-import { randomPattern } from '@/generators/Patterns';
+import Task from '@/tasks/Task';
+import TaskSingleNote from '@/tasks/TaskSingleNote';
+import TaskChord from '@/tasks/TaskChord';
+import { randomPattern } from '@/tasks/PatternTasks';
 
-function randomTask(): Gen {
-	const tasks = [() => SingleNoteGenerator, () => ChordGen, randomPattern];
+function randomTask(): Task {
+	const tasks = [() => TaskSingleNote, () => TaskChord, randomPattern];
 
 	const Task = tasks[Math.floor(Math.random() * tasks.length)]();
 	return new Task();

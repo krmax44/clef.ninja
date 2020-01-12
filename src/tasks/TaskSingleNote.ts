@@ -1,8 +1,8 @@
-import Gen from './Gen';
+import Task from './Task';
 import Note from '../utils/Note';
 import { clefs as CLEFS } from '../utils/noteConstants';
 
-export default class SingleNoteGen extends Gen {
+export default class TaskSingleNote extends Task {
 	constructor(clefs = CLEFS) {
 		super();
 		const note = Note.random(clefs);

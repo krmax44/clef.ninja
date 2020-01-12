@@ -1,4 +1,3 @@
-import * as constants from '../utils/noteConstants';
 import { Clef } from '../utils/types';
 import Note from '../utils/Note';
 
@@ -11,7 +10,7 @@ interface CheckResult {
 	correct: boolean;
 }
 
-export default abstract class Gen {
+export default abstract class Task {
 	public notes: Note[];
 	public clef: Clef;
 
@@ -58,6 +57,6 @@ export default abstract class Gen {
 	}
 
 	public check(_input: number): CheckResult {
-		throw new Error("Can't check abstract gen.");
+		throw new Error("Can't check abstract task.");
 	}
 }

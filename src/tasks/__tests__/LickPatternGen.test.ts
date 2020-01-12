@@ -1,8 +1,8 @@
-import LickPatternGen from '../LickPatternGen';
+import TaskLickPattern from '../TaskLickPattern';
 
-describe('LickPatternGen', () => {
+describe('TaskLickPattern', () => {
 	it('checks correct inputs', () => {
-		const task = new LickPatternGen();
+		const task = new TaskLickPattern();
 		const correctNotes = task.notes.map(n => n.midiNote);
 
 		let i = 1;
@@ -19,7 +19,7 @@ describe('LickPatternGen', () => {
 	});
 
 	it('checks incorrect inputs', () => {
-		const task = new LickPatternGen();
+		const task = new TaskLickPattern();
 		const correctNotes = task.notes.map(n => n.midiNote);
 
 		let i = 1;

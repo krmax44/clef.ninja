@@ -1,8 +1,8 @@
-import ChordGen from '../ChordGen';
+import TaskChord from '../TaskChord';
 
-describe('ChordGen', () => {
+describe('TaskChord', () => {
 	it('checks correct inputs', () => {
-		const task = new ChordGen();
+		const task = new TaskChord();
 		const correctNotes = task.notes.map(n => n.midiNote);
 
 		for (const correctNote of correctNotes) {
@@ -17,7 +17,7 @@ describe('ChordGen', () => {
 	});
 
 	it('checks incorrect inputs', () => {
-		const task = new ChordGen();
+		const task = new TaskChord();
 		const correctNotes = task.notes.map(n => n.midiNote);
 
 		// One wrong, get another try

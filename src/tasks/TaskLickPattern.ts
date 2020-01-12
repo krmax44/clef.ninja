@@ -1,4 +1,4 @@
-import Gen from './Gen';
+import Task from './Task';
 import Note from '../utils/Note';
 import { Clef } from '../utils/types';
 
@@ -14,7 +14,7 @@ const {
 	Beam
 } = Vex.Flow;
 
-export default class LickPatternGen extends Gen {
+export default class TaskLickPattern extends Task {
 	public clef: Clef;
 	public notes: Note[];
 	private checkProgress: number = 0;

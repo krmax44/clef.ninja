@@ -1,4 +1,4 @@
-import Gen from './Gen';
+import Task from './Task';
 import Note from '../utils/Note';
 import { clefs as CLEFS } from '../utils/noteConstants';
 import { entries } from '@tonaljs/chord-dictionary';
@@ -11,7 +11,7 @@ const chords = entries().filter(
 	c => c.intervals.length > 2 && c.intervals.length <= 4
 );
 
-export default class ChordGen extends Gen {
+export default class TaskChord extends Task {
 	private midiNotes: number[];
 	private checkProgress: number[] = [];
 	private checkCount = 0;
