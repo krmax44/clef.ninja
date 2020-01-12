@@ -89,7 +89,8 @@ export default Vue.extend({
 		input(input: number) {
 			if (this.state !== 'playing') return false;
 
-			const { correct, correctNotes, done } = this.task.check(input);
+			const { correct, correctNotes, done, score } = this.task.check(input);
+			console.log({ score });
 			if (!correct) {
 				this.wrong = input;
 
@@ -102,7 +103,7 @@ export default Vue.extend({
 				if (this.lives === 0) {
 					this.gameOver();
 				}
-			} else {
+			} else if (score) {
 				this.score++;
 			}
 

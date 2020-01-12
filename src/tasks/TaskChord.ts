@@ -64,25 +64,26 @@ export default class TaskChord extends Task {
 	public check(input: number) {
 		const pos = this.midiNotes.indexOf(input);
 		const correct = pos !== -1;
+		const score = !this.checkProgress.includes(input); // only count towards score once
 
 		let correctNotes;
 		if (correct) {
 			correctNotes = [input];
 
-			if (!this.checkProgress.includes(input)) {
+			if (score) {
 				this.checkProgress.push(input);
 			}
 		} else {
 			correctNotes = this.checkCount >= 1 ? this.midiNotes : [];
 
 			if (this.checkCount > 3) {
-				return { done: true, correct: false, correctNotes };
+				return { done: true, correct: false, correctNotes, score };
 			}
 		}
 
 		const done = this.checkProgress.length === this.midiNotes.length;
 		this.checkCount++;
-		return { done, correct, correctNotes };
+		return { done, correct, correctNotes, score };
 	}
 
 	public render = super.render;
