@@ -22,7 +22,7 @@ pages:
     - rm public -rf # for some reason gitlab only allows a folder named public
     - mkdir public
     - cp dist/* public/ -r
-    # gziped delivery with gitlab pages is a little more on-hand https://webd97.de/post/gitlab-pages-compression/
+    # gziped delivery with gitlab pages is a little more hands-on https://webd97.de/post/gitlab-pages-compression/
     - gzip -k -6 $(find public -type f)
   artifacts:
     paths:
