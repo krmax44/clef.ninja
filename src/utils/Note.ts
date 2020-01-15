@@ -10,7 +10,7 @@ const ACCIDENTALS = [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0];
 export default class Note {
 	public midiNote: number;
 	public octave: number;
-	public pitchClass?: string;
+	public pitchClass: string;
 	public accidental?: Accidental | false;
 	public clef?: Clef;
 	public color?: string;

@@ -84,6 +84,15 @@ export default class TaskLickPattern extends Task {
 
 			if (typeof accidental === 'string') {
 				staveNote.addAccidental(0, new Accidental(accidental));
+			} else {
+				const notesBefore = this.notes.slice(0, i);
+				const needsNatural = notesBefore.some(
+					n => n.pitchClass[0] === note.pitchClass[0] && n.accidental
+				);
+
+				if (needsNatural) {
+					staveNote.addAccidental(0, new Accidental('n'));
+				}
 			}
 
 			return staveNote;
