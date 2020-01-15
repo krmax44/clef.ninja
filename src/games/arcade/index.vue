@@ -84,6 +84,7 @@ export default Vue.extend({
 			if (this.state !== 'playing') return false;
 
 			const { correct, correctNotes, done, score } = this.task.check(input);
+			this.task.render();
 
 			if (!correct) {
 				this.wrong = input;

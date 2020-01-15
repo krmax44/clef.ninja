@@ -17,7 +17,7 @@ const {
 export default class TaskLickPattern extends Task {
 	public clef: Clef;
 	public notes: Note[];
-	private checkProgress: number = 0;
+	private checkProgress: boolean[] = [];
 
 	constructor(target: HTMLElement, clefs = CLEFS) {
 		super(target);
@@ -95,6 +95,18 @@ export default class TaskLickPattern extends Task {
 				}
 			}
 
+			let color;
+
+			if (this.checkProgress.length === i) {
+				color = '#31bced';
+			} else if (this.checkProgress[i] === true) {
+				color = '#92dd6e';
+			} else if (this.checkProgress[i] === false) {
+				color = '#fc5130';
+			}
+
+			if (color) staveNote.setStyle({ fillStyle: color, strokeStyle: color });
+
 			return staveNote;
 		});
 	}
@@ -123,10 +135,11 @@ export default class TaskLickPattern extends Task {
 	}
 
 	public check(input: number) {
-		const correctNotes = this.notes[this.checkProgress].midiNote;
+		const progress = this.checkProgress.length;
+		const correctNotes = this.notes[progress].midiNote;
 		const correct = correctNotes === input;
-		const done = this.checkProgress === this.notes.length - 1;
-		this.checkProgress++;
+		const done = progress === this.notes.length - 1;
+		this.checkProgress.push(correct);
 
 		return { correct, correctNotes: [correctNotes], done };
 	}

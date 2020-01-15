@@ -82,6 +82,8 @@ export default Vue.extend({
 			if (this.halting) return;
 
 			const { correct, correctNotes, done } = this.task.check(input);
+			this.task.render();
+
 			if (!correct) {
 				this.wrong = input;
 			}
