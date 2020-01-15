@@ -47,6 +47,16 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="option">
+				<div class="options-title">Key labels</div>
+				<div class="options-selector">
+					<div>
+						<input type="checkbox" id="keylabels" v-model="keyLabels" />
+						<label for="keylabels">Enable</label>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -58,11 +68,13 @@ import { Clef } from '../../utils/types';
 export interface Settings {
 	clefs: Clef[];
 	tasks: ('singleNotes' | 'patterns' | 'chords')[];
+	keyLabels: boolean;
 }
 
 export const defaultSettings: Settings = {
 	clefs: ['bass', 'treble'],
-	tasks: ['singleNotes']
+	tasks: ['singleNotes'],
+	keyLabels: true
 };
 
 export default Vue.extend({
@@ -82,13 +94,14 @@ export default Vue.extend({
 			}
 		},
 		update() {
-			const { clefs, tasks } = this;
-			this.$emit('update', { clefs, tasks });
+			const { clefs, tasks, keyLabels } = this;
+			this.$emit('update', { clefs, tasks, keyLabels });
 		}
 	},
 	watch: {
 		clefs: atLeastOne('clefs'),
-		tasks: atLeastOne('tasks')
+		tasks: atLeastOne('tasks'),
+		keyLabels: 'update'
 	}
 });
 

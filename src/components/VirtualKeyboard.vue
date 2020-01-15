@@ -2,18 +2,28 @@
 	<div class="keyboard" :class="{ disabled }">
 		<div
 			class="key no-drag"
-			v-for="({ note, noteName, octave, halftone }, i) in notes"
+			v-for="({ note, noteName, octave, halftone, after }, i) in notes"
 			:key="i"
 		>
 			<div class="white" :class="classes(note)" @click="keyPressed(note)">
-				{{ noteName === 'c' ? `C${octave}` : '' }}
+				<span v-if="noteName === 'C'">
+					{{ `C${octave}` }}
+				</span>
+				<span v-else-if="keyLabels" class="text-gray-400">
+					{{ noteName }}
+				</span>
 			</div>
 			<div
 				v-if="halftone"
 				class="black"
 				:class="classes(halftone)"
 				@click="keyPressed(halftone)"
-			/>
+			>
+				<span class="key-labels" v-if="keyLabels">
+					<span>{{ noteName }}♯</span>
+					<span>{{ after }}♭</span>
+				</span>
+			</div>
 		</div>
 	</div>
 </template>
@@ -22,15 +32,20 @@
 import Vue from 'vue';
 import { toMidi } from '@tonaljs/midi';
 
+const scale = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
 const NOTES = Array(4)
-	.fill(['c', 'd', 'e', 'f', 'g', 'a', 'b'])
+	.fill(scale)
 	.flat()
 	.map((n, i) => {
-		const octave = 2 + Math.floor(i / 7);
+		let octave = Math.floor(i / 7);
+		const step = i - octave * 7;
+		octave += 2;
 		const note = toMidi(`${n}${octave}`);
-		const halftone = ['e', 'b'].includes(n) ? false : toMidi(`${n}#${octave}`);
+		const halftone = ['E', 'B'].includes(n) ? false : toMidi(`${n}#${octave}`);
+		const before = scale[step === 0 ? scale.length - 1 : step - 1];
+		const after = scale[step === scale.length - 1 ? 0 : step + 1];
 
-		return { note, halftone, noteName: n, octave };
+		return { note, halftone, noteName: n, octave, before, after };
 	});
 
 export default Vue.extend({
@@ -44,6 +59,11 @@ export default Vue.extend({
 			required: true
 		},
 		disabled: {
+			type: Boolean,
+			required: false,
+			default: false
+		},
+		keyLabels: {
 			type: Boolean,
 			required: false,
 			default: false
@@ -88,7 +108,7 @@ export default Vue.extend({
 	margin-left: 50%;
 	transform: translateX(-50%);
 	transition: opacity 0.5s;
-	@apply flex w-screen overflow-auto;
+	@apply flex w-screen overflow-x-auto;
 }
 
 .keyboard.disabled {
@@ -115,6 +135,10 @@ export default Vue.extend({
 		left: calc(100% / 1.5);
 		top: 0;
 		@apply bg-black shadow-md rounded absolute z-10;
+
+		.key-labels {
+			@apply flex flex-col h-full justify-end items-center text-white opacity-50;
+		}
 	}
 
 	.keyboard:not(.disabled) {

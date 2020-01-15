@@ -29,6 +29,7 @@
 			@note="input"
 			:correct="correct"
 			:wrong="wrong"
+			:keyLabels="settings.keyLabels"
 			class="mt-auto"
 		/>
 	</div>
@@ -105,6 +106,7 @@ export default Vue.extend({
 		updateSettings(settings: Settings) {
 			const { clefs } = settings;
 			this.settings = settings;
+			console.log(settings.keyLabels);
 
 			if (!clefs.includes(this.task.clef)) {
 				this.randomTask();
