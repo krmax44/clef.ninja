@@ -49,7 +49,7 @@ export default abstract class Task {
 		renderer.resize(150, 150);
 		const context = renderer.getContext();
 
-		const stave = new Stave(0, 0, 300);
+		const stave = new Stave(0, 10, 300);
 		stave.addClef(this.clef);
 
 		stave.setContext(context).draw();

@@ -98,7 +98,7 @@ export default class TaskLickPattern extends Task {
 		renderer.resize(400, 150);
 		const context = renderer.getContext();
 
-		const stave = new Stave(0, 0, 400);
+		const stave = new Stave(0, 10, 400);
 		stave.addClef(this.clef);
 
 		stave.setContext(context).draw();
