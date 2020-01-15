@@ -3,8 +3,8 @@ import Note from '../utils/Note';
 import { clefs as CLEFS } from '../utils/noteConstants';
 
 export default class TaskSingleNote extends Task {
-	constructor(clefs = CLEFS) {
-		super();
+	constructor(target: HTMLElement, clefs = CLEFS) {
+		super(target);
 		const note = Note.random(clefs);
 		this.notes = [note];
 		this.clef = note.clef!;

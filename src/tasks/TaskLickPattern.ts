@@ -19,8 +19,8 @@ export default class TaskLickPattern extends Task {
 	public notes: Note[];
 	private checkProgress: number = 0;
 
-	constructor(clefs = CLEFS) {
-		super();
+	constructor(target: HTMLElement, clefs = CLEFS) {
+		super(target);
 
 		const one = Note.random(clefs, 2, 4);
 		const oneMidi = one.midiNote;
@@ -99,10 +99,12 @@ export default class TaskLickPattern extends Task {
 		});
 	}
 
-	public render(target: HTMLElement) {
+	public render() {
+		[...this.target.children].forEach(c => c.remove());
+
 		const staveNotes = this.staveNotes();
 
-		const renderer = new Renderer(target, Renderer.Backends.SVG);
+		const renderer = new Renderer(this.target, Renderer.Backends.SVG);
 
 		renderer.resize(400, 150);
 		const context = renderer.getContext();

@@ -21,11 +21,7 @@
 								<h2 class="font-bold text-6xl">{{ countdown || 'GO!' }}</h2>
 							</template>
 
-							<NoteRenderer
-								:task="task"
-								ref="renderer"
-								v-show="state === 'playing'"
-							/>
+							<div ref="noteRenderer" v-show="state === 'playing'" />
 						</div>
 					</div>
 				</div>
@@ -48,7 +44,6 @@ import Vue from 'vue';
 import ArcadeTimer from './ArcadeTimer.vue';
 import ArcadeStats from './ArcadeStats.vue';
 import ArcadeGameOver from './ArcadeGameOver.vue';
-import NoteRenderer from '@/components/NoteRenderer.vue';
 import VirtualKeyboard from '@/components/VirtualKeyboard.vue';
 
 import Task from '@/tasks/Task';
@@ -56,17 +51,17 @@ import TaskSingleNote from '@/tasks/TaskSingleNote';
 import TaskChord from '@/tasks/TaskChord';
 import { randomPattern } from '@/tasks/PatternTasks';
 
-function randomTask(): Task {
+function randomTask(target: HTMLElement): Task {
 	const tasks = [() => TaskSingleNote, () => TaskChord, randomPattern];
 
 	const Task = tasks[Math.floor(Math.random() * tasks.length)]();
-	return new Task();
+	return new Task(target);
 }
 
 export default Vue.extend({
 	data() {
 		return {
-			task: randomTask(),
+			task: (undefined as unknown) as Task, // TODO: yikes
 			taskMistake: false,
 			correct: [0],
 			wrong: 0,
@@ -82,7 +77,6 @@ export default Vue.extend({
 		ArcadeTimer,
 		ArcadeStats,
 		ArcadeGameOver,
-		NoteRenderer,
 		VirtualKeyboard
 	},
 	methods: {
@@ -115,7 +109,7 @@ export default Vue.extend({
 			}, 50);
 
 			if (done) {
-				this.task = randomTask();
+				this.newTask();
 				this.taskMistake = false;
 			}
 		},
@@ -143,10 +137,16 @@ export default Vue.extend({
 			this.lives = 0;
 			this.state = 'gameOver';
 			clearInterval(this.gameClock);
+		},
+
+		newTask() {
+			this.task = randomTask(this.$refs.noteRenderer as HTMLElement);
+			this.task.render();
 		}
 	},
 
 	mounted() {
+		this.newTask();
 		// TODO: vuex + ts
 		const { midi } = (this as any).$store.getters;
 

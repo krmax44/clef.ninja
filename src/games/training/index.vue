@@ -17,9 +17,9 @@
 		<div class="display">
 			<div class="card-container h-full md:w-2/3">
 				<div class="card flex justify-center cursor-auto">
-					<NoteRenderer
-						class="px-4 items-center justify-center flex"
-						:task="task"
+					<div
+						class="px-4 items-center justify-center flex paper"
+						ref="noteRenderer"
 					/>
 				</div>
 			</div>
@@ -37,7 +37,6 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import NoteRenderer from '@/components/NoteRenderer.vue';
 import VirtualKeyboard from '@/components/VirtualKeyboard.vue';
 import TrainingSettings, {
 	Settings,
@@ -51,7 +50,10 @@ import TaskSingleNote from '@/tasks/TaskSingleNote';
 import TaskChord from '@/tasks/TaskChord';
 import { randomPattern } from '@/tasks/PatternTasks';
 
-function randomTask({ tasks: viableTasks } = defaultSettings): Task {
+function randomTask(
+	target: HTMLElement,
+	{ tasks: viableTasks } = defaultSettings
+): Task {
 	const tasks = {
 		singleNotes: () => TaskSingleNote,
 		chords: () => TaskChord,
@@ -60,13 +62,13 @@ function randomTask({ tasks: viableTasks } = defaultSettings): Task {
 
 	const name = viableTasks[Math.floor(Math.random() * viableTasks.length)];
 	const Task = tasks[name]();
-	return new Task();
+	return new Task(target);
 }
 
 export default Vue.extend({
 	data() {
 		return {
-			task: randomTask(),
+			task: (undefined as unknown) as Task,
 			correct: [0],
 			wrong: 0,
 			halting: false,
@@ -74,7 +76,7 @@ export default Vue.extend({
 			settings: defaultSettings
 		};
 	},
-	components: { NoteRenderer, VirtualKeyboard, TrainingSettings, SettingsIcon },
+	components: { VirtualKeyboard, TrainingSettings, SettingsIcon },
 	methods: {
 		input(input: number): void {
 			if (this.halting) return;
@@ -95,25 +97,30 @@ export default Vue.extend({
 				this.halting = true;
 
 				setTimeout(() => {
-					this.randomTask();
+					this.newTask();
 					this.halting = false;
 				}, 700);
 			}
 		},
-		randomTask() {
-			this.task = randomTask(this.settings);
+		newTask() {
+			this.task = randomTask(
+				this.$refs.noteRenderer as HTMLElement,
+				this.settings
+			);
+			this.task.render();
 		},
 		updateSettings(settings: Settings) {
 			const { clefs } = settings;
 			this.settings = settings;
-			console.log(settings.keyLabels);
 
 			if (!clefs.includes(this.task.clef)) {
-				this.randomTask();
+				this.newTask();
 			}
 		}
 	},
 	mounted() {
+		this.newTask();
+
 		// TODO: vuex + ts
 		const { midi } = (this as any).$store.getters;
 

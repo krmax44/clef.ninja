@@ -14,10 +14,12 @@ interface CheckResult {
 export default abstract class Task {
 	public notes: Note[];
 	public clef: Clef;
+	protected target: HTMLElement;
 
-	constructor() {
+	constructor(target: HTMLElement) {
 		this.notes = [];
 		this.clef = 'treble';
+		this.target = target;
 	}
 
 	public staveNotes() {
@@ -41,10 +43,11 @@ export default abstract class Task {
 		});
 	}
 
-	public render(target: HTMLElement) {
-		const staveNotes = this.staveNotes();
+	public render() {
+		[...this.target.children].forEach(c => c.remove());
 
-		const renderer = new Renderer(target, Renderer.Backends.SVG);
+		const staveNotes = this.staveNotes();
+		const renderer = new Renderer(this.target, Renderer.Backends.SVG);
 
 		renderer.resize(150, 150);
 		const context = renderer.getContext();

@@ -1,8 +1,10 @@
 import TaskLickPattern from '../TaskLickPattern';
 
+const target = {} as HTMLElement;
+
 describe('TaskLickPattern', () => {
 	it('checks correct inputs', () => {
-		const task = new TaskLickPattern();
+		const task = new TaskLickPattern(target);
 		const correctNotes = task.notes.map(n => n.midiNote);
 
 		let i = 1;
@@ -19,7 +21,7 @@ describe('TaskLickPattern', () => {
 	});
 
 	it('checks incorrect inputs', () => {
-		const task = new TaskLickPattern();
+		const task = new TaskLickPattern(target);
 		const correctNotes = task.notes.map(n => n.midiNote);
 
 		let i = 1;

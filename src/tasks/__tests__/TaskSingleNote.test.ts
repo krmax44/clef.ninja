@@ -1,8 +1,10 @@
 import TaskSingleNote from '../TaskSingleNote';
 
+const target = {} as HTMLElement;
+
 describe('TaskSingleNote', () => {
 	it('checks correct inputs', () => {
-		const task = new TaskSingleNote();
+		const task = new TaskSingleNote(target);
 		const correct = task.notes[0].midiNote;
 
 		expect(task.check(correct)).toEqual({
@@ -13,7 +15,7 @@ describe('TaskSingleNote', () => {
 	});
 
 	it('checks incorrect inputs', () => {
-		const task = new TaskSingleNote();
+		const task = new TaskSingleNote(target);
 		const correct = task.notes[0].midiNote;
 		const incorrect = correct + 2;
 

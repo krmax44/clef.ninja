@@ -16,8 +16,8 @@ export default class TaskChord extends Task {
 	private checkProgress: number[] = [];
 	private checkCount = 0;
 
-	constructor(clefs = CLEFS) {
-		super();
+	constructor(target: HTMLElement, clefs = CLEFS) {
+		super(target);
 
 		const chordTemplate = chords[Math.floor(Math.random() * chords.length)];
 		const maxOffset = parseInt(
