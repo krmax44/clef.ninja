@@ -14,6 +14,8 @@ export default class TaskSingleNote extends Task {
 		const correctNote = this.notes[0].midiNote;
 		const correct = input === correctNote;
 
+		this.notes[0].color = correct ? '#92dd6e' : '#fc5130';
+
 		return { correct, correctNotes: [correctNote], done: true };
 	}
 
