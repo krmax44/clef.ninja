@@ -38,7 +38,7 @@
 
 						<h3>Settings</h3>
 						<p>
-							Setup your MIDI keyboard.
+							Setup your MIDI keyboard or pick a different instrument.
 						</p>
 					</div>
 				</div>

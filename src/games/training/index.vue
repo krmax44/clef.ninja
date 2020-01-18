@@ -25,7 +25,7 @@
 			</div>
 		</div>
 
-		<VirtualKeyboard
+		<VirtualInput
 			@note="input"
 			:correct="correct"
 			:wrong="wrong"
@@ -37,7 +37,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import VirtualKeyboard from '@/components/VirtualKeyboard.vue';
+import VirtualInput from '@/components/VirtualInput.vue';
 import TrainingSettings, {
 	Settings,
 	defaultSettings
@@ -76,7 +76,7 @@ export default Vue.extend({
 			settings: defaultSettings
 		};
 	},
-	components: { VirtualKeyboard, TrainingSettings, SettingsIcon },
+	components: { VirtualInput, TrainingSettings, SettingsIcon },
 	methods: {
 		input(input: number): void {
 			if (this.halting) return;
