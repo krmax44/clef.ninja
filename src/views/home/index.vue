@@ -30,7 +30,7 @@
 
 			<div
 				class="card-container"
-				@click="$store.commit('stage', 'settingsView')"
+				@click="$store.commit('stage', { name: 'settingsView' })"
 			>
 				<div class="card">
 					<div class="card-inner">
@@ -59,7 +59,7 @@ export default Vue.extend({
 		selectGamemode(gamemode: string) {
 			// TODO: vuex + ts
 			(this as any).$store.commit('gamemode', gamemode);
-			(this as any).$store.commit('stage', 'gamePlay');
+			(this as any).$store.commit('stage', { name: 'gamePlay' });
 		}
 	}
 });

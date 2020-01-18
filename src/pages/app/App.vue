@@ -5,13 +5,13 @@
 
 			<main class="pt-12 md:pt-24 flex flex-1">
 				<transition
-					name="slide"
+					:name="stage.transition === 'forwards' ? 'slide' : 'slide-back'"
 					@beforeLeave="bodyScroll('hidden')"
 					@afterEnter="bodyScroll('auto')"
 					mode="out-in"
 				>
-					<HomeView v-if="stage === 'homeView'" />
-					<SettingsView v-else-if="stage === 'settingsView'" />
+					<HomeView v-if="stage.name === 'homeView'" />
+					<SettingsView v-else-if="stage.name === 'settingsView'" />
 					<GameView v-else />
 				</transition>
 			</main>
@@ -21,6 +21,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+
 import SiteHeader from '@/components/SiteHeader.vue';
 import HomeView from '@/views/home/index.vue';
 import SettingsView from '@/views/settings/index.vue';
@@ -30,6 +31,7 @@ export default Vue.extend({
 	components: { SiteHeader, HomeView, SettingsView, GameView },
 	computed: {
 		stage() {
+			// TODO: vuex + ts
 			return (this as any).$store.state.stage;
 		}
 	},
@@ -37,6 +39,15 @@ export default Vue.extend({
 		bodyScroll(to: string) {
 			document.body.style.overflowX = to;
 		}
+	},
+	mounted() {
+		window.addEventListener('popstate', event => {
+			event.preventDefault();
+			const { name } = event.state || { name: 'homeView' };
+
+			// TODO: vuex + ts
+			(this as any).$store.commit('stage', { name, transition: 'backwards' });
+		});
 	}
 });
 </script>
@@ -44,20 +55,34 @@ export default Vue.extend({
 <style lang="postcss" scoped>
 @import '~@/assets/styles/app.css';
 
-.slide-enter-active {
+.slide-enter-active,
+.slide-back-enter-active {
 	transition: opacity 0.5s, transform 0.5s cubic-bezier(0, 0, 0.2, 1);
 }
-.slide-leave-active {
+.slide-leave-active,
+.slide-back-leave-active {
 	transition: opacity 0.5s, transform 0.5s cubic-bezier(0.4, 0, 1, 1);
 }
 
-.slide-leave-to {
+.slide-leave-to,
+.slide-enter,
+.slide-back-leave-to,
+.slide-back-enter {
 	opacity: 0;
+}
+
+.slide-leave-to {
 	transform: translateX(-30%);
 }
 .slide-enter {
-	opacity: 0;
 	transform: translateX(30%);
+}
+
+.slide-back-leave-to {
+	transform: translateX(30%);
+}
+.slide-back-enter {
+	transform: translateX(-30%);
 }
 
 main > div {

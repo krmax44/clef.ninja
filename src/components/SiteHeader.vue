@@ -3,13 +3,13 @@
 		<img
 			src="../assets/images/logo.svg"
 			class="h-16 self-start cursor-pointer"
-			@click="$store.commit('stage', 'homeView')"
+			@click="home()"
 			alt="clef.ninja Logo"
 		/>
 		<h1
 			class="brand"
 			:class="{ 'hidden lg:block': brandHidden, visible: brandVisible }"
-			@click="$store.commit('stage', 'homeView')"
+			@click="home()"
 		>
 			<span class="font-bold">clef</span>
 			<span class="text-gray-800">.ninja</span>
@@ -49,6 +49,13 @@ export default Vue.extend({
 		}
 	},
 	methods: {
+		home() {
+			// TODO: vuex + ts
+			(this as any).$store.commit('stage', {
+				name: 'homeView',
+				transition: 'backwards'
+			});
+		},
 		async portalChange(status: boolean) {
 			if (status === true) {
 				this.brandHidden = true;

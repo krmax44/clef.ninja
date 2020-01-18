@@ -5,7 +5,10 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
 	state: {
-		stage: 'homeView',
+		stage: {
+			name: 'homeView',
+			transition: 'forwards'
+		},
 		gamemode: '',
 		keyboard: {
 			type: 'virtual',
@@ -20,7 +23,11 @@ export default new Vuex.Store({
 			state.keyboard = keyboard;
 		},
 		stage(state, stage) {
-			state.stage = stage;
+			if (state.stage.name === stage.name) return;
+
+			state.stage.transition = stage.transition || 'forwards';
+			state.stage.name = stage.name;
+			window.history.pushState(stage, document.title);
 		}
 	},
 	getters: {
