@@ -80,15 +80,15 @@ export default Vue.extend({
 		}
 	},
 	methods: {
-		setKeyboard(keyboard: string) {
+		setKeyboard(keyboard: { type: string; midi?: any }) {
 			// TODO: vuex + ts
 			(this as any).$store.commit('keyboard', keyboard);
 			(this as any).$store.commit('stage', 'homeView');
 		},
 		noteUp() {
-			(this as any).stage = 'works';
+			this.stage = 'works';
 			this.midi && this.midi.off('noteUp', this.noteUp);
-			(this as any).setKeyboard({ type: 'midi', midi: this.midi });
+			this.setKeyboard({ type: 'midi', midi: this.midi });
 		},
 		async startMidi() {
 			const midi = new MidiHandler();
