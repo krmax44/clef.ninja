@@ -10,6 +10,7 @@
 				<div
 					class="fret"
 					v-for="{ fret, width, strings } in frets"
+					ref="fret"
 					:key="fret"
 					:style="{ width: `${width}%` }"
 				>
@@ -18,7 +19,7 @@
 						v-for="({ pitchClass, midiNote, octave }, string) in strings"
 						:title="keyLabels ? pitchClass.toUpperCase() + octave : undefined"
 						:key="string"
-						@click="input(midiNote)"
+						@click="input(midiNote, string, fret)"
 					>
 						<div class="string" />
 					</div>
@@ -29,6 +30,30 @@
 						/>
 						<div class="dot" v-if="fret === 12" />
 					</div>
+					<div class="dots dots-feedback">
+						<div
+							class="dot"
+							:class="{
+								'no-transition':
+									dotCorrect(fret, string) || dotWrong(fret, string),
+								correct: dotCorrect(fret, string),
+								wrong: dotWrong(fret, string)
+							}"
+							v-for="(a, string) in strings"
+							:key="string"
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="body">
+				<div class="fret">
+					<div
+						class="string-container"
+						v-for="(a, string) in new Array(6)"
+						:key="string"
+					>
+						<div class="string" />
+					</div>
 				</div>
 			</div>
 		</div>
@@ -37,23 +62,13 @@
 
 <script lang="ts">
 import Vue from 'vue';
+
 import Note from '@/utils/Note';
-
-// see https://en.wikipedia.org/wiki/Guitar_tunings#Standard
-// E2, A2, D3, G3, B3, E4
-const BASENOTES = [40, 45, 50, 55, 59, 64].reverse();
-
-// fret widths - sums up to 100%
-const FRETW = [1, 8, 8, 7, 7, 6, 6, 6, 6, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3, 2];
-
-const FRETS = FRETW.map((width, fret) => {
-	const strings = new Array(6).fill(undefined).map((a, string) => {
-		const midi = BASENOTES[string] + fret;
-		return new Note(midi);
-	});
-
-	return { width, strings, fret };
-});
+import InstrumentGuitar, {
+	GuitarNote,
+	midiToGuitarNote,
+	FRETS
+} from '@/instruments/InstrumentGuitar';
 
 export default Vue.extend({
 	props: {
@@ -76,14 +91,54 @@ export default Vue.extend({
 			default: false
 		}
 	},
-	data() {
+	data(): {
+		frets: { width: number; strings: Note[]; fret: number }[];
+		correctDots: GuitarNote[];
+		wrongDot: GuitarNote | undefined;
+		pressed: GuitarNote[];
+	} {
 		return {
-			frets: FRETS
+			frets: FRETS,
+			pressed: [],
+			correctDots: [],
+			wrongDot: undefined
 		};
 	},
 	methods: {
-		input(note: number) {
+		input(note: number, string: number, fret: number) {
+			this.pressed.unshift({ note, string, fret });
 			this.$emit('note', note);
+			setTimeout(() => this.pressed.pop(), 50);
+		},
+		dotCorrect(fret: number, string: number) {
+			return this.correctDots.some(n => n.fret === fret && n.string === string);
+		},
+		dotWrong(fret: number, string: number) {
+			if (this.wrongDot !== undefined) {
+				return this.wrongDot.fret === fret && this.wrongDot.string === string;
+			}
+		}
+	},
+	watch: {
+		wrong() {
+			this.wrongDot = this.pressed.find(i => i.note === this.wrong);
+		},
+		correct() {
+			const corrects = (this.correct as number[]).filter(
+				n => n > InstrumentGuitar.constants.bass.min
+			);
+
+			const pressed = this.pressed;
+			const pressedNotes = pressed.map(p => p.note);
+
+			const correct = corrects
+				.filter(c => pressedNotes.includes(c))
+				.map(c => pressed.find(p => p.note === c)!);
+			const missed = corrects
+				.filter(c => !pressedNotes.includes(c))
+				.map(n => midiToGuitarNote(n)!);
+
+			this.correctDots = [...correct, ...missed];
 		}
 	}
 });
@@ -94,11 +149,11 @@ export default Vue.extend({
 	min-width: 100vw;
 	margin-left: 50%;
 	transform: translateX(-50%);
-	background-image: url('../assets/images/guitar-body.svg');
+	background-image: url('~@/assets/images/guitar-body.svg');
 	background-size: auto 100%;
 	background-position: right;
 	background-repeat: no-repeat;
-	@apply flex items-center overflow-x-auto py-8 pr-64;
+	@apply flex items-center overflow-x-auto py-8;
 }
 
 .guitar {
@@ -107,12 +162,29 @@ export default Vue.extend({
 
 	.head {
 		@apply flex;
-		height: 100%;
+		min-height: 100%;
 		width: auto;
+	}
+
+	.body {
+		width: 24rem;
+
+		& > div.fret {
+			background-color: transparent;
+		}
+
+		& div.string-container {
+			@apply cursor-auto;
+		}
+
+		& div.string:first-of-type {
+			@apply border-gray-600;
+		}
 	}
 }
 
-.fretboard {
+.fretboard,
+.body {
 	transition: opacity 0.5s;
 	height: 87.5%;
 	@apply flex w-full;
@@ -159,18 +231,40 @@ export default Vue.extend({
 	}
 
 	& .dot {
+		transition: background-color 1s;
 		@apply rounded-full h-4 w-4 bg-gray-200;
+	}
+
+	& .dots.dots-feedback {
+		@apply inset-0;
+	}
+
+	& .dots-feedback .dot {
+		background-color: transparent;
+	}
+
+	& .dot.wrong {
+		background-color: theme('colors.brand-red');
+	}
+
+	& .dot.correct {
+		@apply bg-green-500;
+	}
+
+	& .dot.no-transition {
+		transition: none;
 	}
 }
 
-@media (max-width: theme('screens.lg')) {
+@media (max-width: theme('screens.xl')) {
 	.container {
 		background-image: none;
 		@apply p-0;
 	}
 
 	.guitar {
-		.head {
+		.head,
+		.body {
 			@apply hidden;
 		}
 
