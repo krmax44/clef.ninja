@@ -59,7 +59,7 @@
 
 			<div class="flex justify-around py-8 flex-wrap">
 				<div class="card-container" @click="setInstrument('piano')">
-					<div class="card">
+					<div class="card flex">
 						<div class="card-inner">
 							<PianoIcon :size="48" />
 							<h3>Piano</h3>
@@ -72,6 +72,11 @@
 						<div class="card-inner">
 							<GuitarIcon :size="48" />
 							<h3>Guitar</h3>
+
+							<p>
+								<span class="font-bold">Beta:</span> This feature is a
+								work-in-progress
+							</p>
 						</div>
 					</div>
 				</div>
