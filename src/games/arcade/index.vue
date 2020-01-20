@@ -28,11 +28,10 @@
 			</div>
 		</div>
 
-		<VirtualKeyboard
+		<VirtualInput
 			@note="input"
 			:correct="correct"
 			:wrong="wrong"
-			:disabled="state !== 'playing'"
 			class="mt-auto"
 		/>
 	</div>
@@ -44,7 +43,7 @@ import Vue from 'vue';
 import ArcadeTimer from './ArcadeTimer.vue';
 import ArcadeStats from './ArcadeStats.vue';
 import ArcadeGameOver from './ArcadeGameOver.vue';
-import VirtualKeyboard from '@/components/VirtualKeyboard.vue';
+import VirtualInput from '@/components/VirtualInput.vue';
 
 import Task from '@/tasks/Task';
 import TaskSingleNote from '@/tasks/TaskSingleNote';
@@ -77,7 +76,7 @@ export default Vue.extend({
 		ArcadeTimer,
 		ArcadeStats,
 		ArcadeGameOver,
-		VirtualKeyboard
+		VirtualInput
 	},
 	methods: {
 		input(input: number) {
