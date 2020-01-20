@@ -7,7 +7,7 @@
 		"build": "vue-cli-service build",
 		"lint": "vue-cli-service lint",
 		"test": "vue-cli-service test:unit",
-		"ci": "yarn lint && yarn test --coverage"
+		"ci": "yarn lint && yarn test --coverage && codecov"
 	},
 	"dependencies": {
 		"@tonaljs/chord": "^3.3.0",
@@ -38,6 +38,7 @@
 		"@vue/eslint-config-typescript": "^5.0.1",
 		"@vue/test-utils": "^1.0.0-beta.30",
 		"babel-eslint": "^10.0.3",
+		"codecov": "^3.6.1",
 		"eslint": "^6.8.0",
 		"eslint-plugin-prettier": "^3.1.2",
 		"eslint-plugin-vue": "^6.1.2",
