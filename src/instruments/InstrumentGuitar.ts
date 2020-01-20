@@ -6,7 +6,7 @@ const guitar: Instrument = {
 	constants: {
 		treble: {
 			min: 55, // G3
-			max: 83 // B5
+			max: 85 // D6
 		},
 
 		bass: {
