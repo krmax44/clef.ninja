@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import Vue from 'vue';
 import Landing from './Landing.vue';
 

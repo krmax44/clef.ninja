@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ArcadeTimer renders correctly 1`] = `
+<div
+  class="timer"
+>
+  <div
+    class="timer-inner hurry"
+    style="width: 8.333333333333332%;"
+  />
+</div>
+`;

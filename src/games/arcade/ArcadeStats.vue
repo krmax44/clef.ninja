@@ -21,7 +21,16 @@ import Vue from 'vue';
 import HeartIcon from 'vue-material-design-icons/HeartOutline.vue';
 
 export default Vue.extend({
-	props: ['lives', 'score'],
+	props: {
+		lives: {
+			type: Number,
+			required: true
+		},
+		score: {
+			type: Number,
+			required: true
+		}
+	},
 	components: { HeartIcon }
 });
 </script>

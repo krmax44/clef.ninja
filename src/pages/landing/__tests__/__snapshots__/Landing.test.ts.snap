@@ -1,0 +1,193 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Landing renders correctly 1`] = `
+<div
+  class="min-h-screen flex flex-col container mx-auto"
+>
+  <div
+    class="flex flex-1"
+  >
+    <div
+      class="lg:w-8/12 pt-8 md:pt-12 px-4"
+    >
+      <siteheader-stub />
+       
+      <main
+        class="pt-12 md:pt-24"
+      >
+        <h2
+          class="text-3xl"
+        >
+          
+					Train reading music the
+					
+          <span
+            class="text-brand-blue"
+          >
+            fun
+          </span>
+           way.
+				
+        </h2>
+         
+        <div
+          class="flex flex-wrap py-8"
+        >
+          <div
+            class="card-container"
+          >
+            <div
+              class="card"
+            >
+              <div
+                class="card-inner"
+              >
+                <gamepadicon-stub
+                  fillcolor="currentColor"
+                  size="24"
+                  title="Gamepad Square Outline icon"
+                />
+                 
+                <h3>
+                  Learn By Playing
+                </h3>
+                 
+                <p
+                  class="text-gray-700 text-base"
+                >
+                  
+									A random note in a random clef will be shown to you, which
+									you have to recognize and enter correctly. In Arcade Mode,
+									you have 60 seconds to get as many hits as possible. Don't
+									feel ready yet? You can up your skills in Training Mode.
+								
+                </p>
+              </div>
+            </div>
+          </div>
+           
+          <div
+            class="card-container"
+          >
+            <div
+              class="card"
+            >
+              <div
+                class="card-inner"
+              >
+                <pianoicon-stub
+                  fillcolor="currentColor"
+                  size="24"
+                  title="Piano icon"
+                />
+                 
+                <h3>
+                  Connect Your Keyboard
+                </h3>
+                 
+                <p>
+                  
+									Using MIDI, you can connect your keyboard to your computer
+									and use it to input the correct notes! Unfortunately, this
+									feature only works in Chromium-based browsers.
+								
+                </p>
+              </div>
+            </div>
+          </div>
+           
+          <div
+            class="card-container"
+          >
+            <div
+              class="card"
+            >
+              <div
+                class="card-inner"
+              >
+                <gifticon-stub
+                  fillcolor="currentColor"
+                  size="24"
+                  title="Gift Outline icon"
+                />
+                 
+                <h3>
+                  Completely Free With No Ads
+                </h3>
+                 
+                <p>
+                  
+									This site is free to use, doesn't spy on you or serves you
+									ads. You're welcome!
+								
+                </p>
+              </div>
+            </div>
+          </div>
+           
+          <div
+            class="card-container"
+          >
+            <div
+              class="card"
+            >
+              <div
+                class="card-inner"
+              >
+                <hearticon-stub
+                  fillcolor="currentColor"
+                  size="24"
+                  title="Heart Outline icon"
+                />
+                 
+                <h3>
+                  Open-Source Software
+                </h3>
+                 
+                <p>
+                  
+									Are you missing a feature or encountering a nasty bug? Feel
+									free to contribute to the code on
+									
+                  <a
+                    href="https://github.com/krmax44/clef.ninja"
+                  >
+                    Github
+                  </a>
+                  .
+								
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+         
+        <div
+          class="py-4"
+        >
+          <a
+            class="btn btn-red"
+            href="app/"
+          >
+            Let's jam!
+          </a>
+        </div>
+      </main>
+    </div>
+     
+    <div
+      class="w-4/12 items-center justify-center hidden lg:flex pl-16"
+    >
+      <div
+        class="rounded overflow-hidden shadow-lg"
+      >
+        <img
+          alt="Person playing piano"
+          class="w-auto max-h-3/4-screen"
+          src="@/assets/images/reading-music.jpg"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

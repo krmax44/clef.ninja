@@ -3,8 +3,7 @@
 		<div
 			class="timer-inner"
 			:class="{ hurry: remainingTime <= 10 }"
-			:style="{ width: `${(remainingTime / 60) * 100}%` }"
-			@click="remainingTime -= 10"
+			:style="{ width: `${(remainingTime / totalTime) * 100}%` }"
 		/>
 	</div>
 </template>
@@ -13,7 +12,21 @@
 import Vue from 'vue';
 
 export default Vue.extend({
-	props: ['state', 'remainingTime']
+	props: {
+		state: {
+			type: String,
+			required: true
+		},
+		remainingTime: {
+			type: Number,
+			required: true
+		},
+		totalTime: {
+			type: Number,
+			required: false,
+			default: 60
+		}
+	}
 });
 </script>
 

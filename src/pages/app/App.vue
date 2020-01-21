@@ -53,7 +53,7 @@ export default Vue.extend({
 </script>
 
 <style lang="postcss" scoped>
-@import '~@/assets/styles/app.css';
+@import '~@/assets/styles/app.pcss';
 
 .slide-enter-active,
 .slide-back-enter-active {

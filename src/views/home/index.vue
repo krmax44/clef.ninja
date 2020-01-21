@@ -66,7 +66,7 @@ export default Vue.extend({
 </script>
 
 <style lang="postcss" scoped>
-@import '~@/assets/styles/card-picker.css';
+@import '~@/assets/styles/cardPicker.pcss';
 
 @screen md {
 	.card-container {
