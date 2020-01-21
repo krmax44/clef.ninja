@@ -122,7 +122,7 @@ export default Vue.extend({
 		setInstrument(instrument: string) {
 			// TODO: vuex + ts
 			(this as any).$store.commit('instrument', instrument);
-			(this as any).$store.commit('stage', 'homeView');
+			(this as any).$store.commit('stage', { name: 'homeView' });
 		},
 		noteUp() {
 			this.stage = 'works';
