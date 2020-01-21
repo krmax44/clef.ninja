@@ -97,7 +97,7 @@ import PianoIcon from 'vue-material-design-icons/Piano.vue';
 import GiftIcon from 'vue-material-design-icons/GiftOutline.vue';
 import HeartIcon from 'vue-material-design-icons/HeartOutline.vue';
 
-import SiteHeader from '@/components/SiteHeader.vue';
+import SiteHeader from '@/components/SiteHeaderLanding.vue';
 
 export default {
 	components: { GamepadIcon, PianoIcon, GiftIcon, HeartIcon, SiteHeader }
@@ -105,7 +105,7 @@ export default {
 </script>
 
 <style lang="postcss">
-@import '~@/assets/styles/app.css';
+@import '~@/assets/styles/app.pcss';
 
 .center {
 	@apply flex flex-col justify-center items-center;

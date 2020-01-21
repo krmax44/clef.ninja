@@ -1,13 +1,13 @@
 <template>
-	<header class="flex flex-row items-center overflow-hidden">
+	<header>
 		<img
 			src="../assets/images/logo.svg"
-			class="h-16 self-start cursor-pointer"
+			class="logo cursor-pointer"
 			@click="home()"
 			alt="clef.ninja Logo"
 		/>
 		<h1
-			class="brand"
+			class="brand cursor-pointer"
 			:class="{ 'hidden lg:block': brandHidden, visible: brandVisible }"
 			@click="home()"
 		>
@@ -73,31 +73,4 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="postcss">
-.brand {
-	width: 100%;
-	transition: opacity 0.3s;
-	opacity: 0;
-	@apply text-4xl ml-4 cursor-pointer w-auto;
-
-	&.visible {
-		opacity: 1;
-	}
-}
-
-@screen lg {
-	.brand {
-		opacity: 1;
-	}
-}
-
-.fade-enter-active,
-.fade-leave-active {
-	transition: opacity 0.5s;
-}
-
-.fade-enter,
-.fade-leave-to {
-	opacity: 0;
-}
-</style>
+<style lang="postcss" src="./SiteHeader.pcss"></style>
