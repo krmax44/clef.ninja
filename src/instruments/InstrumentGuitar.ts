@@ -1,5 +1,5 @@
 import Instrument from './Instrument';
-import range from '@/utils/range';
+import { rangeArray } from 'rangestar';
 import Note from '@/utils/Note';
 
 const guitar: Instrument = {
@@ -39,7 +39,7 @@ const FRETS = FRETW.map((width, fret) => {
 
 const MIDIMAP = BASENOTES.map((basenote, string) => {
 	const nextStop = BASENOTES[string + 1] || guitar.constants.treble.max;
-	return [...range(basenote, nextStop)].map((note, fret) => ({
+	return rangeArray(basenote, nextStop).map((note, fret) => ({
 		string: 5 - string, // highest string is top here
 		fret,
 		note

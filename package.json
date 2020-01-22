@@ -17,6 +17,7 @@
 		"@types/vexflow": "^1.2.33",
 		"houk": "^1.1.1",
 		"portal-vue": "^2.1.7",
+		"rangestar": "^1.0.0",
 		"typeface-assistant": "^0.0.75",
 		"vexflow": "^1.2.89",
 		"vue": "^2.6.11",
