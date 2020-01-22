@@ -1,0 +1,147 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SettingsView renders correctly 1`] = `
+<div
+  class="px-4"
+>
+  <div
+    class="setting"
+  >
+    <h2
+      class="setting-title"
+    >
+      Input Setup
+    </h2>
+     
+    <div
+      class="flex justify-around py-8 flex-wrap"
+    >
+      <div
+        class="card-container"
+      >
+        <div
+          class="card"
+        >
+          <div
+            class="card-inner"
+          >
+            <virtualicon-stub
+              fillcolor="currentColor"
+              size="48"
+              title="Monitor Clean icon"
+            />
+             
+            <h3>
+              Virtual Keyboard
+            </h3>
+             
+            <p>
+              Use a virtual input device with your mouse.
+            </p>
+          </div>
+        </div>
+      </div>
+       
+      <div
+        class="card-container"
+      >
+        <div
+          class="card cursor-auto"
+        >
+          <div
+            class="card-inner"
+          >
+            <midiicon-stub
+              fillcolor="currentColor"
+              size="48"
+              title="Midi Port icon"
+            />
+             
+            <h3>
+              MIDI Keyboard
+            </h3>
+             
+            <div>
+              <p>
+                
+								Unfortunately, only Chromium-based browsers support this
+								feature at the moment. We're sorry.
+							
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   
+  <div
+    class="setting"
+  >
+    <h2
+      class="setting-title"
+    >
+      Instrument
+    </h2>
+     
+    <div
+      class="flex justify-around py-8 flex-wrap"
+    >
+      <div
+        class="card-container"
+      >
+        <div
+          class="card flex"
+        >
+          <div
+            class="card-inner"
+          >
+            <pianoicon-stub
+              fillcolor="currentColor"
+              size="48"
+              title="Piano icon"
+            />
+             
+            <h3>
+              Piano
+            </h3>
+          </div>
+        </div>
+      </div>
+       
+      <div
+        class="card-container"
+      >
+        <div
+          class="card"
+        >
+          <div
+            class="card-inner"
+          >
+            <guitaricon-stub
+              fillcolor="currentColor"
+              size="48"
+              title="Guitar Acoustic icon"
+            />
+             
+            <h3>
+              Guitar
+            </h3>
+             
+            <p>
+              <span
+                class="font-bold"
+              >
+                Beta:
+              </span>
+               This feature is a
+							work-in-progress
+						
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

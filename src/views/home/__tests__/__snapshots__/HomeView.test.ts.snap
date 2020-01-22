@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HomeView renders correctly 1`] = `
+<div
+  class="px-4"
+>
+  <h2
+    class="text-2xl"
+  >
+    Select your game mode.
+  </h2>
+   
+  <div
+    class="flex justify-around py-8 flex-wrap"
+  >
+    <div
+      class="card-container"
+    >
+      <div
+        class="card"
+      >
+        <div
+          class="card-inner"
+        >
+          <schoolicon-stub
+            fillcolor="currentColor"
+            size="48"
+            title="School Outline icon"
+          />
+           
+          <h3>
+            Training Mode
+          </h3>
+           
+          <p>
+            Get started reading treble and bass clefs.
+          </p>
+        </div>
+      </div>
+    </div>
+     
+    <div
+      class="card-container"
+    >
+      <div
+        class="card"
+      >
+        <div
+          class="card-inner"
+        >
+          <gamepadicon-stub
+            fillcolor="currentColor"
+            size="48"
+            title="Gamepad Square Outline icon"
+          />
+           
+          <h3>
+            Arcade Mode
+          </h3>
+           
+          <p>
+            
+						Hit as many correct notes as possible. You have three lives and 60
+						seconds. Go!
+					
+          </p>
+        </div>
+      </div>
+    </div>
+     
+    <div
+      class="card-container"
+    >
+      <div
+        class="card"
+      >
+        <div
+          class="card-inner"
+        >
+          <settingsicon-stub
+            fillcolor="currentColor"
+            size="48"
+            title="Settings Outline icon"
+          />
+           
+          <h3>
+            Settings
+          </h3>
+           
+          <p>
+            
+						Setup your MIDI keyboard or pick a different instrument.
+					
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
