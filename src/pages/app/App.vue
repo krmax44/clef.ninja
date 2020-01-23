@@ -31,8 +31,7 @@ export default Vue.extend({
 	components: { SiteHeader, HomeView, SettingsView, GameView },
 	computed: {
 		stage() {
-			// TODO: vuex + ts
-			return (this as any).$store.state.stage;
+			return this.$store.state.stage;
 		}
 	},
 	methods: {
@@ -45,8 +44,7 @@ export default Vue.extend({
 			event.preventDefault();
 			const { name } = event.state || { name: 'homeView' };
 
-			// TODO: vuex + ts
-			(this as any).$store.commit('stage', { name, transition: 'backwards' });
+			this.$store.commit('stage', { name, transition: 'backwards' });
 		});
 	}
 });

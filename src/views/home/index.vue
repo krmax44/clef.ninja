@@ -57,9 +57,8 @@ export default Vue.extend({
 	components: { SchoolIcon, GamepadIcon, SettingsIcon },
 	methods: {
 		selectGamemode(gamemode: string) {
-			// TODO: vuex + ts
-			(this as any).$store.commit('gamemode', gamemode);
-			(this as any).$store.commit('stage', { name: 'gamePlay' });
+			this.$store.commit('gamemode', gamemode);
+			this.$store.commit('stage', { name: 'gamePlay' });
 		}
 	}
 });

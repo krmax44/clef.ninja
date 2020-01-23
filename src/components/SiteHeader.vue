@@ -50,8 +50,7 @@ export default Vue.extend({
 	},
 	methods: {
 		home() {
-			// TODO: vuex + ts
-			(this as any).$store.commit('stage', {
+			this.$store.commit('stage', {
 				name: 'homeView',
 				transition: 'backwards'
 			});

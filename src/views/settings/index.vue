@@ -115,14 +115,12 @@ export default Vue.extend({
 	},
 	methods: {
 		setKeyboard(keyboard: { type: string; midi?: any }) {
-			// TODO: vuex + ts
-			(this as any).$store.commit('keyboard', keyboard);
-			(this as any).$store.commit('stage', { name: 'homeView' });
+			this.$store.commit('keyboard', keyboard);
+			this.$store.commit('stage', { name: 'homeView' });
 		},
 		setInstrument(instrument: string) {
-			// TODO: vuex + ts
-			(this as any).$store.commit('instrument', instrument);
-			(this as any).$store.commit('stage', { name: 'homeView' });
+			this.$store.commit('instrument', instrument);
+			this.$store.commit('stage', { name: 'homeView' });
 		},
 		noteUp() {
 			this.stage = 'works';

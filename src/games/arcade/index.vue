@@ -147,8 +147,7 @@ export default Vue.extend({
 
 	mounted() {
 		this.newTask();
-		// TODO: vuex + ts
-		const { midi } = (this as any).$store.getters;
+		const { midi } = this.$store.getters;
 
 		if (midi) {
 			midi.on('noteDown', this.input);
@@ -158,8 +157,7 @@ export default Vue.extend({
 	},
 
 	beforeDestroy() {
-		// TODO: vuex + ts
-		const { midi } = (this as any).$store.getters;
+		const { midi } = this.$store.getters;
 
 		if (midi) {
 			midi.off('noteDown', this.input);
