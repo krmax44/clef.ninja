@@ -7,13 +7,33 @@
 				<div class="options-title">Clefs</div>
 				<div class="options-selector">
 					<div>
-						<input type="checkbox" id="treble" value="treble" v-model="clefs" />
+						<input
+							type="checkbox"
+							id="treble"
+							:value="allClefs[0]"
+							v-model="clefs"
+						/>
 						<label for="treble">Treble</label>
 					</div>
 
 					<div>
-						<input type="checkbox" id="bass" value="bass" v-model="clefs" />
+						<input
+							type="checkbox"
+							id="bass"
+							:value="allClefs[1]"
+							v-model="clefs"
+						/>
 						<label for="bass">Bass</label>
+					</div>
+
+					<div>
+						<input
+							type="checkbox"
+							id="treble8"
+							:value="allClefs[2]"
+							v-model="clefs"
+						/>
+						<label for="treble8">Treble (one octave lower)</label>
 					</div>
 				</div>
 			</div>
@@ -63,7 +83,8 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Clef } from '../../utils/types';
+import Clef from '@/utils/Clef';
+import { clefs } from '../../utils/noteConstants';
 
 export interface Settings {
 	clefs: Clef[];
@@ -72,20 +93,23 @@ export interface Settings {
 }
 
 export const defaultSettings: Settings = {
-	clefs: ['bass', 'treble'],
+	clefs: [],
 	tasks: ['singleNotes'],
 	keyLabels: true
 };
 
 export default Vue.extend({
 	data() {
-		return defaultSettings;
+		return { ...defaultSettings, allClefs: clefs };
 	},
 	props: {
 		open: {
 			type: Boolean,
 			required: true
 		}
+	},
+	created() {
+		this.clefs = this.$store.state.instrument.clefs;
 	},
 	methods: {
 		close(e: MouseEvent) {
@@ -94,7 +118,7 @@ export default Vue.extend({
 			}
 		},
 		update() {
-			const { clefs, tasks, keyLabels } = this;
+			let { clefs, tasks, keyLabels } = this;
 			this.$emit('update', { clefs, tasks, keyLabels });
 		}
 	},

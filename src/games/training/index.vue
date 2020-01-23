@@ -52,7 +52,7 @@ import { randomPattern } from '@/tasks/PatternTasks';
 
 function randomTask(
 	target: HTMLElement,
-	{ tasks: viableTasks } = defaultSettings
+	{ tasks: viableTasks, clefs } = defaultSettings
 ): Task {
 	const tasks = {
 		singleNotes: () => TaskSingleNote,
@@ -62,7 +62,7 @@ function randomTask(
 
 	const name = viableTasks[Math.floor(Math.random() * viableTasks.length)];
 	const Task = tasks[name]();
-	return new Task(target);
+	return new Task(target, clefs);
 }
 
 export default Vue.extend({

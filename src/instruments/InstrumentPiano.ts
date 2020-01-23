@@ -1,20 +1,12 @@
 import Instrument from './Instrument';
 import { toMidi } from '@tonaljs/midi';
+import { treble, bass } from '@/utils/noteConstants';
 
 const piano: Instrument = {
-	constants: {
-		treble: {
-			min: 55, // G3
-			max: 83 // B5
-		},
-
-		bass: {
-			min: 36, // C2
-			max: 65 // F4
-		}
-	},
-	clefs: ['treble', 'bass'],
-	name: 'piano'
+	clefs: [treble, bass],
+	name: 'piano',
+	lowestNote: 36, // C2
+	highestNote: 83 // B5
 };
 
 const scale = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];

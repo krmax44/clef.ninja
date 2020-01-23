@@ -1,22 +1,13 @@
 import Task from './Task';
-import Note from '../utils/Note';
-import { Clef } from '../utils/types';
+import Note from '@/utils/Note';
+import Clef from '@/utils/Clef';
 
 import Vex from 'vexflow';
+const { Accidental } = Vex.Flow;
 import { clefs as CLEFS } from '@/utils/noteConstants';
-const {
-	Renderer,
-	Stave,
-	Formatter,
-	StaveNote,
-	Accidental,
-	StaveTie,
-	Beam
-} = Vex.Flow;
+import { Renderer, StaveNote } from '@/utils/VexHelper';
 
 export default class TaskLickPattern extends Task {
-	public clef: Clef;
-	public notes: Note[];
 	private checkProgress: boolean[] = [];
 
 	constructor(target: HTMLElement, clefs = CLEFS) {
@@ -53,38 +44,19 @@ export default class TaskLickPattern extends Task {
 		this.notes = [one, two, three, four, five, six, seven];
 	}
 
-	beams() {
-		const notes = this.staveNotes();
-
-		return Beam.generateBeams(notes);
-	}
-
-	ties(): Vex.Flow.StaveTie[] {
-		const notes = this.staveNotes();
-
-		return [
-			new StaveTie({
-				first_note: notes[6],
-				last_note: notes[7],
-				first_indices: [0],
-				last_indices: [0]
-			})
-		];
-	}
-
 	staveNotes() {
 		return this.notes.map((note, i) => {
-			const { pitchClass, octave, accidental, duration } = note;
+			if (this.checkProgress.length === i) {
+				note.color = '#31bced';
+			} else if (this.checkProgress[i] === true) {
+				note.color = '#92dd6e';
+			} else if (this.checkProgress[i] === false) {
+				note.color = '#fc5130';
+			}
 
-			const staveNote = new StaveNote({
-				keys: [`${pitchClass}/${octave}`],
-				clef: this.clef,
-				duration: duration as string
-			});
+			const staveNote = StaveNote([note], this.clef);
 
-			if (typeof accidental === 'string') {
-				staveNote.addAccidental(0, new Accidental(accidental));
-			} else {
+			if (!note.accidental) {
 				const notesBefore = this.notes.slice(0, i);
 				const needsNatural = notesBefore.some(
 					n => n.pitchClass[0] === note.pitchClass[0] && n.accidental
@@ -95,43 +67,12 @@ export default class TaskLickPattern extends Task {
 				}
 			}
 
-			let color;
-
-			if (this.checkProgress.length === i) {
-				color = '#31bced';
-			} else if (this.checkProgress[i] === true) {
-				color = '#92dd6e';
-			} else if (this.checkProgress[i] === false) {
-				color = '#fc5130';
-			}
-
-			if (color) staveNote.setStyle({ fillStyle: color, strokeStyle: color });
-
 			return staveNote;
 		});
 	}
 
 	public render() {
-		[...this.target.children].forEach(c => c.remove());
-
-		const staveNotes = this.staveNotes();
-
-		const renderer = new Renderer(this.target, Renderer.Backends.SVG);
-
-		renderer.resize(400, 150);
-		const context = renderer.getContext();
-
-		const stave = new Stave(0, 10, 400);
-		stave.addClef(this.clef);
-
-		stave.setContext(context).draw();
-
-		const beams = Beam.generateBeams(staveNotes);
-		Formatter.FormatAndDraw(context, stave, staveNotes);
-
-		// TODO: fix ties
-		// const ties = this.ties();
-		[...beams].forEach(t => t.setContext(context).draw());
+		Renderer.apply(this, [400]);
 	}
 
 	public check(input: number) {

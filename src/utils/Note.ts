@@ -1,8 +1,9 @@
-import { Accidental, Clef } from './types';
+import { Accidental } from './types';
 import { note as toNote } from '@tonaljs/tonal';
 import * as constants from './noteConstants';
 import Instrument from '@/instruments/Instrument';
 import InstrumentPiano from '@/instruments/InstrumentPiano';
+import Clef from './Clef';
 
 const S = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
 const F = ['c', 'db', 'd', 'eb', 'e', 'f', 'gb', 'g', 'ab', 'a', 'bb', 'b'];
@@ -38,10 +39,10 @@ export default class Note {
 	}
 
 	public determineClef(clefs: Clef[] = constants.clefs): Clef {
+		if (this.clef) return this.clef;
+
 		const viable = clefs.filter(
-			clef =>
-				this.instrument.constants[clef].min <= this.midiNote &&
-				this.midiNote <= this.instrument.constants[clef].max
+			clef => clef.min <= this.midiNote && this.midiNote <= clef.max
 		);
 
 		const clef = viable[Math.floor(Math.random() * viable.length)];
@@ -70,11 +71,11 @@ export default class Note {
 		maxOffset = 0,
 		instrument: Instrument = InstrumentPiano
 	): Note {
-		const mins = clefs.map(clef => instrument.constants[clef].min);
-		const maxs = clefs.map(clef => instrument.constants[clef].max);
+		const mins = clefs.map(clef => clef.min);
+		const maxs = clefs.map(clef => clef.max);
 
-		const MIN = Math.min(...mins) + minOffset;
-		const MAX = Math.max(...maxs) - maxOffset;
+		const MIN = Math.max(Math.min(...mins), instrument.lowestNote) + minOffset;
+		const MAX = Math.min(Math.max(...maxs), instrument.highestNote) - maxOffset;
 
 		const midiNote = Math.floor(Math.random() * (MAX - MIN)) + MIN;
 		const note = new Note(

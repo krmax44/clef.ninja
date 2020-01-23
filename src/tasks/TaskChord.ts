@@ -5,7 +5,8 @@ import { entries } from '@tonaljs/chord-dictionary';
 import { chord as toChord } from '@tonaljs/chord';
 
 import Vex from 'vexflow';
-const { StaveNote, Accidental } = Vex.Flow;
+const { Accidental } = Vex.Flow;
+import { StaveNote } from '@/utils/VexHelper';
 
 const chords = entries().filter(
 	c => c.intervals.length > 2 && c.intervals.length <= 4
@@ -41,24 +42,7 @@ export default class TaskChord extends Task {
 	}
 
 	public staveNotes(): Vex.Flow.StaveNote[] {
-		const keys = this.notes.map(note => {
-			return `${note.pitchClass}/${note.octave}`;
-		});
-
-		const staveNote = new StaveNote({
-			keys,
-			clef: this.clef,
-			duration: 'q'
-		});
-
-		this.notes.forEach((note, i) => {
-			const { accidental } = note;
-			if (typeof accidental === 'string') {
-				staveNote.addAccidental(i, new Accidental(accidental));
-			}
-		});
-
-		return [staveNote];
+		return [StaveNote(this.notes)];
 	}
 
 	public check(input: number) {

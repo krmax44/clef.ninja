@@ -1,13 +1,8 @@
-import { Clef } from '@/utils/types';
+import Clef from '@/utils/Clef';
 
 export default interface Instrument {
 	name: string;
 	clefs: Clef[];
-
-	constants: {
-		[clef in Clef]: {
-			min: number;
-			max: number;
-		};
-	};
+	highestNote: number;
+	lowestNote: number;
 }

@@ -1,21 +1,13 @@
 import Instrument from './Instrument';
 import { rangeArray } from 'rangestar';
 import Note from '@/utils/Note';
+import { treblevb8 } from '@/utils/noteConstants';
 
 const guitar: Instrument = {
-	constants: {
-		treble: {
-			min: 55, // G3
-			max: 85 // D6
-		},
-
-		bass: {
-			min: 40, // E2
-			max: 65 // F4
-		}
-	},
-	clefs: ['treble', 'bass'],
-	name: 'guitar'
+	clefs: [treblevb8],
+	name: 'guitar',
+	lowestNote: 40, // E2
+	highestNote: 85 // D6
 };
 
 type GuitarNote = { note: number; string: number; fret: number };
@@ -38,7 +30,7 @@ const FRETS = FRETW.map((width, fret) => {
 });
 
 const MIDIMAP = BASENOTES.map((basenote, string) => {
-	const nextStop = BASENOTES[string + 1] || guitar.constants.treble.max;
+	const nextStop = BASENOTES[string + 1] || guitar.highestNote;
 	return rangeArray(basenote, nextStop).map((note, fret) => ({
 		string: 5 - string, // highest string is top here
 		fret,

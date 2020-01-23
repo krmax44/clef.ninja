@@ -102,7 +102,7 @@ export default Vue.extend({
 	computed: {
 		correctDots(): GuitarNote[] {
 			const corrects = (this.correct as number[]).filter(
-				n => n > InstrumentGuitar.constants.bass.min
+				n => n > InstrumentGuitar.lowestNote
 			);
 
 			const pressed = this.pressed;
