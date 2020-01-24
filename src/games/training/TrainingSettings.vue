@@ -1,6 +1,6 @@
 <template>
 	<div class="modal-container" :class="{ open }" @click="close" ref="container">
-		<div class="modal" @click="() => {}">
+		<div class="modal">
 			<h3 class="text-xl font-bold mb-4">Settings</h3>
 
 			<div class="option">
