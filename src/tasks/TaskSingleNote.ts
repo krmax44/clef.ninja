@@ -1,7 +1,6 @@
 import Task from './Task';
 import Note from '../utils/Note';
 import { clefs as CLEFS } from '../utils/noteConstants';
-import { Renderer } from '@/utils/VexHelper';
 
 export default class TaskSingleNote extends Task {
 	constructor(target: HTMLElement, clefs = CLEFS) {
