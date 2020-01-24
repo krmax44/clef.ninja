@@ -1,12 +1,18 @@
 import { mount } from '@vue/test-utils';
 import TrainingSettings from '../TrainingSettings.vue';
 import store from '@/store';
-import { treble, bass } from '@/utils/noteConstants';
 
 describe('TrainingSettings', () => {
 	it('allows to change settings', async () => {
 		const wrapper = mount(TrainingSettings, {
-			propsData: { open: true },
+			propsData: {
+				open: true,
+				value: {
+					clefs: [],
+					tasks: ['singleNotes'],
+					keyLabels: true
+				}
+			},
 			store
 		});
 
@@ -15,8 +21,8 @@ describe('TrainingSettings', () => {
 
 		await wrapper.vm.$nextTick();
 
-		expect(wrapper.emitted().update[0][0]).toEqual({
-			clefs: [treble, bass],
+		expect(wrapper.emitted().input[0][0]).toEqual({
+			clefs: [],
 			tasks: ['singleNotes', 'chords'],
 			keyLabels: true
 		});

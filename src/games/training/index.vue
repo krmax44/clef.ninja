@@ -10,8 +10,8 @@
 
 		<TrainingSettings
 			:open="showSettings"
+			v-model="settings"
 			@close="showSettings = false"
-			@update="updateSettings"
 		/>
 
 		<div class="display">
@@ -38,10 +38,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import VirtualInput from '@/components/VirtualInput.vue';
-import TrainingSettings, {
-	Settings,
-	defaultSettings
-} from './TrainingSettings.vue';
+import TrainingSettings from './TrainingSettings.vue';
 
 import SettingsIcon from 'vue-material-design-icons/SettingsOutline.vue';
 
@@ -49,6 +46,7 @@ import Task from '@/tasks/Task';
 import TaskSingleNote from '@/tasks/TaskSingleNote';
 import TaskChord from '@/tasks/TaskChord';
 import { randomPattern } from '@/tasks/PatternTasks';
+import Clef from '@/utils/Clef';
 
 function randomTask(
 	target: HTMLElement,
@@ -64,6 +62,18 @@ function randomTask(
 	const Task = tasks[name]();
 	return new Task(target, clefs);
 }
+
+interface Settings {
+	clefs: Clef[];
+	tasks: ('singleNotes' | 'patterns' | 'chords')[];
+	keyLabels: boolean;
+}
+
+const defaultSettings: Settings = {
+	clefs: [],
+	tasks: ['singleNotes'],
+	keyLabels: true
+};
 
 export default Vue.extend({
 	data() {
@@ -110,15 +120,10 @@ export default Vue.extend({
 				this.settings
 			);
 			this.task.render();
-		},
-		updateSettings(settings: Settings) {
-			const { clefs } = settings;
-			this.settings = settings;
-
-			if (!clefs.includes(this.task.clef)) {
-				this.newTask();
-			}
 		}
+	},
+	created() {
+		this.settings.clefs = this.$store.state.instrument.clefs;
 	},
 	mounted() {
 		this.newTask();
@@ -134,6 +139,26 @@ export default Vue.extend({
 
 		if (midi) {
 			midi.off('noteDown', this.input);
+		}
+	},
+	watch: {
+		async 'settings.clefs'(now, before) {
+			if (now.length === 0) {
+				await this.$nextTick();
+				this.settings.clefs = before;
+				return;
+			}
+
+			if (!this.settings.clefs.map(c => c.name).includes(this.task.clef.name)) {
+				this.newTask();
+			}
+		},
+		async 'settings.tasks'(now, before) {
+			if (now.length === 0) {
+				await this.$nextTick();
+				this.settings.tasks = before;
+				return;
+			}
 		}
 	}
 });

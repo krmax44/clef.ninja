@@ -11,7 +11,7 @@
 							type="checkbox"
 							id="treble"
 							:value="allClefs[0]"
-							v-model="clefs"
+							v-model="settings.clefs"
 						/>
 						<label for="treble">Treble</label>
 					</div>
@@ -21,7 +21,7 @@
 							type="checkbox"
 							id="bass"
 							:value="allClefs[1]"
-							v-model="clefs"
+							v-model="settings.clefs"
 						/>
 						<label for="bass">Bass</label>
 					</div>
@@ -31,7 +31,7 @@
 							type="checkbox"
 							id="treble8"
 							:value="allClefs[2]"
-							v-model="clefs"
+							v-model="settings.clefs"
 						/>
 						<label for="treble8">Treble (one octave lower)</label>
 					</div>
@@ -46,7 +46,7 @@
 							type="checkbox"
 							id="singlenotes"
 							value="singleNotes"
-							v-model="tasks"
+							v-model="settings.tasks"
 						/>
 						<label for="singlenotes">Single notes</label>
 					</div>
@@ -56,13 +56,18 @@
 							type="checkbox"
 							id="patterns"
 							value="patterns"
-							v-model="tasks"
+							v-model="settings.tasks"
 						/>
 						<label for="patterns">Patterns</label>
 					</div>
 
 					<div>
-						<input type="checkbox" id="chords" value="chords" v-model="tasks" />
+						<input
+							type="checkbox"
+							id="chords"
+							value="chords"
+							v-model="settings.tasks"
+						/>
 						<label for="chords">Chords</label>
 					</div>
 				</div>
@@ -72,7 +77,11 @@
 				<div class="options-title">Key labels</div>
 				<div class="options-selector">
 					<div>
-						<input type="checkbox" id="keylabels" v-model="keyLabels" />
+						<input
+							type="checkbox"
+							id="keylabels"
+							v-model="settings.keyLabels"
+						/>
 						<label for="keylabels">Enable</label>
 					</div>
 				</div>
@@ -86,30 +95,29 @@ import Vue from 'vue';
 import Clef from '@/utils/Clef';
 import { clefs } from '../../utils/noteConstants';
 
-export interface Settings {
-	clefs: Clef[];
-	tasks: ('singleNotes' | 'patterns' | 'chords')[];
-	keyLabels: boolean;
-}
-
-export const defaultSettings: Settings = {
-	clefs: [],
-	tasks: ['singleNotes'],
-	keyLabels: true
-};
-
 export default Vue.extend({
 	data() {
-		return { ...defaultSettings, allClefs: clefs };
+		return {
+			settings: {
+				clefs: [],
+				tasks: [],
+				keyLabels: true
+			},
+			allClefs: clefs
+		};
 	},
 	props: {
 		open: {
 			type: Boolean,
 			required: true
+		},
+		value: {
+			type: Object,
+			required: true
 		}
 	},
 	created() {
-		this.clefs = this.$store.state.instrument.clefs;
+		this.settings = this.value;
 	},
 	methods: {
 		close(e: MouseEvent) {
@@ -118,27 +126,18 @@ export default Vue.extend({
 			}
 		},
 		update() {
-			let { clefs, tasks, keyLabels } = this;
-			this.$emit('update', { clefs, tasks, keyLabels });
+			this.$emit('input', this.settings);
 		}
 	},
 	watch: {
-		clefs: atLeastOne('clefs'),
-		tasks: atLeastOne('tasks'),
-		keyLabels: 'update'
+		settings: {
+			deep: true,
+			handler() {
+				this.update();
+			}
+		}
 	}
 });
-
-function atLeastOne(key: any) {
-	return async function(this: any, now: any, before: any) {
-		if (now.length === 0) {
-			await this.$nextTick();
-			this[key] = before;
-		} else {
-			this.update();
-		}
-	};
-}
 </script>
 
 <style lang="postcss" scoped>
