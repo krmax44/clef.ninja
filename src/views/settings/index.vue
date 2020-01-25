@@ -22,22 +22,41 @@
 							<h3>MIDI Keyboard</h3>
 
 							<div v-if="supportsMidi">
-								<p class="mb-4">
-									Use your MIDI keyboard to play clef.ninja. chords.
-								</p>
+								<div class="mb-4">
+									<p v-if="$store.getters.midiState === 'denied'">
+										Access to MIDI has been denied. Change your browser's
+										settings and try again.
+									</p>
+									<p v-else-if="stage === 'granted'">
+										Press a key on your keyboard...
+									</p>
+									<p
+										v-else-if="
+											stage === 'works' ||
+												$store.getters.midiState === 'granted'
+										"
+									>
+										MIDI inputs are enabled.
+									</p>
+									<p v-else>
+										Use your MIDI keyboard to play clef.ninja. chords.
+									</p>
+								</div>
 
-								<p v-if="stage === 'works'">You're set!</p>
-								<p v-else-if="stage === 'granted'">
-									Press a key on your keyboard...
-								</p>
 								<button
 									class="btn btn-disabled"
 									disabled
-									v-else-if="stage === 'requesting'"
+									v-if="stage === 'requesting'"
 								>
 									Requesting access...
 								</button>
-								<button @click="startMidi()" class="btn btn-red" v-else>
+								<button
+									@click="startMidi()"
+									class="btn btn-red"
+									v-else-if="
+										stage === 'start' && $store.getters.midiState !== 'granted'
+									"
+								>
 									Request access
 								</button>
 							</div>
@@ -116,7 +135,6 @@ export default Vue.extend({
 	methods: {
 		setKeyboard(keyboard: { type: string; midi?: any }) {
 			this.$store.commit('keyboard', keyboard);
-			this.$store.commit('stage', { name: 'homeView' });
 		},
 		setInstrument(instrument: string) {
 			this.$store.commit('instrument', instrument);
@@ -124,11 +142,12 @@ export default Vue.extend({
 		},
 		noteUp() {
 			this.stage = 'works';
-			this.midi && this.midi.off('noteUp', this.noteUp);
-			this.setKeyboard({ type: 'midi', midi: this.midi });
+			this.midi!.off('noteUp', this.noteUp);
+			this.$store.commit('stage', { name: 'homeView' });
 		},
 		async startMidi() {
 			const midi = new MidiHandler();
+			this.setKeyboard({ type: 'midi', midi });
 			this.midi = midi;
 
 			midi.on('noteUp', this.noteUp);

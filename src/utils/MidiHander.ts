@@ -4,6 +4,7 @@ export default class MidiHandler extends Houk {
 	public access: any;
 	public inputs: any;
 	public outputs: any;
+	public state: 'none' | 'pending' | 'granted' | 'denied' = 'none';
 
 	constructor() {
 		super();
@@ -11,6 +12,8 @@ export default class MidiHandler extends Houk {
 
 	async requestAccess() {
 		try {
+			this.state = 'pending';
+
 			const access = await navigator.requestMIDIAccess({
 				sysex: true
 			});
@@ -33,8 +36,10 @@ export default class MidiHandler extends Houk {
 				});
 			}
 
+			this.state = 'granted';
 			return true;
 		} catch {
+			this.state = 'denied';
 			return false;
 		}
 	}

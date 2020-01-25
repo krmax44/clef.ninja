@@ -26,7 +26,7 @@ describe('MidiHandler', () => {
 
 	test('listens to events', async () => {
 		const midi = new MidiHandler();
-		const worked = await midi.requestAccess();
+		await midi.requestAccess();
 
 		const listenerUp = jest.fn();
 		const listenerDown = jest.fn();
@@ -44,7 +44,7 @@ describe('MidiHandler', () => {
 			data: new Uint8Array([144, 62, 0])
 		} as any);
 
-		expect(worked).toBe(true);
+		expect(midi.state).toBe('granted');
 		expect(listenerUp.mock.calls[0][0]).toBe(60);
 		expect(listenerDown.mock.calls[0][0]).toBe(62);
 	});

@@ -30,7 +30,7 @@ interface State {
 	instrument: Instrument;
 }
 
-export default new Vuex.Store<State>({
+const store = new Vuex.Store<State>({
 	state: {
 		stage: {
 			name: 'homeView',
@@ -65,8 +65,21 @@ export default new Vuex.Store<State>({
 	},
 	getters: {
 		midi(state) {
-			return state.keyboard.type === 'midi' && state.keyboard.midi;
+			return state.keyboard.midi?.state && state.keyboard.midi;
+		},
+		midiState(state) {
+			return state.keyboard.midi?.state || 'none';
 		}
 	},
 	plugins: [vuexLocal.plugin]
 });
+
+(async () => {
+	if (store.state.keyboard.type === 'midi') {
+		store.state.keyboard.midi = new MidiHandler();
+		const access = store.state.keyboard.midi.requestAccess();
+		if (!access) store.state.keyboard.type = 'virtual';
+	}
+})();
+
+export default store;
