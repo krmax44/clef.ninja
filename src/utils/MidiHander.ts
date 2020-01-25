@@ -11,7 +11,7 @@ export default class MidiHandler extends Houk {
 
 	async requestAccess() {
 		try {
-			const access = await (navigator as any).requestMIDIAccess({
+			const access = await navigator.requestMIDIAccess({
 				sysex: true
 			});
 			const { inputs, outputs } = access;
@@ -20,7 +20,7 @@ export default class MidiHandler extends Houk {
 			this.outputs = outputs;
 
 			for (const input of inputs.values()) {
-				input.onmidimessage = (midiMessage: any) => {
+				input.addEventListener('midimessage', midiMessage => {
 					const [type, note] = midiMessage.data;
 
 					if (type === 128) {
@@ -30,7 +30,7 @@ export default class MidiHandler extends Houk {
 					}
 
 					this.emit('midiMessage', midiMessage);
-				};
+				});
 			}
 
 			return true;

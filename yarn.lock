@@ -1149,6 +1149,11 @@
   resolved "https://registry.yarnpkg.com/@types/vexflow/-/vexflow-1.2.33.tgz#85594222a0268eda2f2ca33e95bb7773b295bba9"
   integrity sha512-9rOsTeuZ4dubH0QekpN/y3w2gwau/RwLUAD+lclcKt/Skj2TM5A/lpMC/VCFzXPBeu/26YPw6izz2uCnpY0abQ==
 
+"@types/webmidi@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@types/webmidi/-/webmidi-2.0.4.tgz#d1bb7287d59cc350333d225ce8b3ad4e54c5e6da"
+  integrity sha512-ouA837zUpSzURsUGvcnay6JwUz2B/UoJP3Lkacnz60y+rul8/auVOFS9LSO6v0gdNbGvRkbHEpayD8PbO7IKhw==
+
 "@types/webpack-env@^1.13.9":
   version "1.15.0"
   resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.15.0.tgz#bd9956d5044b1fb43e869a9ba9148862ff98d9fd"
