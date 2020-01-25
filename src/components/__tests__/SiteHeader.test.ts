@@ -12,8 +12,9 @@ function createWrapper() {
 }
 
 describe('SiteHeader', () => {
+	const wrapper = createWrapper();
+
 	it('goes home', () => {
-		const wrapper = createWrapper();
 		(wrapper.vm as any).$store.commit('stage', { name: 'settingsView' });
 
 		wrapper.find('.logo').trigger('click');
@@ -22,5 +23,19 @@ describe('SiteHeader', () => {
 			name: 'homeView',
 			transition: 'backwards'
 		});
+	});
+
+	it('makes space for portal', () => {
+		(wrapper.vm as any).portalChange(true);
+		expect((wrapper.vm as any).brandHidden).toBe(true);
+		expect((wrapper.vm as any).brandVisible).toBe(false);
+
+		(wrapper.vm as any).portalChange(false);
+		setTimeout(() => {
+			expect((wrapper.vm as any).brandHidden).toBe(false);
+		}, 500);
+		setTimeout(() => {
+			expect((wrapper.vm as any).brandVisible).toBe(true);
+		}, 700);
 	});
 });
