@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="container" :class="{ disabled }">
 		<div class="guitar">
 			<img
 				src="@/assets/images/guitar-head.svg"

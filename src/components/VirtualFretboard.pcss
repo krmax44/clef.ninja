@@ -7,6 +7,10 @@
 	background-position: right;
 	background-repeat: no-repeat;
 	@apply flex items-center overflow-x-auto py-8;
+
+	&.disabled {
+		opacity: 0.7;
+	}
 }
 
 .guitar {
@@ -54,8 +58,13 @@
 			@apply bg-gray-600;
 
 			.string {
+				margin-left: 0;
 				@apply border-white;
 			}
+		}
+
+		&:nth-child(2) .string {
+			margin-left: 0;
 		}
 
 		&:last-of-type {
