@@ -55,28 +55,18 @@ export default Vue.extend({
 	},
 	data() {
 		return {
-			notes: NOTES,
-			active: new Set()
+			notes: NOTES
 		};
 	},
 	methods: {
 		keyPressed(note: number) {
 			if (!this.disabled) this.$emit('note', note);
 		},
-		noteDown({ note }: { note: number }) {
-			this.active.add(note);
-			this.active = new Set(this.active);
-		},
-		noteUp({ note }: { note: number }) {
-			this.active.delete(note);
-			this.active = new Set(this.active);
-		},
 		classes(note: number) {
 			const correct = this.correct.includes(note);
 			const wrong = this.wrong === note;
 
 			return {
-				active: this.active.has(note),
 				correct,
 				wrong,
 				transition: correct || wrong
@@ -124,18 +114,16 @@ export default Vue.extend({
 			@apply flex flex-col h-full justify-end items-center text-white opacity-50;
 		}
 	}
+}
 
-	.keyboard:not(.disabled) {
-		.white:active,
-		.white.active {
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) inset, 0 0 3px rgba(0, 0, 0, 0.1);
-		}
+.keyboard:not(.disabled) {
+	.white:active {
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) inset, 0 0 3px rgba(0, 0, 0, 0.1);
+	}
 
-		.black:active,
-		.black.active {
-			box-shadow: 0 0 10px rgba(255, 255, 255, 0.8) inset,
-				0 0 10px rgba(255, 255, 255, 0.5);
-		}
+	.black:active {
+		box-shadow: 0 0 10px rgba(255, 255, 255, 0.8) inset,
+			0 0 10px rgba(255, 255, 255, 0.5);
 	}
 }
 
