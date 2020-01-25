@@ -11,7 +11,7 @@ function createWrapper() {
 	return shallowMount(GameArcade, { store, localVue });
 }
 
-describe('VirtualKeyboard', () => {
+describe('GameArcade', () => {
 	it('waits for the countdown', () => {
 		const wrapper = createWrapper();
 		expect((wrapper.vm as any).input(30)).toBe(false);
