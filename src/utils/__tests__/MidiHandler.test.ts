@@ -1,4 +1,4 @@
-import MidiHandler from '../MidiHander';
+import MidiHandler from '../MidiHandler';
 
 type HandlerFn = (m: WebMidi.MIDIMessageEvent) => void;
 describe('MidiHandler', () => {

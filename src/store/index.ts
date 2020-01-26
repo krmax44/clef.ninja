@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 import VuexPersistence from 'vuex-persist';
 import InstrumentPiano from '@/instruments/InstrumentPiano';
 import InstrumentGuitar from '@/instruments/InstrumentGuitar';
-import MidiHandler from '@/utils/MidiHander';
+import MidiHandler from '@/utils/MidiHandler';
 import Instrument from '@/instruments/Instrument';
 
 Vue.use(Vuex);

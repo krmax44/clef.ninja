@@ -112,7 +112,7 @@ import MidiIcon from 'vue-material-design-icons/MidiPort.vue';
 import PianoIcon from 'vue-material-design-icons/Piano.vue';
 import GuitarIcon from 'vue-material-design-icons/GuitarAcoustic.vue';
 
-import MidiHandler from '@/utils/MidiHander';
+import MidiHandler from '@/utils/MidiHandler';
 
 interface Data {
 	stage: string;
