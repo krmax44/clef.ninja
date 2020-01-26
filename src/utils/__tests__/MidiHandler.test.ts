@@ -16,15 +16,16 @@ describe('MidiHandler', () => {
 		])
 	};
 
-	Object.defineProperty(navigator, 'requestMIDIAccess', {
-		value: () =>
-			Promise.resolve({
-				inputs: source,
-				outputs: source
-			})
-	});
-
 	test('listens to events', async () => {
+		Object.defineProperty(navigator, 'requestMIDIAccess', {
+			value: () =>
+				Promise.resolve({
+					inputs: source,
+					outputs: source
+				}),
+			writable: true
+		});
+
 		const midi = new MidiHandler();
 		await midi.requestAccess();
 
@@ -47,5 +48,17 @@ describe('MidiHandler', () => {
 		expect(midi.state).toBe('granted');
 		expect(listenerUp.mock.calls[0][0]).toBe(60);
 		expect(listenerDown.mock.calls[0][0]).toBe(62);
+	});
+
+	it('catches denial', async () => {
+		Object.defineProperty(navigator, 'requestMIDIAccess', {
+			value: () => Promise.reject(),
+			writable: true
+		});
+
+		const midi = new MidiHandler();
+		await midi.requestAccess();
+
+		expect(midi.state).toBe('denied');
 	});
 });
