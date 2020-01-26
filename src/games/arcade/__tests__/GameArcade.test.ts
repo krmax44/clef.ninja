@@ -3,6 +3,9 @@ import GameArcade from '../index.vue';
 
 import PortalVue from 'portal-vue';
 import store from '@/store';
+import { fakeTask, fakeCheck } from '@/testUtils/fakeTask';
+
+jest.useFakeTimers();
 
 function createWrapper() {
 	const localVue = createLocalVue();
@@ -19,50 +22,39 @@ describe('GameArcade', () => {
 
 	it('counts scores', () => {
 		const wrapper = createWrapper();
-		setTimeout(() => {
-			const check = jest.fn(() => ({ done: true, correct: true }));
-			wrapper.setData({ task: undefined });
-			wrapper.setData({ task: { check } });
+		jest.advanceTimersByTime(4000);
 
-			(wrapper.vm as any).input(69);
+		const check = fakeCheck(true);
+		wrapper.setData({ task: fakeTask(check) });
 
-			expect(check).toHaveBeenCalledWith(69);
-			expect((wrapper.vm as any).score).toBe(1);
-		}, 3000);
+		(wrapper.vm as any).input(69);
+		expect(check).toHaveBeenCalledWith(69);
+		expect((wrapper.vm as any).score).toBe(1);
 	});
 
 	it('counts lives', () => {
 		const wrapper = createWrapper();
-		setTimeout(() => {
-			const check = jest.fn(() => ({ done: true, correct: false }));
-			wrapper.setData({ task: undefined });
-			wrapper.setData({ task: { check } });
+		jest.advanceTimersByTime(4000);
+		wrapper.setData({ task: fakeTask(false) });
 
-			(wrapper.vm as any).input(1);
-			expect((wrapper.vm as any).lives).toBe(4);
-		}, 3000);
+		(wrapper.vm as any).input(1);
+		expect((wrapper.vm as any).lives).toBe(4);
 	});
 
 	it('runs out of time', () => {
 		const wrapper = createWrapper();
-		setTimeout(() => {
-			wrapper.setData({ remainingTime: 0 });
+		wrapper.setData({ task: fakeTask(false) });
 
-			setTimeout(() => {
-				expect((wrapper.vm as any).state).toBe('gameOver');
-			}, 1000);
-		}, 3000);
+		jest.advanceTimersByTime(4000 + 61000);
+		expect((wrapper.vm as any).state).toBe('gameOver');
 	});
 
 	it('runs out of lives', () => {
 		const wrapper = createWrapper();
-		setTimeout(() => {
-			const check = jest.fn(() => ({ done: true, correct: false }));
-			wrapper.setData({ lives: 1, task: undefined });
-			wrapper.setData({ task: { check } });
-			(wrapper.vm as any).input(1);
+		wrapper.setData({ lives: 1, task: fakeTask(false) });
+		jest.advanceTimersByTime(4000);
+		(wrapper.vm as any).input(1);
 
-			expect((wrapper.vm as any).state).toBe('gameOver');
-		}, 3000);
+		expect((wrapper.vm as any).state).toBe('gameOver');
 	});
 });

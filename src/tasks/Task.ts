@@ -4,7 +4,7 @@ import Note from '@/utils/Note';
 import { treble } from '@/utils/noteConstants';
 import { StaveNote, Renderer } from '@/utils/VexHelper';
 
-interface CheckResult {
+export interface CheckResult {
 	done: boolean;
 	correctNotes: number[];
 	correct: boolean;

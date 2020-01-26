@@ -3,6 +3,7 @@ import GameTraining from '../index.vue';
 
 import PortalVue from 'portal-vue';
 import store from '@/store';
+import { fakeTask } from '@/testUtils/fakeTask';
 
 function createWrapper() {
 	const localVue = createLocalVue();
@@ -20,8 +21,7 @@ describe('GameTraining', () => {
 			correct: true,
 			correctNotes: [60]
 		}));
-		wrapper.setData({ task: undefined });
-		wrapper.setData({ task: { check, render() {}, clef: { name: 'treble' } } });
+		wrapper.setData({ task: fakeTask(check) });
 		(wrapper.vm as any).input(60);
 
 		expect((wrapper.vm as any).correct).toEqual([60]);
@@ -35,8 +35,7 @@ describe('GameTraining', () => {
 			correct: false,
 			correctNotes: [62]
 		}));
-		wrapper.setData({ task: undefined });
-		wrapper.setData({ task: { check, render() {}, clef: { name: 'treble' } } });
+		wrapper.setData({ task: fakeTask(check) });
 		(wrapper.vm as any).input(60);
 
 		expect((wrapper.vm as any).wrong).toBe(60);
