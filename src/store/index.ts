@@ -53,6 +53,11 @@ const store = new Vuex.Store<State>({
 		stage(state, stage) {
 			if (state.stage.name === stage.name) return;
 
+			window.scrollTo({
+				behavior: 'smooth',
+				top: 0
+			});
+
 			state.stage.transition = stage.transition || 'forwards';
 			state.stage.name = stage.name;
 			window.history.pushState(stage, document.title);
