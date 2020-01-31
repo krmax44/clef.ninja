@@ -17,7 +17,7 @@ const instruments = {
 	guitar: InstrumentGuitar
 };
 
-interface State {
+export interface State {
 	stage: {
 		name: 'homeView' | 'settingsView' | 'gamePlay';
 		transition: 'forwards' | 'backwards';
