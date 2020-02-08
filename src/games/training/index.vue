@@ -138,7 +138,7 @@ export default Vue.extend({
 		}
 	},
 	created() {
-		this.settings.clefs = this.$store.state.instrument.clefs.map(
+		this.settings.clefs = this.$store.getters.instrument.clefs.map(
 			(c: Clef) => c.id
 		);
 	},

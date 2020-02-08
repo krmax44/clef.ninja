@@ -4,7 +4,6 @@ import VuexPersistence from 'vuex-persist';
 import InstrumentPiano from '@/instruments/InstrumentPiano';
 import InstrumentGuitar from '@/instruments/InstrumentGuitar';
 import MidiHandler from '@/utils/MidiHandler';
-import Instrument from '@/instruments/Instrument';
 
 Vue.use(Vuex);
 
@@ -27,7 +26,7 @@ export interface State {
 		type: 'virtual' | 'midi';
 		midi?: MidiHandler;
 	};
-	instrument: Instrument;
+	instrument: string;
 }
 
 const store = new Vuex.Store<State>({
@@ -41,7 +40,7 @@ const store = new Vuex.Store<State>({
 			type: 'virtual',
 			midi: undefined
 		},
-		instrument: InstrumentPiano
+		instrument: 'piano'
 	},
 	mutations: {
 		gamemode(state, gamemode) {
@@ -63,9 +62,7 @@ const store = new Vuex.Store<State>({
 			window.history.pushState(stage, document.title);
 		},
 		instrument(state, instrument: string) {
-			if (Object.keys(instruments).includes(instrument)) {
-				state.instrument = instruments[instrument as 'guitar' | 'piano'];
-			}
+			state.instrument = instrument;
 		}
 	},
 	getters: {
@@ -74,6 +71,11 @@ const store = new Vuex.Store<State>({
 		},
 		midiState(state) {
 			return state.keyboard.midi?.state || 'none';
+		},
+		instrument(state) {
+			return (
+				instruments[state.instrument as 'piano' | 'guitar'] || InstrumentPiano
+			);
 		}
 	},
 	plugins: [vuexLocal.plugin]

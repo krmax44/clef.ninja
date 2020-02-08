@@ -1,6 +1,6 @@
 <template>
 	<component
-		:is="$store.state.instrument.name"
+		:is="$store.getters.instrument.name"
 		v-bind="$attrs"
 		v-on="$listeners"
 	/>
