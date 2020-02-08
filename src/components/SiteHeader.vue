@@ -5,11 +5,13 @@
 			class="logo cursor-pointer"
 			@click="home()"
 			alt="clef.ninja Logo"
+			title="To Home screen"
 		/>
 		<h1
 			class="brand cursor-pointer"
 			:class="{ 'hidden lg:block': brandHidden, visible: brandVisible }"
 			@click="home()"
+			title="To Home screen"
 		>
 			<span class="font-bold">clef</span>
 			<span class="text-gray-800">.ninja</span>
@@ -20,6 +22,12 @@
 			class="flex ml-auto"
 			:transition="fadeTransition"
 			@change="portalChange"
+		/>
+
+		<portal-target
+			name="header-right-small"
+			class="flex ml-auto"
+			:transition="fadeTransition"
 		/>
 	</header>
 </template>

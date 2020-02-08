@@ -4,7 +4,10 @@
 			<h2 class="setting-title">Input Setup</h2>
 
 			<div class="flex justify-around py-8 flex-wrap">
-				<div class="card-container" @click="setKeyboard({ type: 'virtual' })">
+				<div
+					class="card-container"
+					@click="setKeyboard({ type: 'virtual' }) || home()"
+				>
 					<div class="card">
 						<div class="card-inner">
 							<VirtualIcon :size="48" />
@@ -138,11 +141,14 @@ export default Vue.extend({
 		},
 		setInstrument(instrument: string) {
 			this.$store.commit('instrument', instrument);
-			this.$store.commit('stage', { name: 'homeView' });
+			this.home();
 		},
 		noteUp() {
 			this.stage = 'works';
 			this.midi!.off('noteUp', this.noteUp);
+			this.home();
+		},
+		home() {
 			this.$store.commit('stage', { name: 'homeView' });
 		},
 		async startMidi() {
@@ -169,6 +175,12 @@ export default Vue.extend({
 .setting {
 	.setting-title {
 		@apply text-2xl;
+	}
+}
+
+@screen md {
+	.card-container {
+		@apply w-1/2;
 	}
 }
 </style>

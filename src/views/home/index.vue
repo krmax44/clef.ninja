@@ -1,5 +1,17 @@
 <template>
 	<div class="px-4">
+		<portal to="header-right-small">
+			<div class="flex items-center">
+				<div
+					class="btn-options"
+					role="button"
+					@click="$store.commit('stage', { name: 'settingsView' })"
+				>
+					<SettingsIcon :size="32" fillColor="#718096" />
+				</div>
+			</div>
+		</portal>
+
 		<h2 class="text-2xl">Select your game mode.</h2>
 
 		<div class="flex justify-around py-8 flex-wrap">
@@ -23,22 +35,6 @@
 						<p>
 							Hit as many correct notes as possible. You have three lives and 60
 							seconds. Go!
-						</p>
-					</div>
-				</div>
-			</div>
-
-			<div
-				class="card-container"
-				@click="$store.commit('stage', { name: 'settingsView' })"
-			>
-				<div class="card">
-					<div class="card-inner">
-						<SettingsIcon :size="48" />
-
-						<h3>Settings</h3>
-						<p>
-							Setup your MIDI keyboard or pick a different instrument.
 						</p>
 					</div>
 				</div>
@@ -69,7 +65,7 @@ export default Vue.extend({
 
 @screen md {
 	.card-container {
-		@apply w-1/3;
+		@apply w-1/2;
 	}
 }
 </style>

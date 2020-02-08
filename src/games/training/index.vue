@@ -1,8 +1,13 @@
 <template>
 	<div class="flex flex-col flex-1 max-w-full">
-		<portal to="header-right">
+		<portal to="header-right-small">
 			<div class="flex items-center">
-				<div class="btn-options" role="checkbox" @click="showSettings = true">
+				<div
+					class="btn-options"
+					role="button"
+					@click="showSettings = true"
+					title="Settings"
+				>
 					<SettingsIcon :size="32" fillColor="#718096" />
 				</div>
 			</div>
@@ -168,13 +173,5 @@ export default Vue.extend({
 .display {
 	max-height: 30vh;
 	@apply flex items-center justify-center mb-8 flex-1;
-}
-
-.btn-options {
-	@apply flex items-center justify-center w-12 h-12 mx-2 rounded-full bg-gray-300 cursor-pointer;
-
-	&:last-child {
-		@apply mr-0;
-	}
 }
 </style>
