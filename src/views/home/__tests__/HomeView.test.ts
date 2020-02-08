@@ -1,10 +1,18 @@
-import { shallowMount } from '@vue/test-utils';
+import { shallowMount, createLocalVue } from '@vue/test-utils';
 import HomeView from '../index.vue';
 
 import store from '@/store';
+import PortalVue from 'portal-vue';
+
+function createWrapper() {
+	const localVue = createLocalVue();
+	localVue.use(PortalVue);
+
+	return shallowMount(HomeView, { store, localVue });
+}
 
 describe('HomeView', () => {
-	const wrapper = shallowMount(HomeView, { store });
+	const wrapper = createWrapper();
 
 	it('sets the gamemode', () => {
 		wrapper.find('.card-container').trigger('click');

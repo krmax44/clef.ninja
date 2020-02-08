@@ -17,9 +17,7 @@ describe('SettingsView', () => {
 		wrapper
 			.find('.setting:last-of-type .card-container:last-of-type')
 			.trigger('click');
-		expect((wrapper.vm as any).$store.state.instrument).toEqual(
-			InstrumentGuitar
-		);
+		expect((wrapper.vm as any).$store.state.instrument).toEqual('guitar');
 	});
 
 	it('renders correctly', () => {

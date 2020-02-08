@@ -4,7 +4,11 @@ exports[`HomeView renders correctly 1`] = `
 <div
   class="px-4"
 >
-  <portal
+  <portal-stub
+    name="1"
+    order="0"
+    slotprops="[object Object]"
+    tag="DIV"
     to="header-right-small"
   >
     <div
@@ -21,7 +25,7 @@ exports[`HomeView renders correctly 1`] = `
         />
       </div>
     </div>
-  </portal>
+  </portal-stub>
    
   <h2
     class="text-2xl"
