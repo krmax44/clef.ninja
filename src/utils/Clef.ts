@@ -1,4 +1,4 @@
-export type ClefName = 'treble' | 'bass' | 'treble-8vb';
+export type ClefName = 'treble' | 'bass';
 export type ClefAnnotation = '8va' | '8vb';
 
 const annotations = {
@@ -16,5 +16,9 @@ export default class Clef {
 
 	get octaveShift() {
 		return this.annotation ? annotations[this.annotation] : 0;
+	}
+
+	get id() {
+		return this.name + (this.annotation || '');
 	}
 }

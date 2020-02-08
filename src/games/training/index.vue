@@ -52,10 +52,26 @@ import TaskSingleNote from '@/tasks/TaskSingleNote';
 import TaskChord from '@/tasks/TaskChord';
 import { randomPattern } from '@/tasks/PatternTasks';
 import Clef from '@/utils/Clef';
+import { clefs } from '@/utils/noteConstants';
+
+type TaskNames = ('singleNotes' | 'patterns' | 'chords')[];
+
+interface Settings {
+	clefs: string[];
+	tasks: TaskNames;
+	keyLabels: boolean;
+}
+
+const defaultSettings: Settings = {
+	clefs: [],
+	tasks: ['singleNotes'],
+	keyLabels: true
+};
 
 function randomTask(
 	target: HTMLElement,
-	{ tasks: viableTasks, clefs } = defaultSettings
+	clefs: Clef[],
+	viableTasks: TaskNames
 ): Task {
 	const tasks = {
 		singleNotes: () => TaskSingleNote,
@@ -67,18 +83,6 @@ function randomTask(
 	const Task = tasks[name]();
 	return new Task(target, clefs);
 }
-
-interface Settings {
-	clefs: Clef[];
-	tasks: ('singleNotes' | 'patterns' | 'chords')[];
-	keyLabels: boolean;
-}
-
-const defaultSettings: Settings = {
-	clefs: [],
-	tasks: ['singleNotes'],
-	keyLabels: true
-};
 
 export default Vue.extend({
 	data() {
@@ -122,13 +126,21 @@ export default Vue.extend({
 		newTask() {
 			this.task = randomTask(
 				this.$refs.noteRenderer as HTMLElement,
-				this.settings
+				this.clefs,
+				this.settings.tasks
 			);
 			this.task.render();
 		}
 	},
+	computed: {
+		clefs() {
+			return clefs.filter(c => this.settings.clefs.includes(c.id));
+		}
+	},
 	created() {
-		this.settings.clefs = this.$store.state.instrument.clefs;
+		this.settings.clefs = this.$store.state.instrument.clefs.map(
+			(c: Clef) => c.id
+		);
 	},
 	mounted() {
 		this.newTask();
@@ -154,7 +166,7 @@ export default Vue.extend({
 				return;
 			}
 
-			if (!this.settings.clefs.map(c => c.name).includes(this.task.clef.name)) {
+			if (!this.clefs.map(c => c.id).includes(this.task.clef.id)) {
 				this.newTask();
 			}
 		},

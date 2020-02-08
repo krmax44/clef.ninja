@@ -10,7 +10,7 @@
 						<input
 							type="checkbox"
 							id="treble"
-							:value="allClefs[0]"
+							value="treble"
 							v-model="settings.clefs"
 						/>
 						<label for="treble">Treble</label>
@@ -20,7 +20,7 @@
 						<input
 							type="checkbox"
 							id="bass"
-							:value="allClefs[1]"
+							value="bass"
 							v-model="settings.clefs"
 						/>
 						<label for="bass">Bass</label>
@@ -30,7 +30,7 @@
 						<input
 							type="checkbox"
 							id="treble8"
-							:value="allClefs[2]"
+							value="treble8vb"
 							v-model="settings.clefs"
 						/>
 						<label for="treble8">Treble (one octave lower)</label>
@@ -93,7 +93,6 @@
 <script lang="ts">
 import Vue from 'vue';
 import Clef from '@/utils/Clef';
-import { clefs } from '../../utils/noteConstants';
 
 export default Vue.extend({
 	data() {
@@ -102,8 +101,7 @@ export default Vue.extend({
 				clefs: [],
 				tasks: [],
 				keyLabels: true
-			},
-			allClefs: clefs
+			}
 		};
 	},
 	props: {
