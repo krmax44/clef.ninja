@@ -133,7 +133,7 @@ export default Vue.extend({
 		}
 	},
 	computed: {
-		clefs() {
+		clefs(): Clef[] {
 			return clefs.filter(c => this.settings.clefs.includes(c.id));
 		}
 	},
