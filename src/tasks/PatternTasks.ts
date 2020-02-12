@@ -1,8 +1,9 @@
 import TaskLickPattern from './TaskLickPattern';
+import { randomFromArray } from '@/utils/randomHelper';
 
 const PATTERNS = [TaskLickPattern];
 
 export default PATTERNS;
 export function randomPattern() {
-	return PATTERNS[Math.floor(Math.random() * PATTERNS.length)];
+	return randomFromArray(PATTERNS);
 }

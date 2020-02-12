@@ -15,11 +15,13 @@ export default abstract class Task {
 	public notes: Note[];
 	public clef: Clef;
 	protected target: HTMLElement;
+	public difficulty: number;
 
-	constructor(target: HTMLElement) {
+	constructor(target: HTMLElement, _clefs: Clef[], difficulty: number) {
 		this.notes = [];
 		this.clef = treble;
 		this.target = target;
+		this.difficulty = difficulty;
 	}
 
 	public staveNotes() {

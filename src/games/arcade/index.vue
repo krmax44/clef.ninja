@@ -49,11 +49,12 @@ import Task from '@/tasks/Task';
 import TaskSingleNote from '@/tasks/TaskSingleNote';
 import TaskChord from '@/tasks/TaskChord';
 import { randomPattern } from '@/tasks/PatternTasks';
+import { randomFromArray } from '../../utils/randomHelper';
 
 function randomTask(target: HTMLElement): Task {
 	const tasks = [() => TaskSingleNote, () => TaskChord, randomPattern];
 
-	const Task = tasks[Math.floor(Math.random() * tasks.length)]();
+	const Task = randomFromArray(tasks)();
 	return new Task(target);
 }
 

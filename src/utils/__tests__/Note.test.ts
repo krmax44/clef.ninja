@@ -29,7 +29,7 @@ describe('Note', () => {
 		const instrument: Instrument = {
 			name: 'Test',
 			lowestNote: 60,
-			highestNote: 60,
+			highestNote: 61,
 			clefs: [treble]
 		};
 

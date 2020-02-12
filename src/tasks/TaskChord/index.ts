@@ -1,41 +1,25 @@
-import Task from './Task';
-import Note from '../utils/Note';
-import { clefs as CLEFS } from '../utils/noteConstants';
-import { entries } from '@tonaljs/chord-dictionary';
-import { chord as toChord } from '@tonaljs/chord';
+import Task from '../Task';
+import { clefs as CLEFS } from '../../utils/noteConstants';
 
 import Vex from 'vexflow';
-const { Accidental } = Vex.Flow;
 import { StaveNote } from '@/utils/VexHelper';
-
-const chords = entries().filter(
-	c => c.intervals.length > 2 && c.intervals.length <= 4
-);
+import randomChord from './randomChord';
 
 export default class TaskChord extends Task {
 	private midiNotes: number[];
 	private checkProgress: number[] = [];
 	private checkCount = 0;
+	private chordName: string;
 
-	constructor(target: HTMLElement, clefs = CLEFS) {
-		super(target);
-
-		const chordTemplate = chords[Math.floor(Math.random() * chords.length)];
-		const maxOffset = parseInt(
-			chordTemplate.intervals[chordTemplate.intervals.length - 1]
-		);
-
-		const bass = Note.random(clefs, 0, maxOffset);
-		const bassPitchClass = bass.pitchClass;
-
-		const chordNotes = toChord(
-			`${bassPitchClass}${bass.octave} ${chordTemplate.aliases[0]}`
-		).notes;
-
-		this.notes = chordNotes.map(n => Note.fromString(n));
+	constructor(target: HTMLElement, clefs = CLEFS, difficulty = 2) {
+		super(target, clefs, difficulty);
+		const chord = randomChord(clefs, difficulty);
+		this.notes = chord.chordNotes;
+		this.chordName = chord.name;
 		this.midiNotes = this.notes.map(n => n.midiNote);
 
 		// determine clef based on center note of chord
+		// TODO: clef determination based on multiple notes
 		this.clef = this.notes[
 			Math.round((this.notes.length - 1) / 2)
 		].determineClef(clefs);
@@ -68,6 +52,32 @@ export default class TaskChord extends Task {
 		const done = this.checkProgress.length === this.midiNotes.length;
 		this.checkCount++;
 		return { done, correct, correctNotes, score };
+	}
+
+	get helpText(): Vue.Component {
+		return {
+			render: h => {
+				const chords = this.notes.map(n =>
+					h(
+						'span',
+						{
+							style: {
+								color: this.checkProgress.includes(n.midiNote)
+									? '#92dd6e'
+									: undefined
+							},
+							class: ['mx-1 font-bold']
+						},
+						n.formattedPitchClass
+					)
+				);
+
+				return h('span', [
+					`You are playing a ${this.chordName} - consisting of`,
+					...chords
+				]);
+			}
+		};
 	}
 
 	public render = super.render;

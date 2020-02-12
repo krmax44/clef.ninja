@@ -1,31 +1,28 @@
 import { mount } from '@vue/test-utils';
 import TrainingSettings from '../TrainingSettings.vue';
+import SettingsSwitches from '../SettingsSwitches.vue';
+import defaultSettings from '../defaultSettings';
 import store from '@/store';
 
 describe('TrainingSettings', () => {
 	const wrapper = mount(TrainingSettings, {
 		propsData: {
 			open: true,
-			value: {
-				clefs: [],
-				tasks: ['singleNotes'],
-				keyLabels: true
-			}
+			value: defaultSettings
 		},
 		store
 	});
 
 	it('allows to change settings', async () => {
-		const checkboxChords = wrapper.find('#chords');
-		checkboxChords.trigger('click');
+		const checkboxChords = wrapper.find(SettingsSwitches);
+		checkboxChords.vm.$emit('input', { bass: true, treble: false });
 
 		await wrapper.vm.$nextTick();
 
-		expect(wrapper.emitted().input[0][0]).toEqual({
-			clefs: [],
-			tasks: ['singleNotes', 'chords'],
-			keyLabels: true
-		});
+		const vm: any = wrapper.vm;
+
+		expect(vm.settings.clefs.bass).toBe(true);
+		expect(vm.settings.clefs.treble).toBe(false);
 	});
 
 	it('closes', () => {

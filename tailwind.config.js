@@ -12,5 +12,6 @@ module.exports = {
 				'3/4-screen': '75vh'
 			}
 		}
-	}
+	},
+	plugins: [require('@tailwindcss/custom-forms')]
 };

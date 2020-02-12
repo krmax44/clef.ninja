@@ -7,51 +7,71 @@ const { Accidental } = Vex.Flow;
 import { clefs as CLEFS } from '@/utils/noteConstants';
 import { Renderer, StaveNote } from '@/utils/VexHelper';
 
+function generatePattern(one: Note): Note[] {
+	const oneMidi = one.midiNote;
+	const twoMidi = oneMidi + 2;
+	const threeMidi = twoMidi + 1;
+	const fourMidi = threeMidi + 2;
+	const fiveMidi = twoMidi;
+	const sixMidi = oneMidi - 2;
+	const sevenMidi = oneMidi;
+
+	const [two, three, four, five, six, seven] = [
+		twoMidi,
+		threeMidi,
+		fourMidi,
+		fiveMidi,
+		sixMidi,
+		sevenMidi
+	].map(n => {
+		const note = new Note(n);
+		note.duration = '8';
+		return note;
+	});
+
+	one.duration = '8';
+	five.duration = 'q';
+	seven.duration = '8';
+
+	return [one, two, three, four, five, six, seven];
+}
+
 export default class TaskLickPattern extends Task {
 	private checkProgress: boolean[] = [];
 
-	constructor(target: HTMLElement, clefs = CLEFS) {
-		super(target);
+	constructor(target: HTMLElement, clefs = CLEFS, difficulty = 2) {
+		super(target, clefs, difficulty);
 
-		const one = Note.random(clefs, 2, 4);
-		const oneMidi = one.midiNote;
-		const twoMidi = oneMidi + 2;
-		const threeMidi = twoMidi + 1;
-		const fourMidi = threeMidi + 2;
-		const fiveMidi = twoMidi;
-		const sixMidi = oneMidi - 2;
-		const sevenMidi = oneMidi;
+		let start: Note;
+		let notes: Note[] = [];
 
-		const [two, three, four, five, six, seven] = [
-			twoMidi,
-			threeMidi,
-			fourMidi,
-			fiveMidi,
-			sixMidi,
-			sevenMidi
-		].map(n => {
-			const note = new Note(n);
-			note.duration = '8';
-			return note;
-		});
+		const maxAccidentals = [0, 3, 7]; // easy = 0; medium = 3; hard = all
 
-		this.clef = four.determineClef(clefs);
+		let accidentals;
+		while (
+			accidentals === undefined ||
+			accidentals > maxAccidentals[difficulty - 1]
+		) {
+			start = Note.random(
+				clefs,
+				2, // minOffset: lowest note is 2 lower than start
+				4, // maxOffset: highest note is 4 higher than start
+				undefined,
+				difficulty === 1 ? false : undefined // no accidentals for easy difficulty
+			);
 
-		one.duration = '8';
-		five.duration = 'q';
-		seven.duration = '8';
+			notes = generatePattern(start);
+			accidentals = notes.reduce((a, n) => (n.accidental ? a + 1 : a), 0);
+		}
 
-		this.notes = [one, two, three, four, five, six, seven];
+		this.notes = notes;
+		this.clef = notes[3].determineClef(clefs);
 	}
 
 	staveNotes() {
 		return this.notes.map((note, i) => {
 			if (this.checkProgress.length === i) {
 				note.color = '#31bced';
-			} else if (this.checkProgress[i] === true) {
-				note.color = '#92dd6e';
-			} else if (this.checkProgress[i] === false) {
-				note.color = '#fc5130';
 			}
 
 			const staveNote = StaveNote([note], this.clef);
@@ -77,11 +97,42 @@ export default class TaskLickPattern extends Task {
 
 	public check(input: number) {
 		const progress = this.checkProgress.length;
+		const note = this.notes[progress];
+
 		const correctNotes = this.notes[progress].midiNote;
 		const correct = correctNotes === input;
 		const done = progress === this.notes.length - 1;
 		this.checkProgress.push(correct);
 
+		note.color = correct ? '#92dd6e' : '#fc5130';
+
 		return { correct, correctNotes: [correctNotes], done };
+	}
+
+	get helpText(): Vue.Component {
+		return {
+			render: h => {
+				const notes = this.notes.map((n, i) => {
+					let color;
+					const checkState = this.checkProgress[i];
+					if (checkState !== undefined) {
+						color = checkState ? '#92dd6e' : '#fc5130';
+					}
+
+					return h(
+						'span',
+						{
+							style: {
+								color
+							},
+							class: ['mx-2 font-bold']
+						},
+						n.formattedPitchClass
+					);
+				});
+
+				return h('span', notes);
+			}
+		};
 	}
 }

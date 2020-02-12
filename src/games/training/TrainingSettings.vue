@@ -1,74 +1,43 @@
 <template>
 	<div class="modal-container" :class="{ open }" @click="close" ref="container">
 		<div class="modal">
-			<h3 class="text-xl font-bold mb-4">Settings</h3>
+			<h3 class="text-3xl font-bold mb-4">Exercise Regimen</h3>
+
+			<SettingsSwitches
+				title="Clefs"
+				:values="[
+					{ value: 'treble', label: 'Treble' },
+					{ value: 'bass', label: 'Bass' },
+					{ value: 'treble8vb', label: 'Treble (one octave lower)' }
+				]"
+				v-model="settings.clefs"
+			/>
+
+			<SettingsSwitches
+				title="Tasks"
+				:values="[
+					{ value: 'singleNotes', label: 'Single Notes' },
+					{ value: 'patterns', label: 'Patterns' },
+					{ value: 'chords', label: 'Chords' }
+				]"
+				v-model="settings.tasks"
+			/>
+
+			<SettingsRadio
+				title="Difficulty"
+				:values="[
+					{ value: 1, label: 'Easy' },
+					{ value: 2, label: 'Medium' },
+					{ value: 3, label: 'Hard' }
+				]"
+				v-model="settings.difficulty"
+			/>
 
 			<div class="option">
-				<div class="options-title">Clefs</div>
+				<div class="options-title">Help text</div>
 				<div class="options-selector">
 					<div>
-						<input
-							type="checkbox"
-							id="treble"
-							value="treble"
-							v-model="settings.clefs"
-						/>
-						<label for="treble">Treble</label>
-					</div>
-
-					<div>
-						<input
-							type="checkbox"
-							id="bass"
-							value="bass"
-							v-model="settings.clefs"
-						/>
-						<label for="bass">Bass</label>
-					</div>
-
-					<div>
-						<input
-							type="checkbox"
-							id="treble8"
-							value="treble8vb"
-							v-model="settings.clefs"
-						/>
-						<label for="treble8">Treble (one octave lower)</label>
-					</div>
-				</div>
-			</div>
-
-			<div class="option">
-				<div class="options-title">Train</div>
-				<div class="options-selector">
-					<div>
-						<input
-							type="checkbox"
-							id="singlenotes"
-							value="singleNotes"
-							v-model="settings.tasks"
-						/>
-						<label for="singlenotes">Single notes</label>
-					</div>
-
-					<div>
-						<input
-							type="checkbox"
-							id="patterns"
-							value="patterns"
-							v-model="settings.tasks"
-						/>
-						<label for="patterns">Patterns</label>
-					</div>
-
-					<div>
-						<input
-							type="checkbox"
-							id="chords"
-							value="chords"
-							v-model="settings.tasks"
-						/>
-						<label for="chords">Chords</label>
+						<SiteSwitch v-model="settings.helpText" />
 					</div>
 				</div>
 			</div>
@@ -77,12 +46,7 @@
 				<div class="options-title">Key labels</div>
 				<div class="options-selector">
 					<div>
-						<input
-							type="checkbox"
-							id="keylabels"
-							v-model="settings.keyLabels"
-						/>
-						<label for="keylabels">Enable</label>
+						<SiteSwitch v-model="settings.keyLabels" />
 					</div>
 				</div>
 			</div>
@@ -93,15 +57,16 @@
 <script lang="ts">
 import Vue from 'vue';
 import Clef from '@/utils/Clef';
+import SiteSwitch from '@/components/SiteSwitch.vue';
+import SettingsSwitches from './SettingsSwitches.vue';
+import SettingsRadio from './SettingsRadio.vue';
+import defaultSettings from './defaultSettings';
 
 export default Vue.extend({
+	components: { SiteSwitch, SettingsSwitches, SettingsRadio },
 	data() {
 		return {
-			settings: {
-				clefs: [],
-				tasks: [],
-				keyLabels: true
-			}
+			settings: defaultSettings
 		};
 	},
 	props: {
@@ -122,16 +87,13 @@ export default Vue.extend({
 			if (e.target === this.$refs.container) {
 				this.$emit('close');
 			}
-		},
-		update() {
-			this.$emit('input', this.settings);
 		}
 	},
 	watch: {
 		settings: {
 			deep: true,
 			handler() {
-				this.update();
+				this.$emit('input', this.settings);
 			}
 		}
 	}
@@ -140,16 +102,16 @@ export default Vue.extend({
 
 <style lang="postcss" scoped>
 .modal-container {
-	background-color: rgba(0, 0, 0, 0.4);
+	background-color: rgba(0, 0, 0, 0.5);
 	opacity: 0;
 	pointer-events: none;
-	transition: opacity 0.3s;
+	transition: opacity 0.4s;
 	@apply flex justify-center items-center fixed inset-0 z-10;
 
 	.modal {
-		transform: scale(0.8) translateY(100px);
+		transform: translateY(50vh);
 		transition: transform 0.5s ease;
-		@apply max-w-2xl w-2/3 p-4 shadow-lg bg-white rounded;
+		@apply max-w-4xl w-full p-6 m-2 shadow-lg bg-white rounded;
 	}
 
 	&.open {
@@ -162,45 +124,46 @@ export default Vue.extend({
 	}
 }
 
-.option {
+>>> .option {
 	@apply flex flex-col w-full;
 
 	&:not(:last-child) {
 		@apply mb-4;
 	}
-}
 
-.options-title {
-	@apply font-bold;
-}
-
-.options-selector {
-	@apply flex flex-col;
-
-	& > div {
-		@apply flex;
+	.options-title {
+		@apply flex items-center font-bold;
 	}
-}
 
-input[type='checkbox'] {
-	@apply leading-tight mr-2;
+	.options-selector {
+		@apply flex flex-col justify-center items-start my-2;
 
-	&:first-child {
-		@apply ml-0;
+		& > div {
+			@apply flex my-1;
+		}
 	}
 }
 
 @screen md {
-	.option {
+	.modal-container .modal {
+		@apply p-12;
+	}
+
+	>>> .option {
 		@apply flex-row;
-	}
 
-	.options-selector {
-		@apply ml-auto flex-row;
-	}
+		.options-selector {
+			@apply ml-auto flex-row;
+		}
 
-	.options-selector > div:not(:first-child) {
-		@apply ml-6;
+		.options-selector > div:not(:first-child) {
+			@apply ml-6;
+		}
+
+		.form-switch {
+			order: 2;
+			@apply mr-0 ml-2;
+		}
 	}
 }
 </style>

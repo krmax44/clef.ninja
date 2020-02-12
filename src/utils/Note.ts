@@ -4,6 +4,8 @@ import * as constants from './noteConstants';
 import Instrument from '@/instruments/Instrument';
 import InstrumentPiano from '@/instruments/InstrumentPiano';
 import Clef from './Clef';
+import { randomFromArray } from './randomHelper';
+import rangeArray from 'rangestar';
 
 const S = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
 const F = ['c', 'db', 'd', 'eb', 'e', 'f', 'gb', 'g', 'ab', 'a', 'bb', 'b'];
@@ -27,7 +29,6 @@ export default class Note {
 	) {
 		this.midiNote = midiNote;
 		this.octave = Math.floor(midiNote / 12) - 1;
-		this.accidental = accidental;
 		this.instrument = instrument;
 		this.clef = clef;
 
@@ -45,10 +46,16 @@ export default class Note {
 			clef => clef.min <= this.midiNote && this.midiNote <= clef.max
 		);
 
-		const clef = viable[Math.floor(Math.random() * viable.length)];
+		const clef = randomFromArray(viable);
 		this.clef = clef;
 
 		return clef;
+	}
+
+	get formattedPitchClass() {
+		const pc = [...this.pitchClass];
+		pc[0] = pc[0].toUpperCase();
+		return pc.join('');
 	}
 
 	static fromString(input: string, instrument: Instrument = InstrumentPiano) {
@@ -65,26 +72,62 @@ export default class Note {
 		return note;
 	}
 
-	static random(
+	static viableMidi = function viableMidi(
 		clefs = constants.clefs,
 		minOffset = 0,
 		maxOffset = 0,
-		instrument: Instrument = InstrumentPiano
-	): Note {
+		instrument: Instrument = InstrumentPiano,
+		accidental: Accidental | false = Note.randomAccidental()
+	) {
 		const mins = clefs.map(clef => clef.min);
 		const maxs = clefs.map(clef => clef.max);
 
 		const MIN = Math.max(Math.min(...mins), instrument.lowestNote) + minOffset;
 		const MAX = Math.min(Math.max(...maxs), instrument.highestNote) - maxOffset;
 
-		const midiNote = Math.floor(Math.random() * (MAX - MIN)) + MIN;
-		const note = new Note(
-			midiNote,
-			Math.random() < 0.5 ? '#' : 'b',
-			instrument
+		const all = rangeArray(MIN, MAX);
+
+		if (accidental === false) {
+			return all.filter(n => !Note.hasAccidental(n));
+		}
+
+		return all;
+	};
+
+	static viableNotes(
+		_clefs?: Clef[],
+		_minOffset?: number,
+		_maxOffset?: number,
+		instrument?: Instrument,
+		accidental?: Accidental | false
+	) {
+		return Note.viableMidi(...arguments).map(
+			n => new Note(n, accidental, instrument)
 		);
+	}
+
+	static random(
+		clefs?: Clef[],
+		_minOffset?: number,
+		_maxOffset?: number,
+		instrument?: Instrument,
+		accidental?: Accidental | false
+	): Note {
+		const viable = Note.viableMidi(...arguments);
+		const midiNote = randomFromArray(viable);
+
+		const note = new Note(midiNote, accidental, instrument);
 		note.determineClef(clefs);
 
 		return note;
+	}
+
+	static hasAccidental(midiNote: number) {
+		const step = midiNote % 12;
+		return ACCIDENTALS[step] === 1;
+	}
+
+	static randomAccidental() {
+		return Math.random() < 0.5 ? '#' : 'b';
 	}
 }

@@ -3,20 +3,28 @@ import Note from '../utils/Note';
 import { clefs as CLEFS } from '../utils/noteConstants';
 
 export default class TaskSingleNote extends Task {
-	constructor(target: HTMLElement, clefs = CLEFS) {
-		super(target);
-		const note = Note.random(clefs);
-		this.notes = [note];
-		this.clef = note.determineClef(clefs);
+	private note: Note;
+
+	constructor(target: HTMLElement, clefs = CLEFS, difficulty = 1) {
+		super(target, clefs, difficulty);
+		this.note = Note.random(clefs);
+		this.notes = [this.note];
+		this.clef = this.note.determineClef(clefs);
 	}
 
 	public check(input: number) {
-		const correctNote = this.notes[0].midiNote;
+		const correctNote = this.note.midiNote;
 		const correct = input === correctNote;
 
-		this.notes[0].color = correct ? '#92dd6e' : '#fc5130';
+		this.note.color = correct ? '#92dd6e' : '#fc5130';
 
 		return { correct, correctNotes: [correctNote], done: true };
+	}
+
+	get helpText(): Vue.Component {
+		return {
+			render: h => h('span', this.note.formattedPitchClass)
+		};
 	}
 
 	public staveNotes = super.staveNotes;

@@ -21,11 +21,18 @@
 
 		<div class="display">
 			<div class="card-container h-full md:w-2/3">
-				<div class="card flex justify-center cursor-auto">
+				<div class="card flex flex-col justify-center cursor-auto">
 					<div
 						class="px-4 items-center justify-center flex paper"
 						ref="noteRenderer"
 					/>
+
+					<div
+						v-if="settings.helpText && task && task.helpText"
+						class="flex justify-center text-lg"
+					>
+						<component :is="task.helpText" />
+					</div>
 				</div>
 			</div>
 		</div>
@@ -44,44 +51,33 @@
 import Vue from 'vue';
 import VirtualInput from '@/components/VirtualInput.vue';
 import TrainingSettings from './TrainingSettings.vue';
-
 import SettingsIcon from 'vue-material-design-icons/SettingsOutline.vue';
 
+import defaultSettings from './defaultSettings';
 import Task from '@/tasks/Task';
 import TaskSingleNote from '@/tasks/TaskSingleNote';
-import TaskChord from '@/tasks/TaskChord';
+import TaskChord from '@/tasks/TaskChord/index';
 import { randomPattern } from '@/tasks/PatternTasks';
+
 import Clef from '@/utils/Clef';
 import { clefs } from '@/utils/noteConstants';
+import { randomFromArray } from '../../utils/randomHelper';
 
-type TaskNames = ('singleNotes' | 'patterns' | 'chords')[];
-
-interface Settings {
-	clefs: string[];
-	tasks: TaskNames;
-	keyLabels: boolean;
-}
-
-const defaultSettings: Settings = {
-	clefs: [],
-	tasks: ['singleNotes'],
-	keyLabels: true
+const tasks: { [key: string]: () => any } = {
+	singleNotes: () => TaskSingleNote,
+	chords: () => TaskChord,
+	patterns: randomPattern
 };
 
 function randomTask(
 	target: HTMLElement,
 	clefs: Clef[],
-	viableTasks: TaskNames
+	viableTasks: string[],
+	difficulty: number
 ): Task {
-	const tasks = {
-		singleNotes: () => TaskSingleNote,
-		chords: () => TaskChord,
-		patterns: randomPattern
-	};
-
-	const name = viableTasks[Math.floor(Math.random() * viableTasks.length)];
-	const Task = tasks[name]();
-	return new Task(target, clefs);
+	const name = randomFromArray(viableTasks);
+	const task = tasks[name]();
+	return new task(target, clefs, difficulty);
 }
 
 export default Vue.extend({
@@ -127,20 +123,31 @@ export default Vue.extend({
 			this.task = randomTask(
 				this.$refs.noteRenderer as HTMLElement,
 				this.clefs,
-				this.settings.tasks
+				this.tasks,
+				this.settings.difficulty
 			);
 			this.task.render();
 		}
 	},
 	computed: {
 		clefs(): Clef[] {
-			return clefs.filter(c => this.settings.clefs.includes(c.id));
+			return clefs.filter(c => this.settings.clefs[c.id]);
+		},
+		tasks(): string[] {
+			return Object.keys(tasks).filter(t => this.settings.tasks[t]);
 		}
 	},
 	created() {
-		this.settings.clefs = this.$store.getters.instrument.clefs.map(
+		const clefNames = this.$store.getters.instrument.clefs.map(
 			(c: Clef) => c.id
 		);
+		let clefs: { [key: string]: boolean } = {};
+
+		for (const clef of clefNames) {
+			clefs[clef] = true;
+		}
+
+		this.settings.clefs = clefs;
 	},
 	mounted() {
 		this.newTask();
@@ -159,23 +166,13 @@ export default Vue.extend({
 		}
 	},
 	watch: {
-		async 'settings.clefs'(now, before) {
-			if (now.length === 0) {
-				await this.$nextTick();
-				this.settings.clefs = before;
-				return;
-			}
-
-			if (!this.clefs.map(c => c.id).includes(this.task.clef.id)) {
-				this.newTask();
-			}
-		},
-		async 'settings.tasks'(now, before) {
-			if (now.length === 0) {
-				await this.$nextTick();
-				this.settings.tasks = before;
-				return;
-			}
+		'settings.clefs': {
+			handler(clefs) {
+				if (!clefs[this.task.clef.id]) {
+					this.newTask();
+				}
+			},
+			deep: true
 		}
 	}
 });
