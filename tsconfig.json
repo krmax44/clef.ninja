@@ -27,14 +27,13 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
-    "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "src/**/*.vue"
   ],
   "exclude": [
     "node_modules"
   ],
   "files": [
-    "src/vue.shims.d.ts"
+    "src/vue.shims.d.ts",
+    "src/jsx.shims.d.ts"
   ]
 }
