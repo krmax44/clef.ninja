@@ -148,22 +148,12 @@ export default Vue.extend({
 
 	mounted() {
 		this.newTask();
-		const { midi } = this.$store.getters;
-
-		if (midi) {
-			midi.on('noteDown', this.input);
-		}
-
+		this.$store.getters.midi?.on('noteDown', this.input);
 		this.start();
 	},
 
 	beforeDestroy() {
-		const { midi } = this.$store.getters;
-
-		if (midi) {
-			midi.off('noteDown', this.input);
-		}
-
+		this.$store.getters.midi?.off('noteDown', this.input);
 		clearInterval(this.gameClock);
 	}
 });
