@@ -3,6 +3,7 @@ import Note from '@/utils/Note';
 
 import { treble } from '@/utils/noteConstants';
 import { StaveNote, Renderer } from '@/utils/VexHelper';
+import { ExtendedVue } from 'vue/types/vue';
 
 export interface CheckResult {
 	done: boolean;
@@ -16,6 +17,7 @@ export default abstract class Task {
 	public clef: Clef;
 	protected target: HTMLElement;
 	public difficulty: number;
+	public helpText?: ExtendedVue<any, any, any, any, any>;
 
 	constructor(target: HTMLElement, _clefs: Clef[], difficulty: number) {
 		this.notes = [];

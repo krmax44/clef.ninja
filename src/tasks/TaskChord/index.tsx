@@ -4,6 +4,7 @@ import { clefs as CLEFS } from '../../utils/noteConstants';
 import Vex from 'vexflow';
 import { StaveNote } from '@/utils/VexHelper';
 import randomChord from './randomChord';
+import Vue from 'vue';
 
 export default class TaskChord extends Task {
 	private midiNotes: number[];
@@ -54,31 +55,24 @@ export default class TaskChord extends Task {
 		return { done, correct, correctNotes, score };
 	}
 
-	get helpText(): Vue.Component {
-		return {
-			render: h => {
-				const chords = this.notes.map(n =>
-					h(
-						'span',
-						{
-							style: {
-								color: this.checkProgress.includes(n.midiNote)
-									? '#92dd6e'
-									: undefined
-							},
-							class: ['mx-1 font-bold']
-						},
-						n.formattedPitchClass
-					)
-				);
+	public helpText = Vue.extend({
+		render: h => (
+			<span>
+				You are playing a {this.chordName} - consisting of
+				{this.notes.map(n => {
+					const color = this.checkProgress.includes(n.midiNote)
+						? '#92dd6e'
+						: undefined;
 
-				return h('span', [
-					`You are playing a ${this.chordName} - consisting of`,
-					...chords
-				]);
-			}
-		};
-	}
+					return (
+						<span style={{ color }} class="mx-1 font-bold">
+							{n.formattedPitchClass}
+						</span>
+					);
+				})}
+			</span>
+		)
+	});
 
 	public render = super.render;
 }

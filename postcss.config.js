@@ -7,7 +7,7 @@ module.exports = {
 		require('tailwindcss')(),
 		IN_PRODUCTION &&
 			require('@fullhuman/postcss-purgecss')({
-				content: [`./public/**/*.html`, `./src/**/*.vue`],
+				content: ['./public/**/*.html', './src/**/*.vue', './src/**/*.tsx'],
 				defaultExtractor(content) {
 					const contentWithoutStyleBlocks = content.replace(
 						/<style[^]+?<\/style>/gi,

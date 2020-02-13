@@ -1,6 +1,6 @@
 import Task from './Task';
 import Note from '@/utils/Note';
-import Clef from '@/utils/Clef';
+import Vue from 'vue';
 
 import Vex from 'vexflow';
 const { Accidental } = Vex.Flow;
@@ -109,30 +109,23 @@ export default class TaskLickPattern extends Task {
 		return { correct, correctNotes: [correctNotes], done };
 	}
 
-	get helpText(): Vue.Component {
-		return {
-			render: h => {
-				const notes = this.notes.map((n, i) => {
+	public helpText = Vue.extend({
+		render: h => (
+			<span>
+				{this.notes.map((n, i) => {
 					let color;
 					const checkState = this.checkProgress[i];
 					if (checkState !== undefined) {
 						color = checkState ? '#92dd6e' : '#fc5130';
 					}
 
-					return h(
-						'span',
-						{
-							style: {
-								color
-							},
-							class: ['mx-2 font-bold']
-						},
-						n.formattedPitchClass
+					return (
+						<span style={{ color }} class="mx-2 font-bold">
+							{n.formattedPitchClass}
+						</span>
 					);
-				});
-
-				return h('span', notes);
-			}
-		};
-	}
+				})}
+			</span>
+		)
+	});
 }

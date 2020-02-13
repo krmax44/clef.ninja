@@ -31,6 +31,8 @@
 		"@ky-is/vue-cli-plugin-tailwind": "^2.0.0",
 		"@typescript-eslint/eslint-plugin": "^2.19.2",
 		"@typescript-eslint/parser": "^2.19.2",
+		"@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
+		"@vue/babel-preset-jsx": "^1.1.2",
 		"@vue/cli-plugin-babel": "^4.2.2",
 		"@vue/cli-plugin-eslint": "^4.2.2",
 		"@vue/cli-plugin-typescript": "^4.2.2",

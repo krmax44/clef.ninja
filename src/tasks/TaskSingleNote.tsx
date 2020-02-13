@@ -1,6 +1,7 @@
 import Task from './Task';
 import Note from '../utils/Note';
 import { clefs as CLEFS } from '../utils/noteConstants';
+import Vue from 'vue';
 
 export default class TaskSingleNote extends Task {
 	private note: Note;
@@ -21,11 +22,9 @@ export default class TaskSingleNote extends Task {
 		return { correct, correctNotes: [correctNote], done: true };
 	}
 
-	get helpText(): Vue.Component {
-		return {
-			render: h => h('span', this.note.formattedPitchClass)
-		};
-	}
+	public helpText = Vue.extend({
+		render: h => <span>{this.note.formattedPitchClass}</span>
+	});
 
 	public staveNotes = super.staveNotes;
 
