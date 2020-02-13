@@ -124,7 +124,7 @@ export default Vue.extend({
 	}
 }
 
->>> .option {
+.modal >>> .option {
 	@apply flex flex-col w-full;
 
 	&:not(:last-child) {
@@ -149,7 +149,7 @@ export default Vue.extend({
 		@apply p-12;
 	}
 
-	>>> .option {
+	.modal >>> .option {
 		@apply flex-row;
 
 		.options-selector {
