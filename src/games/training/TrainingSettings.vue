@@ -111,7 +111,8 @@ export default Vue.extend({
 	.modal {
 		transform: translateY(50vh);
 		transition: transform 0.5s ease;
-		@apply max-w-4xl w-full p-6 m-2 shadow-lg bg-white rounded;
+		max-height: 90vh;
+		@apply max-w-4xl w-full p-6 m-2 shadow-lg bg-white rounded overflow-auto;
 	}
 
 	&.open {
