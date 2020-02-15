@@ -1,7 +1,17 @@
 <template>
 	<div class="modal-container" :class="{ open }" @click="close" ref="container">
 		<div class="modal">
-			<h3 class="text-3xl font-bold mb-4">Exercise Regimen</h3>
+			<div class="flex-center w-full mb-6">
+				<h3 class="text-3xl font-bold">Exercise Regimen</h3>
+				<div
+					class="btn-round w-8 h-8 ml-auto"
+					role="button"
+					@click="$emit('close')"
+					title="Close"
+				>
+					<CloseIcon fillColor="#718096" class="w-6 h-6" />
+				</div>
+			</div>
 
 			<SettingsSwitches
 				title="Clefs"
@@ -58,12 +68,13 @@
 import Vue from 'vue';
 import Clef from '@/utils/Clef';
 import SiteSwitch from '@/components/SiteSwitch.vue';
+import CloseIcon from 'vue-material-design-icons/Close.vue';
 import SettingsSwitches from './SettingsSwitches.vue';
 import SettingsRadio from './SettingsRadio.vue';
 import defaultSettings from './defaultSettings';
 
 export default Vue.extend({
-	components: { SiteSwitch, SettingsSwitches, SettingsRadio },
+	components: { SiteSwitch, SettingsSwitches, SettingsRadio, CloseIcon },
 	data() {
 		return {
 			settings: defaultSettings
