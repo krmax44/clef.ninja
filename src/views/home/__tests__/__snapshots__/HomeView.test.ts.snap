@@ -15,12 +15,13 @@ exports[`HomeView renders correctly 1`] = `
       class="flex items-center"
     >
       <div
-        class="btn-options"
+        class="btn-round"
         role="button"
       >
         <settingsicon-stub
+          class="w-8 h-8"
           fillcolor="#718096"
-          size="32"
+          size="24"
           title="Settings Outline icon"
         />
       </div>
@@ -46,8 +47,9 @@ exports[`HomeView renders correctly 1`] = `
           class="card-inner"
         >
           <schoolicon-stub
+            class="w-12 h-12"
             fillcolor="currentColor"
-            size="48"
+            size="24"
             title="School Outline icon"
           />
            
@@ -72,8 +74,9 @@ exports[`HomeView renders correctly 1`] = `
           class="card-inner"
         >
           <gamepadicon-stub
+            class="w-12 h-12"
             fillcolor="currentColor"
-            size="48"
+            size="24"
             title="Gamepad Square Outline icon"
           />
            

@@ -3,12 +3,12 @@
 		<portal to="header-right-small">
 			<div class="flex items-center">
 				<div
-					class="btn-options"
+					class="btn-round"
 					role="button"
 					@click="showSettings = true"
 					title="Settings"
 				>
-					<SettingsIcon :size="32" fillColor="#718096" />
+					<SettingsIcon fillColor="#718096" class="h-8 w-8" />
 				</div>
 			</div>
 		</portal>

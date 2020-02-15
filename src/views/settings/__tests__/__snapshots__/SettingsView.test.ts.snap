@@ -26,8 +26,9 @@ exports[`SettingsView renders correctly 1`] = `
             class="card-inner"
           >
             <virtualicon-stub
+              class="w-12 h-12"
               fillcolor="currentColor"
-              size="48"
+              size="24"
               title="Monitor Clean icon"
             />
              
@@ -52,8 +53,9 @@ exports[`SettingsView renders correctly 1`] = `
             class="card-inner"
           >
             <midiicon-stub
+              class="w-12 h-12"
               fillcolor="currentColor"
-              size="48"
+              size="24"
               title="Midi Port icon"
             />
              
@@ -97,8 +99,9 @@ exports[`SettingsView renders correctly 1`] = `
             class="card-inner"
           >
             <pianoicon-stub
+              class="w-12 h-12"
               fillcolor="currentColor"
-              size="48"
+              size="24"
               title="Piano icon"
             />
              
@@ -119,8 +122,9 @@ exports[`SettingsView renders correctly 1`] = `
             class="card-inner"
           >
             <guitaricon-stub
+              class="w-12 h-12"
               fillcolor="currentColor"
-              size="48"
+              size="24"
               title="Guitar Acoustic icon"
             />
              

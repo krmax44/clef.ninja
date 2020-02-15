@@ -3,11 +3,11 @@
 		<portal to="header-right-small">
 			<div class="flex items-center">
 				<div
-					class="btn-options"
+					class="btn-round"
 					role="button"
 					@click="$store.commit('stage', { name: 'settingsView' })"
 				>
-					<SettingsIcon :size="32" fillColor="#718096" />
+					<SettingsIcon fillColor="#718096" class="w-8 h-8" />
 				</div>
 			</div>
 		</portal>
@@ -18,7 +18,7 @@
 			<div class="card-container" @click="selectGamemode('training')">
 				<div class="card">
 					<div class="card-inner">
-						<SchoolIcon :size="48" />
+						<SchoolIcon class="w-12 h-12" />
 
 						<h3>Training Mode</h3>
 						<p>Get started reading treble and bass clefs.</p>
@@ -29,7 +29,7 @@
 			<div class="card-container" @click="selectGamemode('arcade')">
 				<div class="card">
 					<div class="card-inner">
-						<GamepadIcon :size="48" />
+						<GamepadIcon class="w-12 h-12" />
 
 						<h3>Arcade Mode</h3>
 						<p>

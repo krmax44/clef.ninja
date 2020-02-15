@@ -1,6 +1,6 @@
 <template>
 	<div class="flex items-center">
-		<transition-group name="lives" tag="div" class="flex flex-row">
+		<transition-group name="lives" tag="div" class="flex-center">
 			<span class="text-2xl score inline-block mr-4" :key="'score'">
 				Score: {{ score }}
 			</span>
@@ -10,7 +10,7 @@
 				v-for="i of new Array(lives).fill(undefined).map((a, i) => i)"
 				class="live"
 			>
-				<HeartIcon fillColor="#fc5130" :size="32" />
+				<HeartIcon fillColor="#fc5130" class="h-6 w-6" />
 			</span>
 		</transition-group>
 	</div>

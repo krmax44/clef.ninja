@@ -1,6 +1,6 @@
 <template>
 	<div class="h-full w-full flex flex-col items-center justify-center">
-		<TrophyIcon :size="48" />
+		<TrophyIcon class="h-8 w-8" />
 
 		<h2 class="font-bold text-3xl">Game Over</h2>
 		<p class="text-xl">

@@ -10,7 +10,7 @@
 				>
 					<div class="card">
 						<div class="card-inner">
-							<VirtualIcon :size="48" />
+							<VirtualIcon class="w-12 h-12" />
 							<h3>Virtual Keyboard</h3>
 
 							<p>Use a virtual input device with your mouse.</p>
@@ -21,7 +21,7 @@
 				<div class="card-container">
 					<div class="card cursor-auto">
 						<div class="card-inner">
-							<MidiIcon :size="48" />
+							<MidiIcon class="w-12 h-12" />
 							<h3>MIDI Keyboard</h3>
 
 							<div v-if="supportsMidi">
@@ -83,7 +83,7 @@
 				<div class="card-container" @click="setInstrument('piano')">
 					<div class="card flex">
 						<div class="card-inner">
-							<PianoIcon :size="48" />
+							<PianoIcon class="w-12 h-12" />
 							<h3>Piano</h3>
 						</div>
 					</div>
@@ -92,7 +92,7 @@
 				<div class="card-container" @click="setInstrument('guitar')">
 					<div class="card">
 						<div class="card-inner">
-							<GuitarIcon :size="48" />
+							<GuitarIcon class="w-12 h-12" />
 							<h3>Guitar</h3>
 
 							<p>
