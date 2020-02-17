@@ -50,7 +50,6 @@ const hardChords = [
 ];
 
 export default function(clefs: Clef[], difficulty: number) {
-	let n = 0;
 	const viableChords = easyChords;
 	const viableBassNotes: Note[] = [];
 	const accidental = Math.random() < 0.5 ? '#' : 'b';
@@ -61,6 +60,7 @@ export default function(clefs: Clef[], difficulty: number) {
 
 	let chord;
 	let chordNotes: Note[];
+	let name: string;
 
 	while (true) {
 		chord = randomFromArray(viableChords);
@@ -82,6 +82,7 @@ export default function(clefs: Clef[], difficulty: number) {
 		}
 
 		const bassNote = randomFromArray(viableBassNotes);
+		name = bassNote.formattedPitchClass + chord.name;
 
 		chordNotes = intervals.map(
 			i => new Note(bassNote.midiNote + i, accidental)
@@ -100,9 +101,6 @@ export default function(clefs: Clef[], difficulty: number) {
 		} else if (accidentals === 0) {
 			break;
 		}
-		n++;
-
-		if (n > 50) break;
 	}
 
 	return { name, chordNotes };
