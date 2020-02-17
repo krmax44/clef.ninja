@@ -14,7 +14,7 @@ const defaultSettings: Settings = {
 		bass: true
 	},
 	tasks: { singleNotes: true },
-	difficulty: 1,
+	difficulty: 2,
 	keyLabels: true,
 	helpText: true
 };
