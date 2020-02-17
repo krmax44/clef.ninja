@@ -1,16 +1,16 @@
-import Task from './Task';
+import Task, { TaskContext } from './Task';
 import Note from '../utils/Note';
-import { clefs as CLEFS } from '../utils/noteConstants';
 import Vue from 'vue';
 
 export default class TaskSingleNote extends Task {
-	private note: Note;
+	public note: Note;
 
-	constructor(target: HTMLElement, clefs = CLEFS, difficulty = 1) {
-		super(target, clefs, difficulty);
-		this.note = Note.random(clefs);
+	constructor(context: TaskContext) {
+		super(context);
+
+		this.note = Note.random(this.clefs);
 		this.notes = [this.note];
-		this.clef = this.note.determineClef(clefs);
+		this.clef = this.note.determineClef(this.clefs);
 	}
 
 	public check(input: number) {

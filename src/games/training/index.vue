@@ -77,7 +77,7 @@ function randomTask(
 ): Task {
 	const name = randomFromArray(viableTasks);
 	const task = tasks[name]();
-	return new task(target, clefs, difficulty);
+	return new task({ target, clefs, difficulty });
 }
 
 export default Vue.extend({

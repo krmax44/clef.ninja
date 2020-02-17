@@ -55,7 +55,7 @@ function randomTask(target: HTMLElement): Task {
 	const tasks = [() => TaskSingleNote, () => TaskChord, randomPattern];
 
 	const Task = randomFromArray(tasks)();
-	return new Task(target);
+	return new Task({ target });
 }
 
 export default Vue.extend({

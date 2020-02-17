@@ -4,7 +4,7 @@ const target = {} as HTMLElement;
 
 describe('TaskChord', () => {
 	it('checks correct inputs', () => {
-		const task = new TaskChord(target);
+		const task = new TaskChord({ target });
 		const correctNotes = task.notes.map(n => n.midiNote);
 
 		for (const correctNote of correctNotes) {
@@ -20,7 +20,7 @@ describe('TaskChord', () => {
 	});
 
 	it('checks incorrect inputs', () => {
-		const task = new TaskChord(target);
+		const task = new TaskChord({ target });
 		const correctNotes = task.notes.map(n => n.midiNote);
 
 		// One wrong, get another try

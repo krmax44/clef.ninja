@@ -1,5 +1,4 @@
-import Task from '../Task';
-import { clefs as CLEFS } from '../../utils/noteConstants';
+import Task, { TaskContext } from '../Task';
 
 import Vex from 'vexflow';
 import { StaveNote } from '@/utils/VexHelper';
@@ -10,11 +9,12 @@ export default class TaskChord extends Task {
 	private midiNotes: number[];
 	private checkProgress: number[] = [];
 	private checkCount = 0;
-	private chordName: string;
+	public chordName: string;
 
-	constructor(target: HTMLElement, clefs = CLEFS, difficulty = 2) {
-		super(target, clefs, difficulty);
-		const chord = randomChord(clefs, difficulty);
+	constructor(context: TaskContext) {
+		super(context);
+
+		const chord = randomChord(this.clefs, this.difficulty);
 		this.notes = chord.chordNotes;
 		this.chordName = chord.name;
 		this.midiNotes = this.notes.map(n => n.midiNote);
@@ -23,7 +23,7 @@ export default class TaskChord extends Task {
 		// TODO: clef determination based on multiple notes
 		this.clef = this.notes[
 			Math.round((this.notes.length - 1) / 2)
-		].determineClef(clefs);
+		].determineClef(this.clefs);
 	}
 
 	public staveNotes(): Vex.Flow.StaveNote[] {

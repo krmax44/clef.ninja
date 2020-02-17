@@ -1,10 +1,9 @@
-import Task from './Task';
+import Task, { TaskContext } from './Task';
 import Note from '@/utils/Note';
 import Vue from 'vue';
 
 import Vex from 'vexflow';
 const { Accidental } = Vex.Flow;
-import { clefs as CLEFS } from '@/utils/noteConstants';
 import { Renderer, StaveNote } from '@/utils/VexHelper';
 
 function generatePattern(one: Note): Note[] {
@@ -39,8 +38,10 @@ function generatePattern(one: Note): Note[] {
 export default class TaskLickPattern extends Task {
 	private checkProgress: boolean[] = [];
 
-	constructor(target: HTMLElement, clefs = CLEFS, difficulty = 2) {
-		super(target, clefs, difficulty);
+	constructor(context: TaskContext) {
+		super(context);
+
+		const { difficulty, clefs } = this;
 
 		let start: Note;
 		let notes: Note[] = [];
