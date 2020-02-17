@@ -1,3 +1,4 @@
+import { mount } from '@vue/test-utils';
 import TaskChord from '../TaskChord';
 
 const target = {} as HTMLElement;
@@ -70,5 +71,15 @@ describe('TaskChord', () => {
 			correctNotes,
 			score: true
 		});
+	});
+
+	it('generates the help text', () => {
+		const task = new TaskChord({ target });
+		const wrapper = mount(task.helpText);
+		const notes = task.notes.map(n => n.formattedPitchClass).join('');
+
+		expect(wrapper.text()).toBe(
+			`You are playing a ${task.chordName} - consisting of${notes}`
+		);
 	});
 });

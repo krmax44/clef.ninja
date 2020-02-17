@@ -1,3 +1,4 @@
+import { mount } from '@vue/test-utils';
 import TaskLickPattern from '../TaskLickPattern';
 
 const target = {} as HTMLElement;
@@ -37,5 +38,13 @@ describe('TaskLickPattern', () => {
 				correctNotes: [correctNote]
 			});
 		}
+	});
+
+	it('generates the help text', () => {
+		const task = new TaskLickPattern({ target });
+		const wrapper = mount(task.helpText);
+		const notes = task.notes.map(n => n.formattedPitchClass).join('');
+
+		expect(wrapper.text()).toBe(notes);
 	});
 });
