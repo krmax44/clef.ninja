@@ -1,9 +1,9 @@
 import Task, { TaskContext } from '../Task';
 
-import Vex from 'vexflow';
-import { StaveNote } from '@/utils/VexHelper';
 import randomChord from './randomChord';
 import Vue from 'vue';
+import Note from '@/utils/Note';
+import { updateLifecycle } from '@/utils/houkLifecycle';
 
 export default class TaskChord extends Task {
 	private midiNotes: number[];
@@ -14,30 +14,29 @@ export default class TaskChord extends Task {
 	constructor(context: TaskContext) {
 		super(context);
 
-		const chord = randomChord(this.clefs, this.difficulty);
-		this.notes = chord.chordNotes;
-		this.chordName = chord.name;
-		this.midiNotes = this.notes.map(n => n.midiNote);
+		const { chordNotes, name } = randomChord(this.clefs, this.difficulty);
+		this.notes = [chordNotes];
+		this.chordName = name;
+		this.midiNotes = chordNotes.map(n => n.midiNote);
 
 		// determine clef based on center note of chord
-		// TODO: clef determination based on multiple notes
-		this.clef = this.notes[
-			Math.round((this.notes.length - 1) / 2)
-		].determineClef(this.clefs);
-	}
-
-	public staveNotes(): Vex.Flow.StaveNote[] {
-		return [StaveNote(this.notes)];
+		const center = Note.centerNote(chordNotes);
+		this.clef = new Note(center, undefined, this.instrument).determineClef(
+			this.clefs
+		);
 	}
 
 	public check(input: number) {
-		const pos = this.midiNotes.indexOf(input);
-		const correct = pos !== -1;
+		const note = this.notes.flat().find(n => n.midiNote === input);
+		const correct = note !== undefined;
 		const score = !this.checkProgress.includes(input); // only count towards score once
 
 		let correctNotes;
-		if (correct) {
+		// TODO: typescript shenanigans - if (correct) doesn't work here even though it's LITERALLY THE SAME omg
+		if (note !== undefined) {
 			correctNotes = [input];
+			note.color = '#92dd6e';
+			this.emit('updateHelpText');
 
 			if (score) {
 				this.checkProgress.push(input);
@@ -56,23 +55,20 @@ export default class TaskChord extends Task {
 	}
 
 	public helpText = Vue.extend({
+		mixins: [updateLifecycle(this)],
 		render: h => (
 			<span>
 				You are playing a {this.chordName} - consisting of
-				{this.notes.map(n => {
-					const color = this.checkProgress.includes(n.midiNote)
-						? '#92dd6e'
-						: undefined;
-
-					return (
-						<span style={{ color }} class="mx-1 font-bold">
-							{n.formattedPitchClass}
-						</span>
-					);
-				})}
+				{this.notes.flat().map(({ color, formattedPitchClass }) => (
+					<span style={{ color }} class="mx-1 font-bold">
+						{formattedPitchClass}
+					</span>
+				))}
 			</span>
 		)
 	});
+
+	public staveNotes = super.staveNotes;
 
 	public render = super.render;
 }

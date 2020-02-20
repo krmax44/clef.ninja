@@ -6,7 +6,7 @@ const target = {} as HTMLElement;
 describe('TaskChord', () => {
 	it('checks correct inputs', () => {
 		const task = new TaskChord({ target });
-		const correctNotes = task.notes.map(n => n.midiNote);
+		const correctNotes = task.notes[0].map(n => n.midiNote);
 
 		for (const correctNote of correctNotes) {
 			const done = correctNote === correctNotes[correctNotes.length - 1];
@@ -22,7 +22,7 @@ describe('TaskChord', () => {
 
 	it('checks incorrect inputs', () => {
 		const task = new TaskChord({ target });
-		const correctNotes = task.notes.map(n => n.midiNote);
+		const correctNotes = task.notes[0].map(n => n.midiNote);
 
 		// One wrong, get another try
 		expect(task.check(-1)).toEqual({
@@ -76,7 +76,7 @@ describe('TaskChord', () => {
 	it('generates the help text', () => {
 		const task = new TaskChord({ target });
 		const wrapper = mount(task.helpText);
-		const notes = task.notes.map(n => n.formattedPitchClass).join('');
+		const notes = task.notes[0].map(n => n.formattedPitchClass).join('');
 
 		expect(wrapper.text()).toBe(
 			`You are playing a ${task.chordName} - consisting of${notes}`

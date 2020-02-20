@@ -9,7 +9,7 @@ export default class TaskSingleNote extends Task {
 		super(context);
 
 		this.note = Note.random(this.clefs);
-		this.notes = [this.note];
+		this.notes = [[this.note]];
 		this.clef = this.note.determineClef(this.clefs);
 	}
 
@@ -23,7 +23,7 @@ export default class TaskSingleNote extends Task {
 	}
 
 	public helpText = Vue.extend({
-		render: h => <span>{this.note.formattedPitchClass}</span>
+		render: h => <span class="font-bold">{this.note.formattedPitchClass}</span>
 	});
 
 	public staveNotes = super.staveNotes;

@@ -57,16 +57,17 @@ import defaultSettings from './defaultSettings';
 import Task from '@/tasks/Task';
 import TaskSingleNote from '@/tasks/TaskSingleNote';
 import TaskChord from '@/tasks/TaskChord/index';
-import { randomPattern } from '@/tasks/PatternTasks';
+import TaskPattern from '@/tasks/TaskPattern';
 
 import Clef from '@/utils/Clef';
 import { clefs } from '@/utils/noteConstants';
-import { randomFromArray } from '../../utils/randomHelper';
+import { randomFromArray } from '@/utils/randomHelper';
+import { midiLifecycle } from '@/utils/houkLifecycle';
 
-const tasks: { [key: string]: () => any } = {
-	singleNotes: () => TaskSingleNote,
-	chords: () => TaskChord,
-	patterns: randomPattern
+const tasks: { [key: string]: any } = {
+	singleNotes: TaskSingleNote,
+	chords: TaskChord,
+	patterns: TaskPattern
 };
 
 function randomTask(
@@ -76,11 +77,12 @@ function randomTask(
 	difficulty: number
 ): Task {
 	const name = randomFromArray(viableTasks);
-	const task = tasks[name]();
+	const task = tasks[name];
 	return new task({ target, clefs, difficulty });
 }
 
 export default Vue.extend({
+	mixins: [midiLifecycle()],
 	data() {
 		return {
 			task: (undefined as unknown) as Task,
@@ -151,10 +153,6 @@ export default Vue.extend({
 	},
 	mounted() {
 		this.newTask();
-		this.$store.getters.midi?.on('noteDown', this.input);
-	},
-	beforeDestroy() {
-		this.$store.getters.midi?.off('noteDown', this.input);
 	},
 	watch: {
 		'settings.clefs': {

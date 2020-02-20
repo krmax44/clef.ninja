@@ -1,4 +1,3 @@
-import { Accidental } from './types';
 import { note as toNote } from '@tonaljs/tonal';
 import * as constants from './noteConstants';
 import Instrument from '@/instruments/Instrument';
@@ -15,7 +14,7 @@ export default class Note {
 	public midiNote: number;
 	public octave: number;
 	public pitchClass: string;
-	public accidental?: Accidental | false;
+	public accidental?: string | false;
 	public clef?: Clef;
 	public instrument: Instrument;
 	public color?: string;
@@ -23,7 +22,7 @@ export default class Note {
 
 	constructor(
 		midiNote: number,
-		accidental: Accidental | false = '#',
+		accidental: string | false = '#',
 		instrument: Instrument = InstrumentPiano,
 		clef?: Clef
 	) {
@@ -63,9 +62,7 @@ export default class Note {
 
 		if (empty === true || !midi) throw new Error('Invalid note');
 
-		const accidental = constants.accidentals.includes(acc as Accidental)
-			? (acc as Accidental)
-			: false;
+		const accidental = constants.accidentals.includes(acc) ? acc : false;
 
 		const note = new Note(midi, accidental, instrument);
 
@@ -77,7 +74,7 @@ export default class Note {
 		minOffset = 0,
 		maxOffset = 0,
 		instrument: Instrument = InstrumentPiano,
-		accidental: Accidental | false = Note.randomAccidental()
+		accidental: string | false = Note.randomAccidental()
 	) {
 		const mins = clefs.map(clef => clef.min);
 		const maxs = clefs.map(clef => clef.max);
@@ -99,7 +96,7 @@ export default class Note {
 		_minOffset?: number,
 		_maxOffset?: number,
 		instrument?: Instrument,
-		accidental?: Accidental | false
+		accidental?: string | false
 	) {
 		return Note.viableMidi(...arguments).map(
 			n => new Note(n, accidental, instrument)
@@ -111,7 +108,7 @@ export default class Note {
 		_minOffset?: number,
 		_maxOffset?: number,
 		instrument?: Instrument,
-		accidental?: Accidental | false
+		accidental?: string | false
 	): Note {
 		const viable = Note.viableMidi(...arguments);
 		const midiNote = randomFromArray(viable);
@@ -129,5 +126,12 @@ export default class Note {
 
 	static randomAccidental() {
 		return Math.random() < 0.5 ? '#' : 'b';
+	}
+
+	static centerNote(notes: Note[]) {
+		const midiNotes = notes.map(n => n.midiNote);
+		const lowest = Math.min(...midiNotes);
+		const highest = Math.max(...midiNotes);
+		return Math.round((highest + lowest) / 2);
 	}
 }

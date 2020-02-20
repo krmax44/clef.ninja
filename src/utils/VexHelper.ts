@@ -2,9 +2,15 @@ import Vex from 'vexflow';
 import Clef from './Clef';
 import Note from './Note';
 import Task from '@/tasks/Task';
+import { treble } from './noteConstants';
 const VF = Vex.Flow;
 
-export function StaveNote(notes: Note[], clef?: Clef, color?: string) {
+export function StaveNote(
+	notes: Note[],
+	clef?: Clef,
+	autoStem = true,
+	notesBefore?: Note[]
+) {
 	clef = clef || notes[0].determineClef();
 
 	const keys = notes.map(note => {
@@ -16,23 +22,53 @@ export function StaveNote(notes: Note[], clef?: Clef, color?: string) {
 		clef: clef.name,
 		octave_shift: clef.octaveShift,
 		duration: notes[0].duration || 'q',
-		auto_stem: true
+		auto_stem: autoStem
 	});
 
-	notes.forEach((note, i) => {
-		if (typeof note.accidental === 'string') {
-			staveNote.addAccidental(i, new VF.Accidental(note.accidental));
+	notes.forEach(({ accidental, color, pitchClass }, i) => {
+		if (notesBefore) {
+			const renderedAccidental = notesBefore.reduce((a, n) => {
+				if (n.pitchClass[0] === pitchClass[0] && n.accidental === accidental)
+					return false;
+				else if (
+					n.pitchClass[0] === pitchClass[0] &&
+					n.accidental !== accidental
+				) {
+					return accidental || 'n';
+				}
+				return a;
+			}, accidental);
+
+			if (renderedAccidental)
+				staveNote.addAccidental(i, new VF.Accidental(renderedAccidental));
+		} else if (typeof accidental === 'string') {
+			staveNote.addAccidental(i, new VF.Accidental(accidental));
 		}
+
+		staveNote.setKeyStyle(i, { fillStyle: color, strokeStyle: color });
 	});
 
-	if (notes[0].color) {
-		staveNote.setStyle({
-			fillStyle: notes[0].color,
-			strokeStyle: notes[0].color
-		});
+	if (notes.length === 0) {
+		const { color } = notes[0];
+		staveNote.setStyle({ fillStyle: color, strokeStyle: color });
 	}
 
 	return staveNote;
+}
+
+export function StaveRest(
+	duration: string,
+	clef = treble,
+	key = clef === treble ? 'b/4' : 'd/3',
+	autoStem = true
+) {
+	return new VF.StaveNote({
+		keys: [key],
+		clef: clef.name,
+		octave_shift: clef.octaveShift,
+		duration: duration + 'r',
+		auto_stem: autoStem
+	});
 }
 
 export function Renderer(this: Task, width = 150) {

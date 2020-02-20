@@ -48,20 +48,21 @@ import VirtualInput from '@/components/VirtualInput.vue';
 import Task from '@/tasks/Task';
 import TaskSingleNote from '@/tasks/TaskSingleNote';
 import TaskChord from '@/tasks/TaskChord';
-import { randomPattern } from '@/tasks/PatternTasks';
-import { randomFromArray } from '../../utils/randomHelper';
+import TaskPattern from '@/tasks/TaskPattern';
+import { randomFromArray } from '@/utils/randomHelper';
+import { midiLifecycle } from '@/utils/houkLifecycle';
 
+const tasks = [TaskSingleNote, TaskChord, TaskPattern];
 function randomTask(target: HTMLElement): Task {
-	const tasks = [() => TaskSingleNote, () => TaskChord, randomPattern];
-
-	const Task = randomFromArray(tasks)();
+	const Task = randomFromArray(tasks);
 	return new Task({ target });
 }
 
 export default Vue.extend({
+	mixins: [midiLifecycle()],
 	data() {
 		return {
-			task: (undefined as unknown) as Task, // TODO: yikes
+			task: (null as unknown) as Task, // TODO: yikes
 			taskMistake: false,
 			correct: [0],
 			wrong: 0,
@@ -116,6 +117,7 @@ export default Vue.extend({
 		},
 
 		start() {
+			this.newTask();
 			this.gameClock = setInterval(() => {
 				if (this.countdown === 0) this.state = 'playing';
 				if (this.remainingTime === 0) this.gameOver();
@@ -147,13 +149,10 @@ export default Vue.extend({
 	},
 
 	mounted() {
-		this.newTask();
-		this.$store.getters.midi?.on('noteDown', this.input);
 		this.start();
 	},
 
 	beforeDestroy() {
-		this.$store.getters.midi?.off('noteDown', this.input);
 		clearInterval(this.gameClock);
 	}
 });
