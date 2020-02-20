@@ -2,14 +2,9 @@
 	<div class="flex flex-col flex-1 max-w-full">
 		<portal to="header-right-small">
 			<div class="flex items-center">
-				<div
-					class="btn-round"
-					role="button"
-					@click="showSettings = true"
-					title="Settings"
-				>
+				<button class="btn-round" @click="showSettings = true" title="Settings">
 					<SettingsIcon fillColor="#718096" class="h-8 w-8" />
-				</div>
+				</button>
 			</div>
 		</portal>
 

@@ -3,14 +3,13 @@
 		<div class="modal">
 			<div class="flex-center w-full mb-6">
 				<h3 class="text-3xl font-bold">Exercise Regimen</h3>
-				<div
+				<button
 					class="btn-round w-8 h-8 ml-auto"
-					role="button"
-					@click="$emit('close')"
 					title="Close"
+					@click="$emit('close')"
 				>
 					<CloseIcon fillColor="#718096" class="w-6 h-6" />
-				</div>
+				</button>
 			</div>
 
 			<SettingsSwitches

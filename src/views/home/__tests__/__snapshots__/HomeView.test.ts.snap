@@ -14,9 +14,8 @@ exports[`HomeView renders correctly 1`] = `
     <div
       class="flex items-center"
     >
-      <div
+      <button
         class="btn-round"
-        role="button"
       >
         <settingsicon-stub
           class="w-8 h-8"
@@ -24,7 +23,7 @@ exports[`HomeView renders correctly 1`] = `
           size="24"
           title="Settings Outline icon"
         />
-      </div>
+      </button>
     </div>
   </portal-stub>
    

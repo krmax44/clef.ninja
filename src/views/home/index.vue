@@ -2,13 +2,12 @@
 	<div class="px-4">
 		<portal to="header-right-small">
 			<div class="flex items-center">
-				<div
+				<button
 					class="btn-round"
-					role="button"
 					@click="$store.commit('stage', { name: 'settingsView' })"
 				>
 					<SettingsIcon fillColor="#718096" class="w-8 h-8" />
-				</div>
+				</button>
 			</div>
 		</portal>
 
