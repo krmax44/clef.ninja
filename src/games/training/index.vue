@@ -2,6 +2,10 @@
 	<div class="flex flex-col flex-1 max-w-full">
 		<portal to="header-right-small">
 			<div class="flex items-center">
+				<button class="btn-round" @click="newTask" title="Skip task">
+					<SkipIcon fillColor="#718096" class="h-8 w-8" />
+				</button>
+
 				<button class="btn-round" @click="showSettings = true" title="Settings">
 					<SettingsIcon fillColor="#718096" class="h-8 w-8" />
 				</button>
