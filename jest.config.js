@@ -4,7 +4,7 @@ module.exports = {
 	...preset,
 	transformIgnorePatterns: ['node_modules/(?!(vue-material-design-icons)/)'],
 	coverageReporters: ['text', 'lcovonly'],
-	collectCoverageFrom: ['./src/**/*.{js,ts,vue}', '!**/node_modules/**'],
+	collectCoverageFrom: ['./src/**/*.{js,ts,tsx,vue}', '!**/node_modules/**'],
 	setupFiles: ['./src/testUtils/window.ts'],
 	moduleNameMapper: {
 		...preset.moduleNameMapper,
