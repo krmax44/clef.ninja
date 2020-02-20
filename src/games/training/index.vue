@@ -46,7 +46,8 @@
 import Vue from 'vue';
 import VirtualInput from '@/components/VirtualInput.vue';
 import TrainingSettings from './TrainingSettings.vue';
-import SettingsIcon from 'vue-material-design-icons/SettingsOutline.vue';
+import SkipIcon from 'icons/SkipForwardOutline.vue';
+import SettingsIcon from 'icons/SettingsOutline.vue';
 
 import defaultSettings from './defaultSettings';
 import Task from '@/tasks/Task';
@@ -88,7 +89,7 @@ export default Vue.extend({
 			settings: defaultSettings
 		};
 	},
-	components: { VirtualInput, TrainingSettings, SettingsIcon },
+	components: { VirtualInput, TrainingSettings, SkipIcon, SettingsIcon },
 	methods: {
 		input(input: number): void {
 			if (this.halting) return;

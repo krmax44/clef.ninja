@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
 	pages: {
 		index: {
@@ -7,6 +9,14 @@ module.exports = {
 		app: {
 			entry: 'src/pages/app',
 			filename: 'app/index.html'
+		}
+	},
+	configureWebpack: {
+		resolve: {
+			alias: {
+				icons: path.resolve(__dirname, 'node_modules/vue-material-design-icons')
+			},
+			extensions: ['.vue']
 		}
 	}
 };

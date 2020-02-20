@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import TrophyIcon from 'vue-material-design-icons/TrophyAward.vue';
+import TrophyIcon from 'icons/TrophyAward.vue';
 
 export default Vue.extend({
 	props: ['score'],

@@ -44,9 +44,9 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import SchoolIcon from 'vue-material-design-icons/SchoolOutline.vue';
-import GamepadIcon from 'vue-material-design-icons/GamepadSquareOutline.vue';
-import SettingsIcon from 'vue-material-design-icons/SettingsOutline.vue';
+import SchoolIcon from 'icons/SchoolOutline.vue';
+import GamepadIcon from 'icons/GamepadSquareOutline.vue';
+import SettingsIcon from 'icons/SettingsOutline.vue';
 
 export default Vue.extend({
 	components: { SchoolIcon, GamepadIcon, SettingsIcon },

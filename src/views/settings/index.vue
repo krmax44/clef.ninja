@@ -110,10 +110,10 @@
 <script lang="ts">
 import Vue from 'vue';
 
-import VirtualIcon from 'vue-material-design-icons/MonitorClean.vue';
-import MidiIcon from 'vue-material-design-icons/MidiPort.vue';
-import PianoIcon from 'vue-material-design-icons/Piano.vue';
-import GuitarIcon from 'vue-material-design-icons/GuitarAcoustic.vue';
+import VirtualIcon from 'icons/MonitorClean.vue';
+import MidiIcon from 'icons/MidiPort.vue';
+import PianoIcon from 'icons/Piano.vue';
+import GuitarIcon from 'icons/GuitarAcoustic.vue';
 
 import MidiHandler from '@/utils/MidiHandler';
 

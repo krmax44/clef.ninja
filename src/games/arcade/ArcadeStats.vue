@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import HeartIcon from 'vue-material-design-icons/HeartOutline.vue';
+import HeartIcon from 'icons/HeartOutline.vue';
 
 export default Vue.extend({
 	props: {

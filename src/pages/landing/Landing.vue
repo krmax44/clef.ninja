@@ -92,10 +92,10 @@
 </template>
 
 <script lang="ts">
-import GamepadIcon from 'vue-material-design-icons/GamepadSquareOutline.vue';
-import PianoIcon from 'vue-material-design-icons/Piano.vue';
-import GiftIcon from 'vue-material-design-icons/GiftOutline.vue';
-import HeartIcon from 'vue-material-design-icons/HeartOutline.vue';
+import GamepadIcon from 'icons/GamepadSquareOutline.vue';
+import PianoIcon from 'icons/Piano.vue';
+import GiftIcon from 'icons/GiftOutline.vue';
+import HeartIcon from 'icons/HeartOutline.vue';
 
 import SiteHeader from '@/components/SiteHeaderLanding.vue';
 
