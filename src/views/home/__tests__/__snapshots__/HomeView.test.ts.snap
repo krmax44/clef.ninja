@@ -16,12 +16,16 @@ exports[`HomeView renders correctly 1`] = `
     >
       <button
         class="btn-round"
+        title="Settings"
       >
         <settingsicon-stub
+          arialabel="SettingsOutline icon"
           class="w-8 h-8"
-          fillcolor="#718096"
-          size="24"
-          title="Settings Outline icon"
+          height="24"
+          role="img"
+          viewbox="0 0 24 24"
+          width="24"
+          xmlns="xmlns=\\"http://www.w3.org/2000/svg\\""
         />
       </button>
     </div>
@@ -46,10 +50,13 @@ exports[`HomeView renders correctly 1`] = `
           class="card-inner"
         >
           <schoolicon-stub
+            arialabel="SchoolOutline icon"
             class="w-12 h-12"
-            fillcolor="currentColor"
-            size="24"
-            title="School Outline icon"
+            height="24"
+            role="img"
+            viewbox="0 0 24 24"
+            width="24"
+            xmlns="xmlns=\\"http://www.w3.org/2000/svg\\""
           />
            
           <h3>
@@ -73,10 +80,13 @@ exports[`HomeView renders correctly 1`] = `
           class="card-inner"
         >
           <gamepadicon-stub
+            arialabel="GamepadSquareOutline icon"
             class="w-12 h-12"
-            fillcolor="currentColor"
-            size="24"
-            title="Gamepad Square Outline icon"
+            height="24"
+            role="img"
+            viewbox="0 0 24 24"
+            width="24"
+            xmlns="xmlns=\\"http://www.w3.org/2000/svg\\""
           />
            
           <h3>

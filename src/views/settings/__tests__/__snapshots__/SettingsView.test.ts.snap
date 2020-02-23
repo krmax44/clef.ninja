@@ -26,10 +26,13 @@ exports[`SettingsView renders correctly 1`] = `
             class="card-inner"
           >
             <virtualicon-stub
+              arialabel="MonitorClean icon"
               class="w-12 h-12"
-              fillcolor="currentColor"
-              size="24"
-              title="Monitor Clean icon"
+              height="24"
+              role="img"
+              viewbox="0 0 24 24"
+              width="24"
+              xmlns="xmlns=\\"http://www.w3.org/2000/svg\\""
             />
              
             <h3>
@@ -53,10 +56,13 @@ exports[`SettingsView renders correctly 1`] = `
             class="card-inner"
           >
             <midiicon-stub
+              arialabel="MidiPort icon"
               class="w-12 h-12"
-              fillcolor="currentColor"
-              size="24"
-              title="Midi Port icon"
+              height="24"
+              role="img"
+              viewbox="0 0 24 24"
+              width="24"
+              xmlns="xmlns=\\"http://www.w3.org/2000/svg\\""
             />
              
             <h3>
@@ -99,10 +105,13 @@ exports[`SettingsView renders correctly 1`] = `
             class="card-inner"
           >
             <pianoicon-stub
+              arialabel="Piano icon"
               class="w-12 h-12"
-              fillcolor="currentColor"
-              size="24"
-              title="Piano icon"
+              height="24"
+              role="img"
+              viewbox="0 0 24 24"
+              width="24"
+              xmlns="xmlns=\\"http://www.w3.org/2000/svg\\""
             />
              
             <h3>
@@ -122,10 +131,13 @@ exports[`SettingsView renders correctly 1`] = `
             class="card-inner"
           >
             <guitaricon-stub
+              arialabel="GuitarAcoustic icon"
               class="w-12 h-12"
-              fillcolor="currentColor"
-              size="24"
-              title="Guitar Acoustic icon"
+              height="24"
+              role="img"
+              viewbox="0 0 24 24"
+              width="24"
+              xmlns="xmlns=\\"http://www.w3.org/2000/svg\\""
             />
              
             <h3>

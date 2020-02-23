@@ -4,9 +4,10 @@
 			<div class="flex items-center">
 				<button
 					class="btn-round"
+					title="Settings"
 					@click="$store.commit('stage', { name: 'settingsView' })"
 				>
-					<SettingsIcon fillColor="#718096" class="w-8 h-8" />
+					<SettingsIcon class="w-8 h-8" />
 				</button>
 			</div>
 		</portal>

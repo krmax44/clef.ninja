@@ -8,9 +8,9 @@
 			<span
 				:key="i"
 				v-for="i of new Array(lives).fill(undefined).map((a, i) => i)"
-				class="live"
+				class="text-brand-red"
 			>
-				<HeartIcon fillColor="#fc5130" class="h-6 w-6" />
+				<HeartIcon class="h-6 w-6" />
 			</span>
 		</transition-group>
 	</div>

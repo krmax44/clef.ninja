@@ -8,7 +8,7 @@
 					title="Close"
 					@click="$emit('close')"
 				>
-					<CloseIcon fillColor="#718096" class="w-6 h-6" />
+					<CloseIcon class="w-6 h-6" />
 				</button>
 			</div>
 

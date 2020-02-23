@@ -16,12 +16,12 @@
 		"@types/vexflow": "^1.2.33",
 		"@types/webmidi": "^2.0.4",
 		"houk": "^1.1.1",
+		"mdi-vue": "^1.4.3",
 		"portal-vue": "^2.1.7",
 		"rangestar": "^1.0.0",
 		"typeface-assistant": "^0.0.75",
 		"vexflow": "^1.2.90",
 		"vue": "^2.6.11",
-		"vue-material-design-icons": "^4.4.0",
 		"vuex": "^3.0.1",
 		"vuex-persist": "^2.2.0"
 	},

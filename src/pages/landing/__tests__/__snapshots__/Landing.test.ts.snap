@@ -43,9 +43,12 @@ exports[`Landing renders correctly 1`] = `
                 class="card-inner"
               >
                 <gamepadicon-stub
-                  fillcolor="currentColor"
-                  size="24"
-                  title="Gamepad Square Outline icon"
+                  arialabel="GamepadSquareOutline icon"
+                  height="24"
+                  role="img"
+                  viewbox="0 0 24 24"
+                  width="24"
+                  xmlns="xmlns=\\"http://www.w3.org/2000/svg\\""
                 />
                  
                 <h3>
@@ -76,9 +79,12 @@ exports[`Landing renders correctly 1`] = `
                 class="card-inner"
               >
                 <pianoicon-stub
-                  fillcolor="currentColor"
-                  size="24"
-                  title="Piano icon"
+                  arialabel="Piano icon"
+                  height="24"
+                  role="img"
+                  viewbox="0 0 24 24"
+                  width="24"
+                  xmlns="xmlns=\\"http://www.w3.org/2000/svg\\""
                 />
                  
                 <h3>
@@ -106,9 +112,12 @@ exports[`Landing renders correctly 1`] = `
                 class="card-inner"
               >
                 <gifticon-stub
-                  fillcolor="currentColor"
-                  size="24"
-                  title="Gift Outline icon"
+                  arialabel="GiftOutline icon"
+                  height="24"
+                  role="img"
+                  viewbox="0 0 24 24"
+                  width="24"
+                  xmlns="xmlns=\\"http://www.w3.org/2000/svg\\""
                 />
                  
                 <h3>
@@ -135,9 +144,12 @@ exports[`Landing renders correctly 1`] = `
                 class="card-inner"
               >
                 <hearticon-stub
-                  fillcolor="currentColor"
-                  size="24"
-                  title="Heart Outline icon"
+                  arialabel="HeartOutline icon"
+                  height="24"
+                  role="img"
+                  viewbox="0 0 24 24"
+                  width="24"
+                  xmlns="xmlns=\\"http://www.w3.org/2000/svg\\""
                 />
                  
                 <h3>

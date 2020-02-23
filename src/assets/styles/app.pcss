@@ -48,7 +48,7 @@ a {
 }
 
 .btn-round {
-	@apply flex-center w-12 h-12 mx-2 rounded-full bg-gray-300 cursor-pointer;
+	@apply flex-center w-12 h-12 mx-2 rounded-full bg-gray-300 text-gray-600 cursor-pointer;
 
 	&:last-child {
 		@apply mr-0;
@@ -60,9 +60,10 @@ a {
 	user-select: none;
 }
 
-.material-design-icon > .material-design-icon__svg {
+.mdi > svg {
 	width: inherit;
 	height: inherit;
+	@apply fill-current;
 }
 
 @tailwind utilities;
