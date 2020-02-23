@@ -42,7 +42,7 @@ export default Vue.extend({
 	mounted() {
 		window.addEventListener('popstate', event => {
 			event.preventDefault();
-			const { name } = event.state || { name: 'homeView' };
+			const name = event.state?.name || 'homeView';
 
 			this.$store.commit('stage', { name, transition: 'backwards' });
 		});
