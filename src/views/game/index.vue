@@ -7,10 +7,9 @@
 <script lang="ts">
 import Vue from 'vue';
 import training from '@/games/training/index.vue';
-import player from '@/games/player/index.vue';
 import arcade from '@/games/arcade/index.vue';
 
 export default Vue.extend({
-	components: { training, player, arcade }
+	components: { training, arcade }
 });
 </script>
