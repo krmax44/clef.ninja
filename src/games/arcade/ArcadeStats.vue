@@ -1,6 +1,6 @@
 <template>
 	<div class="flex items-center">
-		<transition-group name="lives" tag="div" class="flex-center">
+		<transition-group name="scale" tag="div" class="flex-center">
 			<span class="text-2xl score inline-block mr-4" :key="'score'">
 				Score: {{ score }}
 			</span>
@@ -36,19 +36,12 @@ export default Vue.extend({
 </script>
 
 <style lang="postcss" scoped>
-.lives-enter-active,
-.lives-leave-active,
-.lives-move {
-	transition: all 0.5s;
+.scale-move:not(.scale-leave-active),
+.scale-enter-active {
+	transition-delay: 0.3s;
 }
 
-.lives-leave-active {
+.scale-leave-active {
 	position: fixed;
-}
-
-.lives-enter,
-.lives-leave-to {
-	transform: scale(0);
-	opacity: 0;
 }
 </style>

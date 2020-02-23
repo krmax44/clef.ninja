@@ -32,3 +32,15 @@ header {
 .fade-leave-to {
 	opacity: 0;
 }
+
+.scale-enter-active,
+.scale-leave-active,
+.scale-move {
+	transition: all 0.3s ease;
+}
+
+.scale-enter,
+.scale-leave-to {
+	transform: scale(0);
+	opacity: 0;
+}
