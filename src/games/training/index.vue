@@ -2,14 +2,16 @@
 	<div class="flex flex-col flex-1 max-w-full">
 		<portal to="header-right">
 			<div class="flex items-center">
-				<button
-					class="btn-round"
-					title="Retry previous task"
-					v-if="history.length !== 0"
-					@click="previousTask"
-				>
-					<PreviousIcon class="h-8 w-8" />
-				</button>
+				<transition name="scale">
+					<button
+						class="btn-round"
+						title="Retry previous task"
+						v-if="history.length !== 0"
+						@click="previousTask"
+					>
+						<PreviousIcon class="h-8 w-8" />
+					</button>
+				</transition>
 
 				<button class="btn-round" title="Retry task" @click="retryTask">
 					<RetryIcon class="h-8 w-8" />
