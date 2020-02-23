@@ -24,7 +24,7 @@ module.exports = {
 					/-(leave|enter|appear)(|-(to|from|active))$/,
 					/^(?!(|.*?:)cursor-move).+-move$/,
 					/^router-link(|-exact)-active$/,
-					/^material-design-icon.*$/
+					/^mdi$/
 				]
 			}),
 		require('autoprefixer')()
