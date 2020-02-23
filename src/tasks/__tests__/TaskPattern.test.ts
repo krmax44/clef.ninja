@@ -35,6 +35,15 @@ describe('TaskPattern', () => {
 		expect(result.correct).toBe(false);
 	});
 
+	it('allows retrying', () => {
+		const task = new TaskPattern({ target });
+		task.check(task.notes[0][0].midiNote);
+		expect(task.notes[0][0].color).toBe('#92dd6e');
+
+		task.retry();
+		expect(task.notes[0][0].color).toBe(undefined);
+	});
+
 	it('generates the help text', () => {
 		const task = new TaskPattern({ target });
 		const wrapper = mount(task.helpText);

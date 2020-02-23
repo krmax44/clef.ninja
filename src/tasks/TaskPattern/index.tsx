@@ -96,6 +96,13 @@ export default class TaskPattern extends Task {
 		return { correct, correctNotes, done, score, retry };
 	}
 
+	public retry() {
+		this.checks = [];
+		this.checkCount = 0;
+		this.notes.flat().forEach(n => (n.color = undefined));
+		this.emit('updateHelpText');
+	}
+
 	public helpText = Vue.extend({
 		mixins: [updateLifecycle(this)],
 		render: h => {

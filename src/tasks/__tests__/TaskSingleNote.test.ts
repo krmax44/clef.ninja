@@ -27,6 +27,14 @@ describe('TaskSingleNote', () => {
 		});
 	});
 
+	it('allows retrying', () => {
+		const task = new TaskSingleNote({ target });
+		task.check(0);
+		expect(task.note.color).toBe('#fc5130');
+		task.retry();
+		expect(task.note.color).toBe(undefined);
+	});
+
 	it('generates the help text', () => {
 		const task = new TaskSingleNote({ target });
 		const wrapper = mount(task.helpText);

@@ -26,6 +26,10 @@ export default class TaskSingleNote extends Task {
 		render: h => <span class="font-bold">{this.note.formattedPitchClass}</span>
 	});
 
+	public retry() {
+		this.note.color = undefined;
+	}
+
 	public staveNotes = super.staveNotes;
 
 	public render = super.render;

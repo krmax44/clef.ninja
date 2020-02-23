@@ -52,4 +52,6 @@ export default abstract class Tasks extends Houk {
 	public check(_input: number): CheckResult {
 		throw new Error("Can't check abstract task.");
 	}
+
+	public retry() {}
 }

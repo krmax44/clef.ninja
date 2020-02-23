@@ -1,12 +1,25 @@
 <template>
 	<div class="flex flex-col flex-1 max-w-full">
-		<portal to="header-right-small">
+		<portal to="header-right">
 			<div class="flex items-center">
-				<button class="btn-round" @click="newTask" title="Skip task">
+				<button
+					class="btn-round"
+					title="Retry previous task"
+					v-if="history.length !== 0"
+					@click="previousTask"
+				>
+					<PreviousIcon class="h-8 w-8" />
+				</button>
+
+				<button class="btn-round" title="Retry task" @click="retryTask">
+					<RetryIcon class="h-8 w-8" />
+				</button>
+
+				<button class="btn-round" title="Skip task" @click="skipTask">
 					<SkipIcon class="h-8 w-8" />
 				</button>
 
-				<button class="btn-round" @click="showSettings = true" title="Settings">
+				<button class="btn-round" title="Settings" @click="showSettings = true">
 					<SettingsIcon class="h-8 w-8" />
 				</button>
 			</div>
@@ -50,7 +63,9 @@
 import Vue from 'vue';
 import VirtualInput from '@/components/VirtualInput.vue';
 import TrainingSettings from './TrainingSettings.vue';
-import SkipIcon from 'icons/SkipForwardOutline.vue';
+import RetryIcon from 'icons/Refresh.vue';
+import PreviousIcon from 'icons/SkipPreviousOutline.vue';
+import SkipIcon from 'icons/SkipNextOutline.vue';
 import SettingsIcon from 'icons/SettingsOutline.vue';
 
 import defaultSettings from './defaultSettings';
@@ -85,15 +100,23 @@ export default Vue.extend({
 	mixins: [midiLifecycle()],
 	data() {
 		return {
-			task: (undefined as unknown) as Task,
+			task: {} as Task,
 			correct: [0],
 			wrong: 0,
 			halting: false,
 			showSettings: false,
-			settings: defaultSettings
+			settings: defaultSettings,
+			history: [] as Task[]
 		};
 	},
-	components: { VirtualInput, TrainingSettings, SkipIcon, SettingsIcon },
+	components: {
+		VirtualInput,
+		TrainingSettings,
+		PreviousIcon,
+		SkipIcon,
+		RetryIcon,
+		SettingsIcon
+	},
 	methods: {
 		input(input: number): void {
 			if (this.halting) return;
@@ -113,6 +136,7 @@ export default Vue.extend({
 			}, 50);
 
 			if (done) {
+				this.history.push(this.task);
 				this.halting = true;
 
 				setTimeout(() => {
@@ -128,6 +152,23 @@ export default Vue.extend({
 				this.tasks,
 				this.settings.difficulty
 			);
+			this.task.render();
+		},
+		skipTask() {
+			this.history.push(this.task);
+			this.newTask();
+		},
+		previousTask() {
+			if (this.halting) return;
+
+			const previousTask = this.history.pop();
+			if (previousTask) {
+				this.task = previousTask;
+				this.retryTask();
+			}
+		},
+		retryTask() {
+			this.task.retry();
 			this.task.render();
 		}
 	},

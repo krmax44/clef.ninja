@@ -54,6 +54,13 @@ export default class TaskChord extends Task {
 		return { done, correct, correctNotes, score };
 	}
 
+	public retry() {
+		this.checkProgress = [];
+		this.checkCount = 0;
+		this.notes.flat().forEach(n => (n.color = undefined));
+		this.emit('updateHelpText');
+	}
+
 	public helpText = Vue.extend({
 		mixins: [updateLifecycle(this)],
 		render: h => (

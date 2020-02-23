@@ -62,7 +62,7 @@ export default Vue.extend({
 	mixins: [midiLifecycle()],
 	data() {
 		return {
-			task: (null as unknown) as Task, // TODO: yikes
+			task: {} as Task,
 			taskMistake: false,
 			correct: [0],
 			wrong: 0,
