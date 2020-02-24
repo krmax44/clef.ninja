@@ -2,11 +2,12 @@
 
 exports[`ArcadeTimer renders correctly 1`] = `
 <div
-  class="timer"
+  class="timer away"
+  state="playing"
 >
   <div
     class="timer-inner hurry"
-    style="width: 8.333333333333332%;"
+    style="width: 0.008333333333333333%;"
   />
 </div>
 `;

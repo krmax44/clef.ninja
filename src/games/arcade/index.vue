@@ -1,9 +1,20 @@
 <template>
 	<div class="flex flex-col flex-1 max-w-full">
-		<ArcadeTimer :remainingTime="remainingTime" :state="state" />
+		<ArcadeTimer :remainingTime="remainingTime" :visible="isRunning" />
 
 		<portal to="header-right">
-			<ArcadeStats :lives="lives" :score="score" />
+			<div>
+				<ArcadeStats :lives="lives" :score="score" />
+
+				<button
+					class="ml-4 btn-round"
+					:title="isPlaying ? 'Pause' : 'Resume'"
+					@click="pause"
+				>
+					<PauseIcon class="h-8 w-8" v-if="isPlaying" />
+					<PlayIcon class="h-8 w-8" v-else />
+				</button>
+			</div>
 		</portal>
 
 		<div class="flex flex-col flex-1 max-w-full">
@@ -17,11 +28,18 @@
 								@restart="restart"
 							/>
 
-							<template v-else-if="state === 'countdown'">
-								<h2 class="font-bold text-6xl">{{ countdown || 'GO!' }}</h2>
+							<template v-else-if="!isCountdownDone">
+								<h2 class="font-bold text-6xl">
+									{{ Math.trunc(countdown / 1000) || 'GO!' }}
+								</h2>
 							</template>
 
-							<div ref="noteRenderer" v-show="state === 'playing'" />
+							<div
+								ref="noteRenderer"
+								v-show="isRunning"
+								class="note-renderer"
+								:class="{ disabled: !isPlaying }"
+							/>
 						</div>
 					</div>
 				</div>
@@ -32,6 +50,7 @@
 			@note="input"
 			:correct="correct"
 			:wrong="wrong"
+			:disabled="!isPlaying || !isCountdownDone"
 			class="mt-auto"
 		/>
 	</div>
@@ -44,6 +63,8 @@ import ArcadeTimer from './ArcadeTimer.vue';
 import ArcadeStats from './ArcadeStats.vue';
 import ArcadeGameOver from './ArcadeGameOver.vue';
 import VirtualInput from '@/components/VirtualInput.vue';
+import PauseIcon from 'icons/Pause.vue';
+import PlayIcon from 'icons/PlayOutline.vue';
 
 import Task from '@/tasks/Task';
 import TaskSingleNote from '@/tasks/TaskSingleNote';
@@ -58,6 +79,10 @@ function randomTask(target: HTMLElement): Task {
 	return new Task({ target });
 }
 
+async function animationFrame() {
+	return new Promise(c => window.requestAnimationFrame(c));
+}
+
 export default Vue.extend({
 	mixins: [midiLifecycle()],
 	data() {
@@ -67,22 +92,24 @@ export default Vue.extend({
 			correct: [0],
 			wrong: 0,
 			lives: 5,
-			state: 'countdown',
+			state: 'playing',
 			score: 0,
-			remainingTime: 60,
-			countdown: 3,
-			gameClock: 0
+			remainingTime: 60000,
+			countdown: 4000,
+			lastTick: 0
 		};
 	},
 	components: {
 		ArcadeTimer,
 		ArcadeStats,
 		ArcadeGameOver,
-		VirtualInput
+		VirtualInput,
+		PlayIcon,
+		PauseIcon
 	},
 	methods: {
 		input(input: number) {
-			if (this.state !== 'playing') return false;
+			if (!this.isRunning) return false;
 
 			const { correct, correctNotes, done, score } = this.task.check(input);
 			this.task.render();
@@ -118,16 +145,25 @@ export default Vue.extend({
 
 		start() {
 			this.newTask();
-			this.gameClock = setInterval(() => {
-				if (this.countdown === 0) this.state = 'playing';
-				if (this.remainingTime === 0) this.gameOver();
+			this.setGameClock();
+		},
 
-				if (this.countdown >= 0) {
-					this.countdown--;
+		async setGameClock() {
+			this.lastTick = Date.now();
+
+			while (this.isPlaying) {
+				if (this.remainingTime <= 0) this.gameOver();
+
+				const delta = Date.now() - this.lastTick;
+				if (this.countdown > 0) {
+					this.countdown -= delta;
 				} else {
-					this.remainingTime--;
+					this.remainingTime -= delta;
 				}
-			}, 1000);
+
+				this.lastTick = Date.now();
+				await animationFrame();
+			}
 		},
 
 		restart() {
@@ -135,11 +171,19 @@ export default Vue.extend({
 			this.start();
 		},
 
+		pause() {
+			if (this.isPlaying && this.isCountdownDone) {
+				this.state = 'paused';
+			} else if (this.state === 'paused') {
+				this.state = 'playing';
+				this.setGameClock();
+			}
+		},
+
 		gameOver() {
 			this.remainingTime = 0;
 			this.lives = 0;
 			this.state = 'gameOver';
-			clearInterval(this.gameClock);
 		},
 
 		newTask() {
@@ -148,12 +192,27 @@ export default Vue.extend({
 		}
 	},
 
+	computed: {
+		isRunning(): boolean {
+			return (
+				(this.state === 'playing' || this.state === 'paused') &&
+				this.isCountdownDone
+			);
+		},
+		isCountdownDone(): boolean {
+			return this.countdown <= 0;
+		},
+		isPlaying(): boolean {
+			return this.state === 'playing';
+		}
+	},
+
 	mounted() {
 		this.start();
 	},
 
 	beforeDestroy() {
-		clearInterval(this.gameClock);
+		this.state = 'paused';
 	}
 });
 </script>
@@ -161,5 +220,13 @@ export default Vue.extend({
 <style lang="postcss" scoped>
 .display {
 	max-height: 300px;
+}
+
+.note-renderer {
+	transition: opacity 0.3s;
+
+	&.disabled {
+		opacity: 0.5;
+	}
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-	<div class="timer" :class="{ away: state !== 'playing' }">
+	<div class="timer" :class="{ away: !visible }">
 		<div
 			class="timer-inner"
 			:class="{ hurry: remainingTime <= 10 }"
@@ -13,8 +13,8 @@ import Vue from 'vue';
 
 export default Vue.extend({
 	props: {
-		state: {
-			type: String,
+		visible: {
+			type: Boolean,
 			required: true
 		},
 		remainingTime: {
@@ -24,7 +24,7 @@ export default Vue.extend({
 		totalTime: {
 			type: Number,
 			required: false,
-			default: 60
+			default: 60000
 		}
 	}
 });
@@ -42,7 +42,6 @@ export default Vue.extend({
 
 	&-inner {
 		height: 8px;
-		transition: all 1s linear;
 		@apply bg-brand-blue;
 
 		&.hurry {
