@@ -66,4 +66,15 @@ describe('GameArcade', () => {
 		(wrapper.vm as any).input(1);
 		expect((wrapper.vm as any).state).toBe('gameOver');
 	});
+
+	it('allows pausing', async () => {
+		const wrapper = createWrapper();
+		wrapper.setData({ countdown: 0 });
+
+		(wrapper.vm as any).pause();
+
+		await sleep(50);
+
+		expect((wrapper.vm as any).remainingTime).toBe(60000);
+	});
 });
